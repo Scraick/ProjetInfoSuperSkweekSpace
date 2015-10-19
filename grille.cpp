@@ -3,7 +3,7 @@
 const int Nbligne = 20;
 const int Nbcolonne = 20;
 
-string Matrice[Nbligne][Nbcolonne];
+char Matrice[Nbligne][Nbcolonne];
 
 grille::grille()
 {
@@ -21,26 +21,23 @@ void grille::dessinerNiveauBas()
 	if (fichier)  // si l'ouverture a réussi
 	{
 
-	for (int x = 0; x < Nbligne; x++)
+	for (int y = 0; y < Nbligne +1; y++)
 	{
-		for (int y = 0; y < Nbcolonne; y++)
+		for (int x = 0; x < Nbcolonne -1; x++)
 		{
-		
-			string ligne;
-			while (getline(fichier, ligne, '#'))
-			{
-				Matrice[y][x] = ligne;
-			}	
+			char caractere;
+			fichier.get(caractere);
+			Matrice[x][y] = caractere;
 		}
 	}
 
 	fichier.close();
 
-	for (int x = 0; x < Nbligne; x++)
+	for (int y = 0; y < Nbligne; y++)
 	{
-		for (int y = 0; y < Nbcolonne; y++)
+		for (int x = 0; x < Nbcolonne; x++)
 		{
-			cout << Matrice[y][x];
+			cout << Matrice[x][y];
 		}
 	}
 

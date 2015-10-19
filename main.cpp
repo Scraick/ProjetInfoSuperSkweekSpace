@@ -42,7 +42,7 @@ void affichage()
 	glClearColor(1.0, 1.0, 1.0, 1.0);
 	glClear(GL_COLOR_BUFFER_BIT);
 	glMatrixMode(GL_MODELVIEW);
-	//dessinerNiveau();
+	dessinerNiveau();
 
 	glFlush();
 }
@@ -56,58 +56,59 @@ void redimmensionner(int x, int y)
 
 }
 
-//void dessinerNiveau()
-//{
-//	grilleTest.dessinerNiveauBas(); //remplissage de la matrice avec les valeurs
-//
-//	for (int i = 0; i < 20; i++) // remplissage de la matrice avec les textures
-//	{
-//		for (int j = 0; j < 20; j++)
-//		{
-//			glEnable(GL_TEXTURE_2D);
-//			switch (Matrice[j][i])
-//			{
-//			case '0': // Sol
-//				glBegin(GL_QUADS);
-//				glColor3d(0.0, 0.0, 0.0);
-//				break;
-//
-//			case '1': // Trou Noir
-//				glBegin(GL_QUADS);
-//				glColor3d(1.0, 1.0, 1.0);
-//				break;
-//
-//			case '2': // Planetes
-//				glBegin(GL_QUADS);
-//				glColor3d(0.3, 0.0, 0.4);
-//				break;
-//
-//			case '3': // Soleil
-//				glBegin(GL_QUADS);
-//				glColor3d(0.0, 0.6, 0.6);
-//				break;
-//
-//			case '4': // Teleporteur
-//				glBegin(GL_QUADS);
-//				glColor3d(0.5, 0.5, 0.5);
-//				break;
-//
-//			case '5': // Cases flechées
-//				glBegin(GL_QUADS);
-//				glColor3d(0.3, 0.3, 0.0);
-//				break;
-//
-//			}
-//			glTexCoord2d(0.0f, 1.0f); glVertex2d(i, j);
-//			glTexCoord2d(1.0f, 1.0f); glVertex2d(i + 1, j);
-//			glTexCoord2d(1.0f, 0.0f); glVertex2d(i + 1, j + 1);
-//			glTexCoord2d(0.0f, 0.0f); glVertex2d(i, j + 1);
-//
-//			glEnd();
-//			glDisable(GL_TEXTURE_2D);
-//		}
-//	}
-//}
+void dessinerNiveau()
+{
+	grilleTest.dessinerNiveauBas(); //remplissage de la matrice avec les valeurs
+
+	for (int i = 0; i < 20; i++) // remplissage de la matrice avec les textures
+	{
+		for (int j = 0; j < 20; j++)
+		{
+			glEnable(GL_TEXTURE_2D);
+
+			switch (Matrice[i][j])
+			{
+			case '0': // Sol
+				glBegin(GL_QUADS);
+				glColor3d(0.0, 0.0, 0.0);
+				break;
+
+			case '1': // Trou Noir
+				glBegin(GL_QUADS);
+				glColor3d(1.0, 1.0, 1.0);
+				break;
+
+			case '2': // Planetes
+				glBegin(GL_QUADS);
+				glColor3d(0.3, 0.0, 0.4);
+				break;
+
+			case '3': // Soleil
+				glBegin(GL_QUADS);
+				glColor3d(0.0, 0.6, 0.6);
+				break;
+
+			case '4': // Teleporteur
+				glBegin(GL_QUADS);
+				glColor3d(0.5, 0.5, 0.5);
+				break;
+
+			case '5': // Cases flechées
+				glBegin(GL_QUADS);
+				glColor3d(0.3, 0.3, 0.0);
+				break;
+
+			}
+
+			glTexCoord2d(0.0f, 1.0f); glVertex2d(i, j);
+			glTexCoord2d(1.0f, 1.0f); glVertex2d(i + 1, j);
+			glTexCoord2d(1.0f, 0.0f); glVertex2d(i + 1, j + 1);
+			glTexCoord2d(0.0f, 0.0f); glVertex2d(i, j + 1);
+			glEnd();
+			glDisable(GL_TEXTURE_2D);
+		}
+	}
+}
 
 int main()
 {

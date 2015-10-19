@@ -1,6 +1,7 @@
 #ifndef GRILLE_H
 #define GRILLE_H
 #include <fstream>
+#include <sstream>
 #include <iostream>
 #include <string>
 
@@ -19,6 +20,6 @@ public:
 	void dessinerNiveauBas();
 };
 
-extern string Matrice[20][20];
+extern char Matrice[20][20];
 
 #endif
