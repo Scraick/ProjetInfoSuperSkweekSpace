@@ -146,7 +146,23 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="cases.cpp" />
+    <ClCompile Include="ennemi.cpp" />
+    <ClCompile Include="ennemiMortel.cpp" />
+    <ClCompile Include="ennemiPeuple.cpp" />
+    <ClCompile Include="grille.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="player.cpp" />
+    <ClCompile Include="score.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="cases.h" />
+    <ClInclude Include="ennemi.h" />
+    <ClInclude Include="ennemiMortel.h" />
+    <ClInclude Include="ennemiPeuple.h" />
+    <ClInclude Include="grille.h" />
+    <ClInclude Include="player.h" />
+    <ClInclude Include="score.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
