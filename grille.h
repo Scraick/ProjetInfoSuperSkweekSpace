@@ -4,6 +4,7 @@
 #include <sstream>
 #include <iostream>
 #include <string>
+#include "cases.h"
 
 #define NB_LIGNES 20
 #define NB_COLONNES 20
@@ -17,9 +18,9 @@ public:
 	grille();
 	~grille();
 
-	char Matrice[NB_LIGNES][NB_COLONNES];
+	cases Matrice[NB_LIGNES][NB_COLONNES];
 	
-	void dessinerNiveauBas();
+	void dessinerNiveauBas(vector <cases> C);
 };
 
 

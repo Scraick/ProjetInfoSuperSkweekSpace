@@ -1,28 +1,22 @@
 #pragma once
 
-#include "grille.h"
+#include <vector>
 #include <chrono>
 #include "GL/glut.h"
 
 
-class cases :
-	public grille
+class cases
 {
 public:
 	cases();
+	cases(GLuint texture);
 	~cases();
+	std::vector<GLuint> m_textures;
+	int frame;
+	int ralentissementAnim;
 
-	int valPlanete = 0;
-	int nbPlanete = 0;
-	GLuint m_texturePlanete;
-
-	static void dessinerSoleil(int);
-	void dessinerPlanete();
-	void dessinerTrouNoir();
-	void dessinerFleches();
-	void dessinerTeleporteur();
-
-
+	virtual GLuint textureAnime();
+	void ajouterFrame(GLuint texture);
 };
 
 extern cases Case;

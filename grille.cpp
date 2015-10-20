@@ -11,7 +11,7 @@ grille::~grille()
 }
 
 
-void grille::dessinerNiveauBas()
+void grille::dessinerNiveauBas(vector <cases> C)
 {
 	ifstream fichier("Matricetest.txt", ios::in);  // on ouvre le fichier en lecture
 
@@ -24,20 +24,11 @@ void grille::dessinerNiveauBas()
 			{
 				char caractere;
 				fichier.get(caractere);
-				Matrice[x][y] = caractere;
+				Matrice[x][y] = cases(C[caractere - '0']);
 			}
 		}
 
 		fichier.close();
-
-		for (int y = 0; y < NB_LIGNES; y++)
-		{
-			for (int x = 0; x < NB_COLONNES; x++)
-			{
-				cout << Matrice[x][y];
-			}
-			cout << '\n';
-		}
 
 	}
 	else  // sinon

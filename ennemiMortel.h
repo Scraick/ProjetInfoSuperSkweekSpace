@@ -8,5 +8,7 @@ class ennemiMortel :
 public:
 	ennemiMortel();
 	~ennemiMortel();
+
+	
 };
 

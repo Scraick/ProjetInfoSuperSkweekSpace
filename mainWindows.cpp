@@ -36,26 +36,44 @@ int  mainWindows::LoadGLTextures(string name) // Load Bitmaps And Convert To Tex
 
 void mainWindows::loadtexture()
 {
-	LoadGLTextures("textures/Soleil02.png");	// Sol			0
-	LoadGLTextures("textures/Soleil02.png");	// Murs			1
-	LoadGLTextures("textures/Soleil02.png");	// Planètes		2
+	LoadGLTextures("textures/NOIRTest.png");	// Sol			0
+	LoadGLTextures("textures/NOIRTest.png");	// Murs			1
+	LoadGLTextures("textures/NOIRTest.png");	// Planètes		2
 	LoadGLTextures("textures/Soleil02.png");	// Soleil		3
-	LoadGLTextures("textures/Soleil02.png");	// Tp			4
-	LoadGLTextures("textures/Soleil02.png");	// Flèches		5
+	LoadGLTextures("textures/Soleil.png");		// Soleil	2	4
+	LoadGLTextures("textures/Soleil03.png");	// Soleil	3	5
+	LoadGLTextures("textures/NOIRTest.png");	// Tp			6
+	LoadGLTextures("textures/NOIRTest.png");	// Flèches		7
+
+
+	cases caseSoleil;
+	caseSoleil.ajouterFrame(texture[3]);
+	caseSoleil.ajouterFrame(texture[4]);
+	caseSoleil.ajouterFrame(texture[5]);
+
+
+
+	m_cases.push_back(cases(texture[0]));
+	m_cases.push_back(cases(texture[1]));
+	m_cases.push_back(cases(texture[2]));
+	m_cases.push_back(caseSoleil);
+	m_cases.push_back(cases(texture[6]));
+	m_cases.push_back(cases(texture[7]));
 }
 
 void mainWindows::init(int x, int y)
 {
-	grilleTest.dessinerNiveauBas(); //remplissage de la matrice avec les valeurs
-
 	glutInitWindowPosition(10, 10);
 	glutInitWindowSize(x, y);
 	glutInitDisplayMode(GLUT_RGBA | GLUT_SINGLE);
 	glutCreateWindow("Super Skweek");
 
 	loadtexture();
+	grilleTest.dessinerNiveauBas(m_cases); //remplissage de la matrice avec les valeurs
 	glutDisplayFunc(affichage);
 	glutReshapeFunc(redim);
+
+	glutTimerFunc(16, callback_affichage, 0);
 
 	glutMainLoop();
 }
@@ -79,25 +97,31 @@ void mainWindows::afficherTexture(double x, double y, double largeur, double hau
 void  mainWindows::dessinerNiveau()
 {
 	int index;
+	GLuint tmpTexture;
 
 	for (int i = 0; i < NB_LIGNES; i++) // remplissage de la matrice avec les textures
 	{
 		for (int j = 0; j < NB_COLONNES; j++)
 		{
-			index = grilleTest.Matrice[i][j] - '0';
-			afficherTexture(i, j, 1, 1, texture[index]);
+			afficherTexture(i, j, 1, 1, grilleTest.Matrice[i][j].textureAnime());
 		}
 	}
 }
 
 void  mainWindows::affichage()
 {
-	glClearColor(1.0, 1.0, 1.0, 1.0);
+	glClearColor(0.0, 0.0, 0.0, 1.0);
 	glClear(GL_COLOR_BUFFER_BIT);
 	glMatrixMode(GL_MODELVIEW);
 	mainWindow.dessinerNiveau();
 
 	glFlush();
+	glutTimerFunc(80, callback_affichage, 0);
+}
+
+void mainWindows::callback_affichage(int)
+{
+	affichage();
 }
 
 void mainWindows::redim(int x, int y)
