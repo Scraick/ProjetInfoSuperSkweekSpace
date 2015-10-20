@@ -46,13 +46,12 @@ void mainWindows::loadtexture()
 	LoadGLTextures("textures/NOIRTest.png");	// Flèches		7
 
 
-	cases caseSoleil;
+	cases caseSoleil; // Creation de la case Soleil, qui contient les frames d'animation
 	caseSoleil.ajouterFrame(texture[3]);
 	caseSoleil.ajouterFrame(texture[4]);
 	caseSoleil.ajouterFrame(texture[5]);
 
-
-
+	//Puis remplissage de m_cases avec les autres textures non animèes
 	m_cases.push_back(cases(texture[0]));
 	m_cases.push_back(cases(texture[1]));
 	m_cases.push_back(cases(texture[2]));
@@ -68,7 +67,7 @@ void mainWindows::init(int x, int y)
 	glutInitDisplayMode(GLUT_RGBA | GLUT_SINGLE);
 	glutCreateWindow("Super Skweek");
 
-	loadtexture();
+	loadtexture(); //Moad des textures dans les vecteurs correspondants
 	grilleTest.dessinerNiveauBas(m_cases); //remplissage de la matrice avec les valeurs
 	glutDisplayFunc(affichage);
 	glutReshapeFunc(redim);
@@ -99,11 +98,13 @@ void  mainWindows::dessinerNiveau()
 	int index;
 	GLuint tmpTexture;
 
-	for (int i = 0; i < NB_LIGNES; i++) // remplissage de la matrice avec les textures
+	for (int i = 0; i < NB_LIGNES; i++) //Parcours de la matrice de cases et affichage des textures
 	{
 		for (int j = 0; j < NB_COLONNES; j++)
 		{
-			afficherTexture(i, j, 1, 1, grilleTest.Matrice[i][j].textureAnime());
+			//Appel de la fonction textureAnime, qui permet de faire l'animation
+			//Si il n'y a qu'un texture dans une case, il n'ya a pas d'animation
+			afficherTexture(i, j, 1, 1, grilleTest.Matrice[i][j].textureAnime()); 
 		}
 	}
 }
@@ -119,7 +120,7 @@ void  mainWindows::affichage()
 	glutTimerFunc(80, callback_affichage, 0);
 }
 
-void mainWindows::callback_affichage(int)
+void mainWindows::callback_affichage(int) // utiliser pour atteindre la fonction affichage
 {
 	affichage();
 }

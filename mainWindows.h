@@ -13,25 +13,14 @@ using namespace std;
 class mainWindows
 {
 public:
-	enum TypeCase
-	{
-		CASE_VIDE,		
-		CASE_TROUNOIR,		
-		CASE_PLANETE,
-		CASE_SOLEIL,
-		CASE_TP,
-		CASE_FLECHE
-
-	};
-
-
+	
 	mainWindows();
 	~mainWindows();
 
 	vector <GLuint>	texture;
 	grille grilleTest;
-	vector <cases> m_cases;
-	vector <cases> m_casesActives;
+	vector <cases> m_cases; //Vecteur de cases, qui est rempli avec toutes les textures
+	//vector <cases> m_casesActives;
 
 	void init(int x, int y);
 	void afficherTexture(double, double, double, double, const GLuint &);

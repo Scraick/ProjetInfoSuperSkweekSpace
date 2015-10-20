@@ -5,7 +5,7 @@ cases Case;
 
 cases::cases()
 {
-	frame = -1;
+	frame = -1; //début de frame a -1, pour que la frame '0' se joue en première, et non la frame '1'
 	ralentissementAnim = 5;
 }
 
@@ -21,11 +21,11 @@ cases::~cases()
 
 GLuint cases::textureAnime()
 {
-	frame = (frame + 1) % (m_textures.size() * ralentissementAnim);
+	frame = (frame + 1) % (m_textures.size() * ralentissementAnim); //Incrémentation de la frame, puis retour au début lorsque le nombre max de frame est atteint
 	return m_textures[(frame / ralentissementAnim)];
 }
 
-void cases::ajouterFrame(GLuint texture)
+void cases::ajouterFrame(GLuint texture) //Fonction pour remplir une case de plusieurs frames, comme dans la case soleil, afin de les animer
 {
 	m_textures.push_back(texture);
 }

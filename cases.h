@@ -12,10 +12,10 @@ public:
 	cases(GLuint texture);
 	~cases();
 	std::vector<GLuint> m_textures;
-	int frame;
-	int ralentissementAnim;
+	int frame; //Nombre de frame dans notre case animée
+	int ralentissementAnim; //ralentissement de l'animation
 
-	virtual GLuint textureAnime();
+	virtual GLuint textureAnime(); //Fonction qui ajoute une frame a chaque rafraichissement, pour animer la case
 	void ajouterFrame(GLuint texture);
 };
 

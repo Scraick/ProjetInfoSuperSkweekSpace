@@ -24,7 +24,9 @@ void grille::dessinerNiveauBas(vector <cases> C)
 			{
 				char caractere;
 				fichier.get(caractere);
-				Matrice[x][y] = cases(C[caractere - '0']);
+				//Remplissage de la matrice de cases, avec des caracteres
+				//Ces derniers seront remplacés par des textures dans le mainWindows
+				Matrice[x][y] = cases(C[caractere - '0']); 
 			}
 		}
 
