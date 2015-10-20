@@ -23,6 +23,4 @@ public:
 	void dessinerNiveauBas(vector <cases> C);
 };
 
-
-
 #endif

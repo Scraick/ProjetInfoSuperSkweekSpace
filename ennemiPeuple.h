@@ -1,12 +1,22 @@
-#pragma once
+#ifndef ENNEMIPEUPLE_H
+#define ENNEMIPEUPLE_H
 #include "ennemi.h"
+#include "grille.h"
 
-
-class ennemiPeuple :
-	public ennemi
+class ennemiPeuple : public ennemi
 {
 public:
-	ennemiPeuple();
-	~ennemiPeuple();
+	ennemiPeuple(int x, int y);
+
+	void nombre();
+
+	double distance();
+	//	void deplacement();
+	void changerCase();
+
+private:
+	int planete;
+
 };
 
+#endif

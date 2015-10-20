@@ -1,4 +1,5 @@
-#pragma once
+#ifndef CASES_H
+#define CASES_H
 
 #include <vector>
 #include <chrono>
@@ -20,3 +21,5 @@ public:
 };
 
 extern cases Case;
+
+#endif

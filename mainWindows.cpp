@@ -1,7 +1,6 @@
 #include "mainWindows.h"
 
-
-mainWindows mainWindow;
+mainWindows fenetre;
 
 mainWindows::mainWindows()
 {
@@ -95,9 +94,6 @@ void mainWindows::afficherTexture(double x, double y, double largeur, double hau
 
 void  mainWindows::dessinerNiveau()
 {
-	int index;
-	GLuint tmpTexture;
-
 	for (int i = 0; i < NB_LIGNES; i++) //Parcours de la matrice de cases et affichage des textures
 	{
 		for (int j = 0; j < NB_COLONNES; j++)
@@ -114,7 +110,7 @@ void  mainWindows::affichage()
 	glClearColor(0.0, 0.0, 0.0, 1.0);
 	glClear(GL_COLOR_BUFFER_BIT);
 	glMatrixMode(GL_MODELVIEW);
-	mainWindow.dessinerNiveau();
+	fenetre.dessinerNiveau();
 
 	glFlush();
 	glutTimerFunc(80, callback_affichage, 0);

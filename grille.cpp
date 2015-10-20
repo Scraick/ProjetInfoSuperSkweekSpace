@@ -1,15 +1,12 @@
 #include "grille.h"
 
-
 grille::grille()
 {
 }
 
-
 grille::~grille()
 {
 }
-
 
 void grille::dessinerNiveauBas(vector <cases> C)
 {
