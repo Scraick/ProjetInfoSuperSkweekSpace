@@ -154,6 +154,7 @@
     <ClCompile Include="ennemiPeuple.cpp" />
     <ClCompile Include="grille.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="mainWindows.cpp" />
     <ClCompile Include="player.cpp" />
     <ClCompile Include="score.cpp" />
   </ItemGroup>
@@ -163,6 +164,7 @@
     <ClInclude Include="ennemiMortel.h" />
     <ClInclude Include="ennemiPeuple.h" />
     <ClInclude Include="grille.h" />
+    <ClInclude Include="mainWindows.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="score.h" />
   </ItemGroup>

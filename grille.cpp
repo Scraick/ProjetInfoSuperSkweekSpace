@@ -1,9 +1,5 @@
 #include "grille.h"
 
-const int Nbligne = 20;
-const int Nbcolonne = 20;
-
-char Matrice[Nbligne][Nbcolonne];
 
 grille::grille()
 {
@@ -14,6 +10,7 @@ grille::~grille()
 {
 }
 
+
 void grille::dessinerNiveauBas()
 {
 	ifstream fichier("Matricetest.txt", ios::in);  // on ouvre le fichier en lecture
@@ -21,25 +18,26 @@ void grille::dessinerNiveauBas()
 	if (fichier)  // si l'ouverture a réussi
 	{
 
-	for (int y = 0; y < Nbligne +1; y++)
-	{
-		for (int x = 0; x < Nbcolonne -1; x++)
+		for (int y = 0; y < NB_LIGNES; y++)
 		{
-			char caractere;
-			fichier.get(caractere);
-			Matrice[x][y] = caractere;
+			for (int x = 0; x < NB_COLONNES; x++)
+			{
+				char caractere;
+				fichier.get(caractere);
+				Matrice[x][y] = caractere;
+			}
 		}
-	}
 
-	fichier.close();
+		fichier.close();
 
-	for (int y = 0; y < Nbligne; y++)
-	{
-		for (int x = 0; x < Nbcolonne; x++)
+		for (int y = 0; y < NB_LIGNES; y++)
 		{
-			cout << Matrice[x][y];
+			for (int x = 0; x < NB_COLONNES; x++)
+			{
+				cout << Matrice[x][y];
+			}
+			cout << '\n';
 		}
-	}
 
 	}
 	else  // sinon

@@ -5,21 +5,23 @@
 #include <iostream>
 #include <string>
 
+#define NB_LIGNES 20
+#define NB_COLONNES 20
+
 using namespace std;
 
 class grille
 {
 
-	
-
 public:
 	grille();
 	~grille();
 
+	char Matrice[NB_LIGNES][NB_COLONNES];
 	
 	void dessinerNiveauBas();
 };
 
-extern char Matrice[20][20];
+
 
 #endif
