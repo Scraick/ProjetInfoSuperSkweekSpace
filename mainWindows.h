@@ -21,7 +21,6 @@ public:
 	vector <GLuint>	texture;
 	grille grilleTest;
 	vector <cases> m_cases; //Vecteur de cases, qui est rempli avec toutes les textures
-	//vector <cases> m_casesActives;
 
 	void init(int x, int y);
 	void afficherTexture(double, double, double, double, const GLuint &);

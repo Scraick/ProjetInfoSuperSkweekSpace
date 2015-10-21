@@ -14,17 +14,20 @@ void grille::dessinerNiveauBas(vector <cases> C)
 
 	if (fichier)  // si l'ouverture a réussi
 	{
+		char caractere;
 
 		for (int y = 0; y < NB_LIGNES; y++)
 		{
 			for (int x = 0; x < NB_COLONNES; x++)
 			{
-				char caractere;
+				
 				fichier.get(caractere);
 				//Remplissage de la matrice de cases, avec des caracteres
 				//Ces derniers seront remplacés par des textures dans le mainWindows
-				Matrice[x][y] = cases(C[caractere - '0']); 
+				Matrice[y][x] = cases(C[caractere - '0']); 
+				cout << caractere;
 			}
+			
 		}
 
 		fichier.close();
@@ -32,7 +35,6 @@ void grille::dessinerNiveauBas(vector <cases> C)
 	}
 	else  // sinon
 		cout << "Impossible d'ouvrir le fichier !" << endl;
-
 }
 
 double grille::distancePlanetes()

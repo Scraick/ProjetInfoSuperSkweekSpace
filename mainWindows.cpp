@@ -34,50 +34,51 @@ int  mainWindows::LoadGLTextures(string name) // Load Bitmaps And Convert To Tex
 
 void mainWindows::loadtexture()
 {
-	LoadGLTextures("textures/NOIRTest.png");	// Sol			0
-	LoadGLTextures("textures/NOIRTest.png");	// Murs			1
-	LoadGLTextures("textures/NOIRTest.png");	// Planètes		2
-	LoadGLTextures("textures/Soleil02.png");	// Soleil		3
-	LoadGLTextures("textures/Soleil.png");		// Soleil	2	4
-	LoadGLTextures("textures/Soleil03.png");	// Soleil	3	5
-	LoadGLTextures("textures/NOIRTest.png");	// Tp			6
-	LoadGLTextures("textures/NOIRTest.png");	// Flèches		7
+	LoadGLTextures("textures/Sol.png");			// Sol			0
+	LoadGLTextures("textures/murTrouNoir.jpg");	// Murs			1
+	LoadGLTextures("textures/murTrouNoir02.jpg");	// 2
+	LoadGLTextures("textures/murTrouNoir03.jpg");	// 3
+	LoadGLTextures("textures/murTrouNoir04.jpg");	// 4
+	LoadGLTextures("textures/NOIRTest.png");	// Planètes		5
+	LoadGLTextures("textures/Soleil02.png");	// Soleil		6
+	LoadGLTextures("textures/Soleil.png");		// Soleil	2	7
+	LoadGLTextures("textures/Soleil03.png");	// Soleil	3	8
+	LoadGLTextures("textures/Teleport.jpg");	// Tp			9
+	LoadGLTextures("textures/ventSolaire.jpg");	// Flèches		10
 
 
 	cases caseSoleil; // Creation de la case Soleil, qui contient les frames d'animation
 	caseSoleil.m_id = '3';
-	caseSoleil.ajouterFrame(texture[3]);
-	caseSoleil.ajouterFrame(texture[4]);
-	caseSoleil.ajouterFrame(texture[5]);
+	caseSoleil.ajouterFrame(texture[6]);
+	caseSoleil.ajouterFrame(texture[7]);
+	caseSoleil.ajouterFrame(texture[8]);
+
+	cases caseTrouNoir;
+	caseTrouNoir.m_id = '1';
+	caseTrouNoir.ajouterFrame(texture[1]);
+	caseTrouNoir.ajouterFrame(texture[2]);
+	caseTrouNoir.ajouterFrame(texture[3]);
+	caseTrouNoir.ajouterFrame(texture[4]);
 
 	//Puis remplissage de m_cases avec les autres textures non animèes
 	m_cases.push_back(cases(texture[0], '0'));
-	m_cases.push_back(cases(texture[1], '1'));
-	m_cases.push_back(cases(texture[2], '2'));
+	m_cases.push_back(caseTrouNoir);
+	m_cases.push_back(cases(texture[5], '2'));
 	m_cases.push_back(caseSoleil);
-	m_cases.push_back(cases(texture[6], '4'));
-	m_cases.push_back(cases(texture[7], '5'));
+	m_cases.push_back(cases(texture[9], '4'));
+	m_cases.push_back(cases(texture[10], '5'));
 }
 
-void mainWindows::clavier(int key, int x, int y)
-{
-	switch (key)
-	{
-	case GLUT_KEY_F1 :
-		exit(0);
-		break;
-	}
 
-}
 
 void mainWindows::init(int x, int y)
 {
-	glutInitWindowPosition(10, 10);
+	glutInitWindowPosition(0, 0);
 	glutInitWindowSize(x, y);
 	glutInitDisplayMode(GLUT_RGBA | GLUT_SINGLE);
 	glutCreateWindow("Super Skweek");
 
-	loadtexture(); //Moad des textures dans les vecteurs correspondants
+	loadtexture(); //Load des textures dans les vecteurs correspondants
 	grilleTest.dessinerNiveauBas(m_cases); //remplissage de la matrice avec les valeurs
 	glutDisplayFunc(affichage);
 	glutReshapeFunc(redim);
@@ -103,23 +104,9 @@ void mainWindows::afficherTexture(double x, double y, double largeur, double hau
 	glDisable(GL_TEXTURE_2D);
 }
 
-void  mainWindows::dessinerNiveau()
-{
-
-	for (int i = 0; i < NB_LIGNES; i++) //Parcours de la matrice de cases et affichage des textures
-	{
-		for (int j = 0; j < NB_COLONNES; j++)
-		{
-			//Appel de la fonction textureAnime, qui permet de faire l'animation
-			//Si il n'y a qu'un texture dans une case, il n'ya a pas d'animation
-			afficherTexture(i, j, 1, 1, grilleTest.Matrice[i][j].textureAnime()); 
-		}
-	}
-}
-
 void  mainWindows::affichage()
 {
-	glClearColor(0.0, 0.0, 0.0, 1.0);
+	glClearColor(0.0, 0.0, 0.0, 1.0); //Couleur bleue vérifiée sur photoshop
 	glClear(GL_COLOR_BUFFER_BIT);
 	glMatrixMode(GL_MODELVIEW);
 	fenetre.dessinerNiveau();
@@ -129,12 +116,32 @@ void  mainWindows::affichage()
 	glutSpecialFunc(fenetre.clavier);
 
 	glFlush();
-	glutTimerFunc(80, callback_affichage, 0);
+	glutTimerFunc(100, callback_affichage, 0);
 }
 
-void mainWindows::callback_affichage(int) // utiliser pour atteindre la fonction affichage
+void  mainWindows::dessinerNiveau()
 {
-	affichage();
+
+	for (int i = 0; i < 32; i++) //Parcours de la matrice de cases et affichage des textures
+	{
+		for (int j = 0; j < 60; j++)
+		{
+			//Appel de la fonction textureAnime, qui permet de faire l'animation
+			//Si il n'y a qu'un texture dans une case, il n'ya a pas d'animation
+			afficherTexture(j, i, 1, 1, grilleTest.Matrice[i][j].textureAnime()); 
+		}
+	}
+}
+
+void mainWindows::clavier(int key, int x, int y)
+{
+	switch (key)
+	{
+	case GLUT_KEY_F1 :
+		exit(0);
+		break;
+	}
+
 }
 
 void mainWindows::redim(int x, int y)
@@ -142,5 +149,12 @@ void mainWindows::redim(int x, int y)
 	glViewport(0, 0, x, y);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	gluOrtho2D(0.0, (double)NB_LIGNES, (double)NB_COLONNES, 0.0);
+	gluOrtho2D(0.0, (double)60, (double)32, 0.0);
 }
+
+void mainWindows::callback_affichage(int) // utiliser pour atteindre la fonction affichage
+{
+	affichage();
+}
+
+

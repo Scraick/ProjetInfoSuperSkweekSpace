@@ -8,8 +8,8 @@
 #include "ennemiPeuple.h"
 
 
-#define NB_LIGNES 20
-#define NB_COLONNES 20
+#define NB_LIGNES 32
+#define NB_COLONNES 60
 
 using namespace std;
 

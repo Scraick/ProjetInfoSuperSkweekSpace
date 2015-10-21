@@ -2,7 +2,7 @@
 
 int main()
 {
-	fenetre.init(1000, 1000);
+	fenetre.init(6000, 3200);
 
 	return 0;
 }
