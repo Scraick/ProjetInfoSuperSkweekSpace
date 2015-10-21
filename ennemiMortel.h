@@ -14,19 +14,7 @@ public:
 	bool invisible(); // Booleen pour verifier si le joueur est invisible ou non
 	void deplacementMortel(); //Deplacement ennemis Mortel
 
-private:
 	bool m_invisible;
-	int m_nombre;
-
-	int nombre();
-	void tuer();
-
-	bool invisible();
-	void deplacement();
-
-private:
-	bool m_invisible;
-
 };
 
 #endif

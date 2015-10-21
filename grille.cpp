@@ -57,7 +57,6 @@ double grille::distancePlanetes()
 			}
 		}
 	}
-	cout << valTemp << endl;
 
 	return valTemp;
 }

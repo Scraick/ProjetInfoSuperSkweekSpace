@@ -24,7 +24,3 @@ void ennemiMortel::deplacementMortel()
 
 }
 
-void ennemiMortel::deplacement()
-{
-
-}

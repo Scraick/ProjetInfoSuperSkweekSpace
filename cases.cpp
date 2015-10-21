@@ -8,6 +8,10 @@ cases::cases()
 	ralentissementAnim = 5;
 }
 
+cases::~cases()
+{
+}
+
 cases::cases(GLuint texture, char id)
 {
 	frame = -1;
@@ -15,9 +19,6 @@ cases::cases(GLuint texture, char id)
 	m_id = id;
 }
 
-cases::~cases()
-{
-}
 
 GLuint cases::textureAnime()
 {

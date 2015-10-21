@@ -9,7 +9,7 @@ public:
 
 	ennemiPeuple();
 
-	//void deplacementEP();
+
 	
 	int positionX();
 	int positionY();
@@ -17,13 +17,8 @@ public:
 	ennemiPeuple(int x, int y);
 
 	void nombre();
-
-	double distance();
-	//	void deplacement();
 	void changerCase();
-
-private:
-	int planete;
+	//void deplacementEP();
 
 
 };
