@@ -2,7 +2,6 @@
 
 cases Case;
 
-
 cases::cases()
 {
 	frame = -1; //début de frame a -1, pour que la frame '0' se joue en première, et non la frame '1'

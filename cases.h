@@ -1,3 +1,5 @@
+#ifndef CASES_H
+#define CASES_H
 #include <vector>
 #include <chrono>
 #include "GL/glut.h"
@@ -20,3 +22,5 @@ public:
 };
 
 extern cases Case;
+
+#endif

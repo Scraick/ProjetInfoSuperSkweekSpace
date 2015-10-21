@@ -26,6 +26,7 @@ public:
 
 	void dessinerNiveauBas(vector <cases> C);
 
+
 	double distancePlanetes();
 	void respawnEnnemi();
 

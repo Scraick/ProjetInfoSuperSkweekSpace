@@ -6,12 +6,26 @@
 class ennemiPeuple : public ennemi
 {
 public:
+
 	ennemiPeuple();
 
 	//void deplacementEP();
 	
 	int positionX();
 	int positionY();
+
+	ennemiPeuple(int x, int y);
+
+	void nombre();
+
+	double distance();
+	//	void deplacement();
+	void changerCase();
+
+private:
+	int planete;
+
+
 };
 
 #endif

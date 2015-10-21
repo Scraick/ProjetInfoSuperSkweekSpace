@@ -1,3 +1,5 @@
+#ifndef MAINWINDOWS_H
+#define MAINWINDOWS_H
 #include <vector>
 #include <string>
 #include "GL/glut.h"
@@ -35,3 +37,8 @@ public:
 };
 
 extern mainWindows fenetre;
+
+extern mainWindows mainWindow;
+
+#endif
+

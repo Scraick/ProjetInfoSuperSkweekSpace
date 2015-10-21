@@ -5,6 +5,7 @@ class ennemi
 {
 public:
 	ennemi();
+
 	ennemi(int x, int y);
 
 	void mortEnnemi(bool etat); //Vérification de la mort des ennemis
@@ -13,6 +14,22 @@ public:
 
 	int m_x, m_y, m_nombre; //Position X et Y des différents ennemis
 	bool m_etat; // booleen d'état de l'ennemi
+
+
+	void mort(bool etat);
+	void respawn();
+
+	void speed();
+	void deplacement(int dep);
+
+	int positionX();
+	int positionY();
+
+protected:
+	bool m_etat;
+	int m_x, m_y, m_nombre;
+
+private:
 
 };
 

@@ -1,6 +1,5 @@
 #include "mainWindows.h"
 
-
 mainWindows fenetre;
 
 mainWindows::mainWindows()
@@ -124,6 +123,7 @@ void  mainWindows::affichage()
 	glClear(GL_COLOR_BUFFER_BIT);
 	glMatrixMode(GL_MODELVIEW);
 	fenetre.dessinerNiveau();
+
 	glutFullScreen();
 
 	glutSpecialFunc(fenetre.clavier);

@@ -21,4 +21,10 @@ bool ennemiMortel::invisible()
 
 void ennemiMortel::deplacementMortel()
 {
+
+}
+
+void ennemiMortel::deplacement()
+{
+
 }

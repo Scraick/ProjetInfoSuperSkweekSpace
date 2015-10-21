@@ -7,6 +7,7 @@ class ennemiMortel : public ennemi
 public:
 	ennemiMortel();
 
+
 	int nombre(); //Nombre d'ennemis Mortel
 	void tuer(); //Fonction pour tuer le joueur
 
@@ -16,6 +17,16 @@ public:
 private:
 	bool m_invisible;
 	int m_nombre;
+
+	int nombre();
+	void tuer();
+
+	bool invisible();
+	void deplacement();
+
+private:
+	bool m_invisible;
+
 };
 
 #endif
