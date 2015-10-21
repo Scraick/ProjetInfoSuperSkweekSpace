@@ -1,5 +1,5 @@
-#pragma once
-
+#ifndef SCORE_H
+#define SCORE_H
 
 class score
 {
@@ -8,3 +8,4 @@ public:
 	~score();
 };
 
+#endif

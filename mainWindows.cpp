@@ -1,7 +1,7 @@
 #include "mainWindows.h"
 
 
-mainWindows mainWindow;
+mainWindows fenetre;
 
 mainWindows::mainWindows()
 {
@@ -9,7 +9,6 @@ mainWindows::mainWindows()
 
 mainWindows::~mainWindows()
 {
-
 }
 
 int  mainWindows::LoadGLTextures(string name) // Load Bitmaps And Convert To Textures
@@ -47,17 +46,29 @@ void mainWindows::loadtexture()
 
 
 	cases caseSoleil; // Creation de la case Soleil, qui contient les frames d'animation
+	caseSoleil.m_id = '3';
 	caseSoleil.ajouterFrame(texture[3]);
 	caseSoleil.ajouterFrame(texture[4]);
 	caseSoleil.ajouterFrame(texture[5]);
 
 	//Puis remplissage de m_cases avec les autres textures non animèes
-	m_cases.push_back(cases(texture[0]));
-	m_cases.push_back(cases(texture[1]));
-	m_cases.push_back(cases(texture[2]));
+	m_cases.push_back(cases(texture[0], '0'));
+	m_cases.push_back(cases(texture[1], '1'));
+	m_cases.push_back(cases(texture[2], '2'));
 	m_cases.push_back(caseSoleil);
-	m_cases.push_back(cases(texture[6]));
-	m_cases.push_back(cases(texture[7]));
+	m_cases.push_back(cases(texture[6], '4'));
+	m_cases.push_back(cases(texture[7], '5'));
+}
+
+void mainWindows::clavier(int key, int x, int y)
+{
+	switch (key)
+	{
+	case GLUT_KEY_F1 :
+		exit(0);
+		break;
+	}
+
 }
 
 void mainWindows::init(int x, int y)
@@ -95,8 +106,6 @@ void mainWindows::afficherTexture(double x, double y, double largeur, double hau
 
 void  mainWindows::dessinerNiveau()
 {
-	int index;
-	GLuint tmpTexture;
 
 	for (int i = 0; i < NB_LIGNES; i++) //Parcours de la matrice de cases et affichage des textures
 	{
@@ -114,7 +123,10 @@ void  mainWindows::affichage()
 	glClearColor(0.0, 0.0, 0.0, 1.0);
 	glClear(GL_COLOR_BUFFER_BIT);
 	glMatrixMode(GL_MODELVIEW);
-	mainWindow.dessinerNiveau();
+	fenetre.dessinerNiveau();
+	glutFullScreen();
+
+	glutSpecialFunc(fenetre.clavier);
 
 	glFlush();
 	glutTimerFunc(80, callback_affichage, 0);

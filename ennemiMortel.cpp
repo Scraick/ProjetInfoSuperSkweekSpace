@@ -1,12 +1,24 @@
 #include "ennemiMortel.h"
 
-
-
-ennemiMortel::ennemiMortel()
+ennemiMortel::ennemiMortel() : ennemi()
 {
 }
 
+int ennemiMortel::nombre()
+{
+	return m_nombre;
+}
 
-ennemiMortel::~ennemiMortel()
+void ennemiMortel::tuer()
+{
+
+}
+
+bool ennemiMortel::invisible()
+{
+	return m_invisible;
+}
+
+void ennemiMortel::deplacementMortel()
 {
 }

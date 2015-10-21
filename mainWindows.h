@@ -1,4 +1,3 @@
-#pragma once
 #include <vector>
 #include <string>
 #include "GL/glut.h"
@@ -30,6 +29,9 @@ public:
 	static void callback_affichage(int);
 	static void redim(int x, int y);
 	void loadtexture();
+
+	static void clavier(int key, int x, int y);
+	
 };
 
-extern mainWindows mainWindow;
+extern mainWindows fenetre;
