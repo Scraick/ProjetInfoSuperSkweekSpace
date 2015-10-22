@@ -37,7 +37,5 @@ public:
 
 extern mainWindows fenetre;
 
-extern mainWindows mainWindow;
-
 #endif
 

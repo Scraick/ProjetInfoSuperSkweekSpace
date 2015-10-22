@@ -5,6 +5,7 @@
 #include "GL/glut.h"
 
 
+
 class cases
 {
 public:
@@ -19,6 +20,7 @@ public:
 
 	virtual GLuint textureAnime(); //Fonction qui ajoute une frame a chaque rafraichissement, pour animer la case
 	void ajouterFrame(GLuint texture);
+
 };
 
 extern cases Case;

@@ -5,6 +5,7 @@
 #include <iostream>
 #include <string>
 #include "cases.h"
+#include "mainWindows.h"
 #include "ennemiPeuple.h"
 
 
@@ -24,9 +25,6 @@ public:
 
 	cases Matrice[NB_LIGNES][NB_COLONNES];
 
-
-	//int positionX();
-	//int positionY();
 	int m_x = 1, m_y = 1; //Position de départ du joueur
 
 	void dessinerNiveauBas(vector <cases> C);
@@ -34,7 +32,9 @@ public:
 	void respawnEnnemi();
 	void speedEnnemis();
 
-
+	void verifPosition();
+	void caseFleches();
+	static void callBackFleches(int call);
 
 };
 

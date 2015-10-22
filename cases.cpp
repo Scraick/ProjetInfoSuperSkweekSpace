@@ -31,3 +31,5 @@ void cases::ajouterFrame(GLuint texture) //Fonction pour remplir une case de plu
 	m_textures.push_back(texture);
 }
 
+
+

@@ -129,13 +129,14 @@ void  mainWindows::affichage()
 	joueur.translationCam();
 	fenetre.dessinerNiveau();
 	fenetre.dessinerJoueur();
-	
+	grilleJeu.verifPosition();
+
 	glutFullScreen();
 
 	glutSpecialFunc(fenetre.clavier);
 
 	glFlush();
-	glutTimerFunc(100, callback_affichage, 0);
+	glutTimerFunc(150, callback_affichage, 0);
 }
 
 void  mainWindows::dessinerNiveau()

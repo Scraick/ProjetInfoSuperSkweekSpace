@@ -76,13 +76,49 @@ void grille::speedEnnemis()
 	int valDefaut = 100;
 }
 
-//
-//int grille::positionX()
-//{
-//	return m_x;
-//}
-//
-//int grille::positionY()
-//{
-//	return m_y;
-//}
+void grille::verifPosition()
+{
+
+	if (grilleJeu.Matrice[grilleJeu.m_y][grilleJeu.m_x].m_id == '5')
+	{
+		glutTimerFunc(250, grilleJeu.callBackFleches, 0);
+	}
+}
+
+void grille::caseFleches()
+{
+	int alea = (rand() % 4);
+
+	switch (alea)
+	{
+	case 0:
+		if ((grilleJeu.Matrice[grilleJeu.m_y - 1][grilleJeu.m_x].m_id != '1') && (grilleJeu.Matrice[grilleJeu.m_y - 1][grilleJeu.m_x].m_id != '3'))
+			//Verification de l'endroit ou les fleches déplacent le joueur
+			grilleJeu.m_y--;
+		break;
+
+	case 1:
+		if ((grilleJeu.Matrice[grilleJeu.m_y + 1][grilleJeu.m_x].m_id != '1') && (grilleJeu.Matrice[grilleJeu.m_y + 1][grilleJeu.m_x].m_id != '3'))
+			//Verification de l'endroit ou les fleches déplacent le joueur
+			grilleJeu.m_y++;
+		break;
+
+	case 2:
+		if ((grilleJeu.Matrice[grilleJeu.m_y][grilleJeu.m_x - 1].m_id != '1') && (grilleJeu.Matrice[grilleJeu.m_y][grilleJeu.m_x - 1].m_id != '3'))
+			//Verification de l'endroit ou les fleches déplacent le joueur
+			grilleJeu.m_x--;
+		break;
+
+	case 3:
+		if ((grilleJeu.Matrice[grilleJeu.m_y][grilleJeu.m_x + 1].m_id != '1') && (grilleJeu.Matrice[grilleJeu.m_y][grilleJeu.m_x + 1].m_id != '3'))
+			//Verification de l'endroit ou les fleches déplacent le joueur
+			grilleJeu.m_x++;
+		break;
+	}
+
+}
+
+void grille::callBackFleches(int call)
+{
+	grilleJeu.caseFleches();
+}

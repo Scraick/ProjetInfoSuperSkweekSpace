@@ -1,6 +1,7 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 #include "grille.h"
+#include "grille.h"
 
 
 class player
