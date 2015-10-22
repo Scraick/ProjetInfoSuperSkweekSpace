@@ -24,14 +24,20 @@ public:
 
 	cases Matrice[NB_LIGNES][NB_COLONNES];
 
+
+	//int positionX();
+	//int positionY();
+	int m_x = 1, m_y = 1; //Position de départ du joueur
+
 	void dessinerNiveauBas(vector <cases> C);
-
-
 	double distancePlanetes();
 	void respawnEnnemi();
-
 	void speedEnnemis();
 
+
+
 };
+
+extern grille grilleJeu;
 
 #endif

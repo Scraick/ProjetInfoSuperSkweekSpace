@@ -1,19 +1,26 @@
 #ifndef PLAYER_H
 #define PLAYER_H
+#include "grille.h"
 
 
 class player
 {
 public:
-	player(int x, int y);
+	player();
 	~player();
 
-	int positionX();
-	int positionY();
+	int valDep = 0;
+
+	void depGauche();
+	void depDroit();
+	void depHaut();
+	void depBas();
+
+	void translationCam();
 
 protected:
-	int m_x, m_y;
 	int m_nbVie;
 };
 
+extern player joueur;
 #endif

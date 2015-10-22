@@ -19,13 +19,13 @@ public:
 	~mainWindows();
 
 	vector <GLuint>	texture;
-	grille grilleTest;
 	vector <cases> m_cases; //Vecteur de cases, qui est rempli avec toutes les textures
 
 	void init(int x, int y);
 	void afficherTexture(double, double, double, double, const GLuint &);
 	int LoadGLTextures(string);
 	void dessinerNiveau();
+	void dessinerJoueur();
 	static void affichage();
 	static void callback_affichage(int);
 	static void redim(int x, int y);

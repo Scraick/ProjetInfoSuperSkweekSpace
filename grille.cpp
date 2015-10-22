@@ -1,5 +1,7 @@
 #include "grille.h"
 
+grille grilleJeu;
+
 grille::grille()
 {
 }
@@ -74,3 +76,13 @@ void grille::speedEnnemis()
 	int valDefaut = 100;
 }
 
+//
+//int grille::positionX()
+//{
+//	return m_x;
+//}
+//
+//int grille::positionY()
+//{
+//	return m_y;
+//}
