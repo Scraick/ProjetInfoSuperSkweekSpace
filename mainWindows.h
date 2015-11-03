@@ -31,6 +31,7 @@ public:
 	void dessinerNiveau();
 	void dessinerJoueur();
 	void dessinerPlanete();
+
 	void planeteBleuDetruite();
 	void planeteJauneDetruite();
 	void planeteRoseDetruite();

@@ -76,7 +76,6 @@ void grille::speedEnnemis()
 	int valDefaut = 100;
 }
 
-<<<<<<< HEAD
 void grille::colisionHaut()
 {
 	int	pt1 = round(joueur.positionX() - 0.4);
@@ -84,7 +83,7 @@ void grille::colisionHaut()
 	int	pt3 = round(joueur.positionY() - 0.6);
 	int	pt4 = round(joueur.positionY() + 0.4);
 
-	if ((grilleJeu.Matrice[pt3][(int)pt1].m_id != '1') && (grilleJeu.Matrice[pt3][(int)pt2].m_id != '1'))
+	if ((grilleJeu.Matrice[pt3][pt1].m_id != '1') && (grilleJeu.Matrice[pt3][pt2].m_id != '1') && (grilleJeu.Matrice[pt3][pt1].m_id != '3') && (grilleJeu.Matrice[pt3][pt2].m_id != '3'))
 	{
 		joueur.depHaut();
 	}
@@ -97,7 +96,7 @@ void grille::colisionBas()
 	int pt3 = round(joueur.positionY() - 0.4);
 	int pt4 = round(joueur.positionY() + 0.6);
 
-	if ((grilleJeu.Matrice[pt4][(int)pt1].m_id != '1') && (grilleJeu.Matrice[pt4][(int)pt2].m_id != '1'))
+	if ((grilleJeu.Matrice[pt4][pt1].m_id != '1') && (grilleJeu.Matrice[pt4][pt2].m_id != '1') && (grilleJeu.Matrice[pt4][pt1].m_id != '3') && (grilleJeu.Matrice[pt4][pt2].m_id != '3'))
 	{
 		joueur.depBas();
 	}
@@ -110,7 +109,7 @@ void grille::colisionGauche()
 	int pt3 = round(joueur.positionY() - 0.4);
 	int pt4 = round(joueur.positionY() + 0.4);
 
-	if ((grilleJeu.Matrice[(int)pt3][pt1].m_id != '1') && (grilleJeu.Matrice[pt4][(int)pt1].m_id != '1'))
+	if ((grilleJeu.Matrice[pt3][pt1].m_id != '1') && (grilleJeu.Matrice[pt4][pt1].m_id != '1') && (grilleJeu.Matrice[pt3][pt1].m_id != '3') && (grilleJeu.Matrice[pt4][pt1].m_id != '3'))
 	{
 		joueur.depGauche();
 	}
@@ -123,31 +122,35 @@ void grille::colisionDroite()
 	int pt3 = round(joueur.positionY() - 0.4);
 	int pt4 = round(joueur.positionY() + 0.4);
 
-	if ((grilleJeu.Matrice[(int)pt3][pt2].m_id != '1') && (grilleJeu.Matrice[(int)pt4][pt2].m_id != '1'))
+	if ((grilleJeu.Matrice[pt3][pt2].m_id != '1') && (grilleJeu.Matrice[pt4][pt2].m_id != '1') && (grilleJeu.Matrice[pt3][pt2].m_id != '3') && (grilleJeu.Matrice[pt4][pt2].m_id != '3'))
 	{
 		joueur.depDroit();
 	}
-=======
+}
+
 void grille::verifPosition()
 {
+	int	pt1 = round(joueur.positionX());
+	int	pt2 = round(joueur.positionX());
+	int	pt3 = round(joueur.positionY());
+	int	pt4 = round(joueur.positionY());
 
-	if (grilleJeu.Matrice[joueur.m_y][joueur.m_x].m_id == '5')
+	if ((grilleJeu.Matrice[pt3][pt1].m_id == '5') && (grilleJeu.Matrice[pt3][pt2].m_id == '5'))
 	{
 		glutTimerFunc(250, grilleJeu.callBackFleches, 0);
 	}
 
-
-	if (grilleJeu.Matrice[joueur.m_y][joueur.m_x].m_id == '2')
+	if ((grilleJeu.Matrice[pt3][pt1].m_id == '2') && (grilleJeu.Matrice[pt3][pt2].m_id == '2')) 
 	{
 		fenetre.planeteBleuDetruite();
 	}
 
-	if (grilleJeu.Matrice[joueur.m_y][joueur.m_x].m_id == '6')
+	if ((grilleJeu.Matrice[pt3][pt1].m_id == '6') && (grilleJeu.Matrice[pt3][pt2].m_id == '6')) 
 	{
 		fenetre.planeteJauneDetruite();
 	}
 
-	if (grilleJeu.Matrice[joueur.m_y][joueur.m_x].m_id == '7')
+	if ((grilleJeu.Matrice[pt3][pt1].m_id == '7') && (grilleJeu.Matrice[pt3][pt2].m_id == '7')) 
 	{
 		fenetre.planeteRoseDetruite();
 	}
@@ -160,27 +163,19 @@ void grille::caseFleches()
 	switch (alea)
 	{
 	case 0:
-		if ((grilleJeu.Matrice[joueur.m_y - 1][joueur.m_x].m_id != '1') && (grilleJeu.Matrice[joueur.m_y - 1][joueur.m_x].m_id != '3'))
-			//Verification de l'endroit ou les fleches déplacent le joueur
-			joueur.m_y--;
+		colisionHaut();
 		break;
 
 	case 1:
-		if ((grilleJeu.Matrice[joueur.m_y + 1][joueur.m_x].m_id != '1') && (grilleJeu.Matrice[joueur.m_y + 1][joueur.m_x].m_id != '3'))
-			//Verification de l'endroit ou les fleches déplacent le joueur
-			joueur.m_y++;
+		colisionBas();
 		break;
 
 	case 2:
-		if ((grilleJeu.Matrice[joueur.m_y][joueur.m_x - 1].m_id != '1') && (grilleJeu.Matrice[joueur.m_y][joueur.m_x - 1].m_id != '3'))
-			//Verification de l'endroit ou les fleches déplacent le joueur
-			joueur.m_x--;
+		colisionGauche();
 		break;
 
 	case 3:
-		if ((grilleJeu.Matrice[joueur.m_y][joueur.m_x + 1].m_id != '1') && (grilleJeu.Matrice[joueur.m_y][joueur.m_x + 1].m_id != '3'))
-			//Verification de l'endroit ou les fleches déplacent le joueur
-			joueur.m_x++;
+		colisionDroite();
 		break;
 	}
 
@@ -189,5 +184,4 @@ void grille::caseFleches()
 void grille::callBackFleches(int call)
 {
 	grilleJeu.caseFleches();
->>>>>>> origin/master
 }

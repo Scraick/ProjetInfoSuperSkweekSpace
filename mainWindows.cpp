@@ -152,21 +152,14 @@ void  mainWindows::affichage()
 	fenetre.dessinerPlanete();
 	grilleJeu.verifPosition();
 	fenetre.dessinerJoueur();
-<<<<<<< HEAD
-	
-	//glutFullScreen();
 
-	glutSpecialFunc(fenetre.clavier); // Appuie des touches du clavier
-	glutSpecialUpFunc(fenetre.clavierUp); // Touche du clavier relaché
-=======
 	glutFullScreen();
 
-	glutSpecialFunc(fenetre.clavier);
-	
->>>>>>> origin/master
+	glutSpecialFunc(fenetre.clavier); // Appuie des touches du clavier
+//	glutSpecialUpFunc(fenetre.clavierUp); // Touche du clavier relaché
 
 	glFlush();
-	glutTimerFunc(150, callback_affichage, 0);
+	glutTimerFunc(16, callback_affichage, 0);
 }
 
 void  mainWindows::dessinerNiveau()
@@ -188,38 +181,21 @@ void mainWindows::dessinerJoueur()
 	switch (joueur.valDep)
 	{
 	case 0:
-<<<<<<< HEAD
+		afficherTexture(joueur.positionX(), joueur.positionY(), 1, 1, texture[10]);
+		break;
+
+	case 1:
 		afficherTexture(joueur.positionX(), joueur.positionY(), 1, 1, texture[11]);
 		break;
 
-	case 1:
+	case 2:
 		afficherTexture(joueur.positionX(), joueur.positionY(), 1, 1, texture[12]);
 		break;
 
-	case 2:
+	case 3:
 		afficherTexture(joueur.positionX(), joueur.positionY(), 1, 1, texture[13]);
 		break;
-
-	case 3:
-		afficherTexture(joueur.positionX(), joueur.positionY(), 1, 1, texture[14]);
-=======
-		afficherTexture(joueur.m_x, joueur.m_y, 1, 1, texture[10]);
-		break;
-
-	case 1:
-		afficherTexture(joueur.m_x, joueur.m_y, 1, 1, texture[11]);
-		break;
-
-	case 2:
-		afficherTexture(joueur.m_x, joueur.m_y, 1, 1, texture[12]);
-		break;
-
-	case 3:
-		afficherTexture(joueur.m_x, joueur.m_y, 1, 1, texture[13]);
->>>>>>> origin/master
-		break;
 	}
-
 }
 
 void mainWindows::dessinerPlanete()
@@ -231,7 +207,7 @@ void mainWindows::dessinerPlanete()
 		{
 			if (grilleJeu.Matrice[i][j].m_id == '2')
 			{
-				if ((joueur.m_x == 1) && (joueur.m_y == 1))
+				if ((joueur.positionX() == 1) && (joueur.positionY() == 1))
 				{
 					bleu[i][j] = texture[18];
 				}
@@ -241,7 +217,7 @@ void mainWindows::dessinerPlanete()
 
 			if (grilleJeu.Matrice[i][j].m_id == '6')
 			{
-				if ((joueur.m_x == 1) && (joueur.m_y == 1))
+				if ((joueur.positionX() == 1) && (joueur.positionY() == 1))
 				{
 					jaune[i][j] = texture[19];
 				}
@@ -251,7 +227,7 @@ void mainWindows::dessinerPlanete()
 
 			if (grilleJeu.Matrice[i][j].m_id == '7')
 			{
-				if ((joueur.m_x == 1) && (joueur.m_y == 1))
+				if ((joueur.positionX() == 1) && (joueur.positionY() == 1))
 				{
 					rose[i][j] = texture[20];
 				}
@@ -265,77 +241,66 @@ void mainWindows::dessinerPlanete()
 
 void mainWindows::planeteBleuDetruite()
 {
-	tmp_x = joueur.m_x;
-	tmp_y = joueur.m_y;
+	tmp_x = joueur.positionX();
+	tmp_y = joueur.positionY();
 
 	if (bleu[tmp_y][tmp_x] == texture[18])
 	{
 		bleu[tmp_y][tmp_x] = texture[21];
 		scoreJoueur += 100;
-	}
-
-	//cout << "planete detruite";
-	
+	}	
 }
 
 void mainWindows::planeteJauneDetruite()
 {
-	tmp_x = joueur.m_x;
-	tmp_y = joueur.m_y;
+	tmp_x = joueur.positionX();
+	tmp_y = joueur.positionY();
 
 	if (jaune[tmp_y][tmp_x] == texture[19])
 	{
 		jaune[tmp_y][tmp_x] = texture[22];
 		scoreJoueur += 100;
 	}
-
-	//cout << "planete detruite";
 }
 
 void mainWindows::planeteRoseDetruite()
 {
-	tmp_x = joueur.m_x;
-	tmp_y = joueur.m_y;
+	tmp_x = joueur.positionX();
+	tmp_y = joueur.positionY();
 
 	if (rose[tmp_y][tmp_x] == texture[20])
 	{
 		rose[tmp_y][tmp_x] = texture[23];
 		scoreJoueur += 100;
 	}
-
-	//cout << "planete detruite";
 }
 
 void mainWindows::clavier(int key, int x, int y)
 {
 	switch (key)
 	{
-	case GLUT_KEY_F1 :
+	case GLUT_KEY_F1:
 		exit(0);
 		break;
 
 	case GLUT_KEY_UP:
 		grilleJeu.colisionHaut();
 		joueur.valDep = 0;
-		cout << joueur.m_x << " " << joueur.m_y << "\n";
 		break;
 
 	case GLUT_KEY_DOWN:
 		grilleJeu.colisionBas();
 		joueur.valDep = 2;
-		cout << joueur.m_x << " " << joueur.m_y << "\n";
 		break;
 
 	case GLUT_KEY_LEFT:
 		grilleJeu.colisionGauche();
 		joueur.valDep = 1;
-		cout << joueur.m_x << " " << joueur.m_y << "\n";
 		break;
 
 	case GLUT_KEY_RIGHT:
 		grilleJeu.colisionDroite();
 		joueur.valDep = 3;
-		cout << joueur.m_x << " " << joueur.m_y << "\n";
 		break;
 	}
 }
@@ -369,19 +334,10 @@ void mainWindows::redim(int x, int y)
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	glScalef(2.5, 2.5, 0);
-<<<<<<< HEAD
-	gluOrtho2D(0.0, (double)60, (double)32, 0.0);
-=======
 	gluOrtho2D(0.0, (double)NB_COLONNES, (double)NB_LIGNES, 0.0);
-
->>>>>>> origin/master
 }
 
 void mainWindows::callback_affichage(int) // utiliser pour atteindre la fonction affichage
 {
 	affichage();
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> origin/master

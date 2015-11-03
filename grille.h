@@ -29,21 +29,17 @@ public:
 	void respawnEnnemi();
 	void speedEnnemis();
 
-<<<<<<< HEAD
 	void colisionHaut();
 	void colisionBas();
 	void colisionGauche();
 	void colisionDroite();
 
-private:
-	int planete;
-=======
 	void verifPosition();
 	void caseFleches();
 	static void callBackFleches(int call);
 
-	
->>>>>>> origin/master
+private:
+	int planete;
 };
 
 extern grille grilleJeu;
