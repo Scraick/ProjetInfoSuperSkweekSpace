@@ -65,7 +65,6 @@ double grille::distancePlanetes()
 	return valTemp;
 }
 
-
 void grille::respawnEnnemi()
 {
 
@@ -76,13 +75,54 @@ void grille::speedEnnemis()
 	int valDefaut = 100;
 }
 
-//
-//int grille::positionX()
-//{
-//	return m_x;
-//}
-//
-//int grille::positionY()
-//{
-//	return m_y;
-//}
+void grille::colisionHaut()
+{
+	int	pt1 = round(joueur.positionX() - 0.4);
+	int	pt2 = round(joueur.positionX() + 0.4);
+	int	pt3 = round(joueur.positionY() - 0.6);
+	int	pt4 = round(joueur.positionY() + 0.4);
+
+	if ((grilleJeu.Matrice[pt3][(int)pt1].m_id != '1') && (grilleJeu.Matrice[pt3][(int)pt2].m_id != '1'))
+	{
+		joueur.depHaut();
+	}
+}
+
+void grille::colisionBas()
+{
+	int pt1 = round(joueur.positionX() - 0.2);
+	int pt2 = round(joueur.positionX() + 0.2);
+	int pt3 = round(joueur.positionY() - 0.4);
+	int pt4 = round(joueur.positionY() + 0.6);
+
+	if ((grilleJeu.Matrice[pt4][(int)pt1].m_id != '1') && (grilleJeu.Matrice[pt4][(int)pt2].m_id != '1'))
+	{
+		joueur.depBas();
+	}
+}
+
+void grille::colisionGauche()
+{
+	int pt1 = round(joueur.positionX() - 0.6);
+	int pt2 = round(joueur.positionX() + 0.4);
+	int pt3 = round(joueur.positionY() - 0.4);
+	int pt4 = round(joueur.positionY() + 0.4);
+
+	if ((grilleJeu.Matrice[(int)pt3][pt1].m_id != '1') && (grilleJeu.Matrice[pt4][(int)pt1].m_id != '1'))
+	{
+		joueur.depGauche();
+	}
+}
+
+void grille::colisionDroite()
+{
+	int pt1 = round(joueur.positionX() - 0.4);
+	int pt2 = round(joueur.positionX() + 0.6);
+	int pt3 = round(joueur.positionY() - 0.4);
+	int pt4 = round(joueur.positionY() + 0.4);
+
+	if ((grilleJeu.Matrice[(int)pt3][pt2].m_id != '1') && (grilleJeu.Matrice[(int)pt4][pt2].m_id != '1'))
+	{
+		joueur.depDroit();
+	}
+}

@@ -120,7 +120,6 @@ void mainWindows::afficherTexture(double x, double y, double largeur, double hau
 
 void  mainWindows::affichage()
 {
-
 	glClearColor(0.0, 0.0157, 0.0313, 1);  
 	glClear(GL_COLOR_BUFFER_BIT);
 	glMatrixMode(GL_MODELVIEW);
@@ -130,9 +129,10 @@ void  mainWindows::affichage()
 	fenetre.dessinerNiveau();
 	fenetre.dessinerJoueur();
 	
-	glutFullScreen();
+	//glutFullScreen();
 
-	glutSpecialFunc(fenetre.clavier);
+	glutSpecialFunc(fenetre.clavier); // Appuie des touches du clavier
+	glutSpecialUpFunc(fenetre.clavierUp); // Touche du clavier relaché
 
 	glFlush();
 	glutTimerFunc(100, callback_affichage, 0);
@@ -157,19 +157,19 @@ void mainWindows::dessinerJoueur()
 	switch (joueur.valDep)
 	{
 	case 0:
-		afficherTexture(grilleJeu.m_x, grilleJeu.m_y, 1, 1, texture[11]);
+		afficherTexture(joueur.positionX(), joueur.positionY(), 1, 1, texture[11]);
 		break;
 
 	case 1:
-		afficherTexture(grilleJeu.m_x, grilleJeu.m_y, 1, 1, texture[12]);
+		afficherTexture(joueur.positionX(), joueur.positionY(), 1, 1, texture[12]);
 		break;
 
 	case 2:
-		afficherTexture(grilleJeu.m_x, grilleJeu.m_y, 1, 1, texture[13]);
+		afficherTexture(joueur.positionX(), joueur.positionY(), 1, 1, texture[13]);
 		break;
 
 	case 3:
-		afficherTexture(grilleJeu.m_x, grilleJeu.m_y, 1, 1, texture[14]);
+		afficherTexture(joueur.positionX(), joueur.positionY(), 1, 1, texture[14]);
 		break;
 	}
 }
@@ -183,26 +183,48 @@ void mainWindows::clavier(int key, int x, int y)
 		break;
 
 	case GLUT_KEY_UP:
-		joueur.depHaut();
+		grilleJeu.colisionHaut();
 		joueur.valDep = 0;
 		break;
 
 	case GLUT_KEY_DOWN:
-		joueur.depBas();
+		grilleJeu.colisionBas();
 		joueur.valDep = 2;
 		break;
 
 	case GLUT_KEY_LEFT:
-		joueur.depGauche();
+		grilleJeu.colisionGauche();
 		joueur.valDep = 1;
 		break;
 
 	case GLUT_KEY_RIGHT:
-		joueur.depDroit();
+		grilleJeu.colisionDroite();
 		joueur.valDep = 3;
 		break;
 	}
+}
 
+void mainWindows::clavierUp(int key, int x, int y)
+{
+	if (key == GLUT_KEY_UP)
+	{
+		joueur.velocityHaut();
+	}
+
+	if (key == GLUT_KEY_DOWN)
+	{
+		joueur.velocityBas();
+	}
+
+	if (key == GLUT_KEY_LEFT)
+	{
+		joueur.velocityGauche();
+	}
+
+	if (key == GLUT_KEY_RIGHT)
+	{
+		joueur.velocityDroit();
+	}
 }
 
 void mainWindows::redim(int x, int y)
@@ -212,12 +234,9 @@ void mainWindows::redim(int x, int y)
 	glLoadIdentity();
 	glScalef(2.5, 2.5, 0);
 	gluOrtho2D(0.0, (double)60, (double)32, 0.0);
-
 }
 
 void mainWindows::callback_affichage(int) // utiliser pour atteindre la fonction affichage
 {
 	affichage();
 }
-
-
