@@ -18,16 +18,26 @@ public:
 	mainWindows();
 	~mainWindows();
 
-	vector <GLuint>	texture;
 	vector <cases> m_cases; //Vecteur de cases, qui est rempli avec toutes les textures
+	cases casePlanetes; //Cases des planetes accesible depuis la grille pour le changement de texture
+	cases planeteBleue, planeteJaune, planeteRose;
 
 	void init(int x, int y);
 	void afficherTexture(double, double, double, double, const GLuint &);
 	int LoadGLTextures(string);
+	int tmp_x = 0, tmp_y = 0;
+	int scoreJoueur = 0;
+
 	void dessinerNiveau();
 	void dessinerJoueur();
+	void dessinerPlanete();
+	void planeteBleuDetruite();
+	void planeteJauneDetruite();
+	void planeteRoseDetruite();
+
 	static void affichage();
 	static void callback_affichage(int);
+
 	static void redim(int x, int y);
 	void loadtexture();
 
@@ -36,6 +46,6 @@ public:
 };
 
 extern mainWindows fenetre;
-
+extern vector <GLuint>	texture;
 #endif
 

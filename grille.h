@@ -4,6 +4,7 @@
 #include <sstream>
 #include <iostream>
 #include <string>
+#include <cmath>
 #include "cases.h"
 #include "mainWindows.h"
 #include "ennemiPeuple.h"
@@ -25,8 +26,6 @@ public:
 
 	cases Matrice[NB_LIGNES][NB_COLONNES];
 
-	int m_x = 1, m_y = 1; //Position de départ du joueur
-
 	void dessinerNiveauBas(vector <cases> C);
 	double distancePlanetes();
 	void respawnEnnemi();
@@ -36,6 +35,7 @@ public:
 	void caseFleches();
 	static void callBackFleches(int call);
 
+	
 };
 
 extern grille grilleJeu;

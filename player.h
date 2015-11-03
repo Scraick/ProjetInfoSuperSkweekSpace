@@ -11,6 +11,7 @@ public:
 	~player();
 
 	int valDep = 0;
+	int m_x, m_y; //Position de départ du joueur
 
 	void depGauche();
 	void depDroit();
