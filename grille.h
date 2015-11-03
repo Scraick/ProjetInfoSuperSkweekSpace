@@ -4,7 +4,9 @@
 #include <sstream>
 #include <iostream>
 #include <string>
+#include <cmath>
 #include "cases.h"
+#include "mainWindows.h"
 #include "ennemiPeuple.h"
 #include "player.h"
 
@@ -27,6 +29,7 @@ public:
 	void respawnEnnemi();
 	void speedEnnemis();
 
+<<<<<<< HEAD
 	void colisionHaut();
 	void colisionBas();
 	void colisionGauche();
@@ -34,6 +37,13 @@ public:
 
 private:
 	int planete;
+=======
+	void verifPosition();
+	void caseFleches();
+	static void callBackFleches(int call);
+
+	
+>>>>>>> origin/master
 };
 
 extern grille grilleJeu;

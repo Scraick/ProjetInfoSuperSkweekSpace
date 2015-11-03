@@ -1,6 +1,11 @@
 #include "mainWindows.h"
 
 mainWindows fenetre;
+vector <GLuint>	texture;
+GLuint bleu[60][32];
+GLuint jaune[60][32];
+GLuint rose[60][32];
+
 
 mainWindows::mainWindows()
 {
@@ -34,55 +39,72 @@ int  mainWindows::LoadGLTextures(string name) // Load Bitmaps And Convert To Tex
 
 void mainWindows::loadtexture()
 {
-	LoadGLTextures("textures/Sol.png");			// Sol			0
-	LoadGLTextures("textures/murTrouNoir.png");	// Murs			1
-	LoadGLTextures("textures/murTrouNoir02.png");	// 2
-	LoadGLTextures("textures/murTrouNoir03.png");	// 3
-	LoadGLTextures("textures/murTrouNoir04.png");	// 4
-	LoadGLTextures("textures/NOIRTest.png");	// Planètes		5
-	LoadGLTextures("textures/Soleil02.png");	// Soleil		6
-	LoadGLTextures("textures/Soleil.png");		// Soleil	2	7
-	LoadGLTextures("textures/Soleil03.png");	// Soleil	3	8
-	LoadGLTextures("textures/Teleport.png");	// Tp			9
-	LoadGLTextures("textures/ventSolaire.png");	// Flèches		10
-	LoadGLTextures("textures/playerHaut.png");	// playerHaut   11
-	LoadGLTextures("textures/playerGauche.png");// playerGauche	12
-	LoadGLTextures("textures/playerBas.png");	// playerBas	13
-	LoadGLTextures("textures/playerDroite.png");// playerDroite	14
-	LoadGLTextures("textures/ventSolaire02.png");	// Flèches		15
-	LoadGLTextures("textures/ventSolaire03.png");	// Flèches		16
-	LoadGLTextures("textures/ventSolaire04.png");	// Flèches		17
-	LoadGLTextures("textures/ventSolaire05.png");	// Flèches		18
+	LoadGLTextures("textures/Sol.png");						// Sol				0
+	LoadGLTextures("textures/murTrouNoir.png");				// Murs				1
+	LoadGLTextures("textures/murTrouNoir02.png");			// Murs	2			2
+	LoadGLTextures("textures/murTrouNoir03.png");			// Murs	3			3
+	LoadGLTextures("textures/murTrouNoir04.png");			// Murs	4			4
+	LoadGLTextures("textures/Soleil02.png");				// Soleil			5
+	LoadGLTextures("textures/Soleil.png");					// Soleil	2		6
+	LoadGLTextures("textures/Soleil03.png");				// Soleil	3		7
+	LoadGLTextures("textures/Teleport.png");				// Tp				8
+	LoadGLTextures("textures/ventSolaire.png");				// Flèches			9
+	LoadGLTextures("textures/playerHaut.png");				// playerHaut		10
+	LoadGLTextures("textures/playerGauche.png");			// playerGauche		11
+	LoadGLTextures("textures/playerBas.png");				// playerBas		12
+	LoadGLTextures("textures/playerDroite.png");			// playerDroite		13
+	LoadGLTextures("textures/ventSolaire02.png");			// Flèches			14
+	LoadGLTextures("textures/ventSolaire03.png");			// Flèches			15
+	LoadGLTextures("textures/ventSolaire04.png");			// Flèches			16
+	LoadGLTextures("textures/ventSolaire05.png");			// Flèches			17
+	LoadGLTextures("textures/PlaneteBleue.png");			// PlanèteBleue		18
+	LoadGLTextures("textures/PlaneteJaune.png");			// PlanèteJaune		19
+	LoadGLTextures("textures/PlaneteRose.png");				// PlanèteRose		20
+	LoadGLTextures("textures/PlaneteBleueDetruite.png");	// PlanèteBleueD	21
+	LoadGLTextures("textures/PlaneteJauneDetruite.png");	// PlanèteJauneD	22
+	LoadGLTextures("textures/PlaneteRoseDetruite.png");		// PlanèteRoseD		23
+
 
 	cases caseSoleil; // Creation de la case Soleil, qui contient les frames d'animation
 	caseSoleil.m_id = '3';
+	caseSoleil.sub_id = '0';
+	caseSoleil.ajouterFrame(texture[5]);
 	caseSoleil.ajouterFrame(texture[6]);
 	caseSoleil.ajouterFrame(texture[7]);
-	caseSoleil.ajouterFrame(texture[8]);
 
-	cases caseTrouNoir;
+	cases caseTrouNoir; // Creation de la case Trou Noir, qui contient les frames d'animation
 	caseTrouNoir.m_id = '1';
+	caseTrouNoir.sub_id = '0';
 	caseTrouNoir.ajouterFrame(texture[1]);
 	caseTrouNoir.ajouterFrame(texture[2]);
 	caseTrouNoir.ajouterFrame(texture[3]);
 	caseTrouNoir.ajouterFrame(texture[4]);
 
-	cases caseVent;
+	cases caseVent; // Creation de la case Vent Solaire, qui contient les frames d'animation
 	caseVent.m_id = '5';
-	caseVent.ajouterFrame(texture[10]);
+	caseVent.sub_id = '0';
+	caseVent.ajouterFrame(texture[9]);
+	caseVent.ajouterFrame(texture[14]);
 	caseVent.ajouterFrame(texture[15]);
 	caseVent.ajouterFrame(texture[16]);
 	caseVent.ajouterFrame(texture[17]);
-	caseVent.ajouterFrame(texture[18]);
 
-	//Puis remplissage de m_cases avec les autres textures non animèes
-	m_cases.push_back(cases(texture[0], '0'));
+	//Plusieurs numéros pour le moment, car l'attribution automatique ne fonctionne pas
+	planeteBleue.m_id = '2';
+	planeteJaune.m_id = '6';
+	planeteRose.m_id = '7';
+
+	//Puis remplissage de m_cases avec les autres textures non animées
+	m_cases.push_back(cases(texture[0], '0', '0'));
 	m_cases.push_back(caseTrouNoir);
-	m_cases.push_back(cases(texture[5], '2'));
+	m_cases.push_back(cases(texture[0], '2', '0'));
 	m_cases.push_back(caseSoleil);
-	m_cases.push_back(cases(texture[9], '4'));
+	m_cases.push_back(cases(texture[8], '4', '0'));
 	m_cases.push_back(caseVent);
-
+	m_cases.push_back(cases(texture[0], '6', '0'));
+	m_cases.push_back(cases(texture[0], '7', '0'));
+	
+	
 }
 
 void mainWindows::init(int x, int y)
@@ -124,32 +146,41 @@ void  mainWindows::affichage()
 	glClear(GL_COLOR_BUFFER_BIT);
 	glMatrixMode(GL_MODELVIEW);
 
-	
 	joueur.translationCam();
+
 	fenetre.dessinerNiveau();
+	fenetre.dessinerPlanete();
+	grilleJeu.verifPosition();
 	fenetre.dessinerJoueur();
+<<<<<<< HEAD
 	
 	//glutFullScreen();
 
 	glutSpecialFunc(fenetre.clavier); // Appuie des touches du clavier
 	glutSpecialUpFunc(fenetre.clavierUp); // Touche du clavier relaché
+=======
+	glutFullScreen();
+
+	glutSpecialFunc(fenetre.clavier);
+	
+>>>>>>> origin/master
 
 	glFlush();
-	glutTimerFunc(100, callback_affichage, 0);
+	glutTimerFunc(150, callback_affichage, 0);
 }
 
 void  mainWindows::dessinerNiveau()
 {
-
-	for (int i = 0; i < 32; i++) //Parcours de la matrice de cases et affichage des textures
+	for (int i = 0; i < NB_LIGNES ; i++) //Parcours de la matrice de cases et affichage des textures
 	{
-		for (int j = 0; j < 60; j++)
+		for (int j = 0; j < NB_COLONNES ; j++)
 		{
-			//Appel de la fonction textureAnime, qui permet de faire l'animation
-			//Si il n'y a qu'un texture dans une case, il n'ya a pas d'animation
+			// Appel de la fonction textureAnime, qui permet de faire l'animation
+			// Si il n'y a qu'un texture dans une case, il n'ya a pas d'animation
 			afficherTexture(j, i, 1, 1, grilleJeu.Matrice[i][j].textureAnime());
 		}
 	}
+
 }
 
 void mainWindows::dessinerJoueur()
@@ -157,6 +188,7 @@ void mainWindows::dessinerJoueur()
 	switch (joueur.valDep)
 	{
 	case 0:
+<<<<<<< HEAD
 		afficherTexture(joueur.positionX(), joueur.positionY(), 1, 1, texture[11]);
 		break;
 
@@ -170,8 +202,108 @@ void mainWindows::dessinerJoueur()
 
 	case 3:
 		afficherTexture(joueur.positionX(), joueur.positionY(), 1, 1, texture[14]);
+=======
+		afficherTexture(joueur.m_x, joueur.m_y, 1, 1, texture[10]);
+		break;
+
+	case 1:
+		afficherTexture(joueur.m_x, joueur.m_y, 1, 1, texture[11]);
+		break;
+
+	case 2:
+		afficherTexture(joueur.m_x, joueur.m_y, 1, 1, texture[12]);
+		break;
+
+	case 3:
+		afficherTexture(joueur.m_x, joueur.m_y, 1, 1, texture[13]);
+>>>>>>> origin/master
 		break;
 	}
+
+}
+
+void mainWindows::dessinerPlanete()
+{
+
+	for (int i = 0; i < NB_LIGNES; i++) //Parcours de la matrice et remplissage des textures de planètes
+	{
+		for (int j = 0; j < NB_COLONNES; j++)
+		{
+			if (grilleJeu.Matrice[i][j].m_id == '2')
+			{
+				if ((joueur.m_x == 1) && (joueur.m_y == 1))
+				{
+					bleu[i][j] = texture[18];
+				}
+
+				afficherTexture(j, i, 1, 1, bleu[i][j]);
+			}
+
+			if (grilleJeu.Matrice[i][j].m_id == '6')
+			{
+				if ((joueur.m_x == 1) && (joueur.m_y == 1))
+				{
+					jaune[i][j] = texture[19];
+				}
+
+				afficherTexture(j, i, 1, 1, jaune[i][j]);
+			}
+
+			if (grilleJeu.Matrice[i][j].m_id == '7')
+			{
+				if ((joueur.m_x == 1) && (joueur.m_y == 1))
+				{
+					rose[i][j] = texture[20];
+				}
+
+				afficherTexture(j, i, 1, 1, rose[i][j]);
+			}
+		}
+	}
+
+}
+
+void mainWindows::planeteBleuDetruite()
+{
+	tmp_x = joueur.m_x;
+	tmp_y = joueur.m_y;
+
+	if (bleu[tmp_y][tmp_x] == texture[18])
+	{
+		bleu[tmp_y][tmp_x] = texture[21];
+		scoreJoueur += 100;
+	}
+
+	//cout << "planete detruite";
+	
+}
+
+void mainWindows::planeteJauneDetruite()
+{
+	tmp_x = joueur.m_x;
+	tmp_y = joueur.m_y;
+
+	if (jaune[tmp_y][tmp_x] == texture[19])
+	{
+		jaune[tmp_y][tmp_x] = texture[22];
+		scoreJoueur += 100;
+	}
+
+	//cout << "planete detruite";
+}
+
+void mainWindows::planeteRoseDetruite()
+{
+	tmp_x = joueur.m_x;
+	tmp_y = joueur.m_y;
+
+	if (rose[tmp_y][tmp_x] == texture[20])
+	{
+		rose[tmp_y][tmp_x] = texture[23];
+		scoreJoueur += 100;
+	}
+
+	//cout << "planete detruite";
 }
 
 void mainWindows::clavier(int key, int x, int y)
@@ -185,21 +317,25 @@ void mainWindows::clavier(int key, int x, int y)
 	case GLUT_KEY_UP:
 		grilleJeu.colisionHaut();
 		joueur.valDep = 0;
+		cout << joueur.m_x << " " << joueur.m_y << "\n";
 		break;
 
 	case GLUT_KEY_DOWN:
 		grilleJeu.colisionBas();
 		joueur.valDep = 2;
+		cout << joueur.m_x << " " << joueur.m_y << "\n";
 		break;
 
 	case GLUT_KEY_LEFT:
 		grilleJeu.colisionGauche();
 		joueur.valDep = 1;
+		cout << joueur.m_x << " " << joueur.m_y << "\n";
 		break;
 
 	case GLUT_KEY_RIGHT:
 		grilleJeu.colisionDroite();
 		joueur.valDep = 3;
+		cout << joueur.m_x << " " << joueur.m_y << "\n";
 		break;
 	}
 }
@@ -233,10 +369,19 @@ void mainWindows::redim(int x, int y)
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	glScalef(2.5, 2.5, 0);
+<<<<<<< HEAD
 	gluOrtho2D(0.0, (double)60, (double)32, 0.0);
+=======
+	gluOrtho2D(0.0, (double)NB_COLONNES, (double)NB_LIGNES, 0.0);
+
+>>>>>>> origin/master
 }
 
 void mainWindows::callback_affichage(int) // utiliser pour atteindre la fonction affichage
 {
 	affichage();
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> origin/master

@@ -1,6 +1,7 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 #include "grille.h"
+#include "grille.h"
 
 class player
 {
@@ -9,6 +10,7 @@ public:
 	~player();
 
 	int valDep = 0;
+	int m_x, m_y; //Position de départ du joueur
 
 	void depGauche();
 	void depDroit();
