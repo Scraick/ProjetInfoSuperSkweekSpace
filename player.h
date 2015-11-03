@@ -1,6 +1,7 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 #include "grille.h"
+#include <ctime>
 
 class player
 {
@@ -22,8 +23,6 @@ public:
 
 	double acceleration();
 	double deceleration();
-
-	void translationCam();
 
 	double positionX();
 	double positionY();

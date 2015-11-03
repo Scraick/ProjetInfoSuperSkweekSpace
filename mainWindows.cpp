@@ -6,7 +6,6 @@ GLuint bleu[60][32];
 GLuint jaune[60][32];
 GLuint rose[60][32];
 
-
 mainWindows::mainWindows()
 {
 }
@@ -119,7 +118,7 @@ void mainWindows::init(int x, int y)
 	glutDisplayFunc(affichage);
 	glutReshapeFunc(redim);
 
-	glutTimerFunc(16, callback_affichage, 0);
+	glutTimerFunc(0, callback_affichage, 0);
 
 	glutMainLoop();
 }
@@ -146,20 +145,21 @@ void  mainWindows::affichage()
 	glClear(GL_COLOR_BUFFER_BIT);
 	glMatrixMode(GL_MODELVIEW);
 
-	joueur.translationCam();
+	fenetre.translationCam();
 
 	fenetre.dessinerNiveau();
 	fenetre.dessinerPlanete();
+
 	grilleJeu.verifPosition();
 	fenetre.dessinerJoueur();
 
 	glutFullScreen();
 
 	glutSpecialFunc(fenetre.clavier); // Appuie des touches du clavier
-//	glutSpecialUpFunc(fenetre.clavierUp); // Touche du clavier relaché
+	glutSpecialUpFunc(fenetre.clavierUp); // Touche du clavier relaché
 
 	glFlush();
-	glutTimerFunc(16, callback_affichage, 0);
+	glutTimerFunc(0, callback_affichage, 0);
 }
 
 void  mainWindows::dessinerNiveau()
@@ -333,8 +333,41 @@ void mainWindows::redim(int x, int y)
 	glViewport(0, 0, x, y);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	glScalef(2.5, 2.5, 0);
+	glScalef(2, 2, 0);
 	gluOrtho2D(0.0, (double)NB_COLONNES, (double)NB_LIGNES, 0.0);
+}
+
+void mainWindows::translationCam()
+{
+	double i = 29;
+	double j = 15.5;
+
+	glLoadIdentity();
+
+	//Coin haut/gauche
+	if (joueur.positionX() < 14)
+	{
+		i = 15 + joueur.positionX();
+	}
+	if (joueur.positionY() < 7.5)
+	{
+		j = 8 + joueur.positionY();
+	}
+
+	//Coin bas/droite
+	if (joueur.positionX() > 44)
+	{
+		i = joueur.positionX() - 15;
+	}
+	if (joueur.positionY() > 23.5)
+	{
+		j = joueur.positionY() - 8;
+	}
+
+	//Centre de l'écran
+	glTranslatef(-joueur.positionX() + i, -joueur.positionY() + j, 0);
+
+	glutSwapBuffers();
 }
 
 void mainWindows::callback_affichage(int) // utiliser pour atteindre la fonction affichage

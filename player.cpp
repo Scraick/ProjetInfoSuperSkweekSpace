@@ -36,41 +36,42 @@ void player::velocityGauche()
 {
 	while (deceleration() != 0)
 	{
-		m_playerX -= (0.1 * acceleration());
+		grilleJeu.colisionGauche();
 		deceleration();
 	}
 }
 
 void player::velocityDroit()
 {
+	//ctime::last_time
 	while (deceleration() != 0)
 	{
-		m_playerX += (0.1 * acceleration());
+		grilleJeu.colisionDroite();
+		deceleration();
 	}
-	deceleration();
 }
 
 void player::velocityHaut()
 {
 	while (deceleration() != 0)
 	{
-		m_playerY -= (0.1 * acceleration());
+		grilleJeu.colisionHaut();
+		deceleration();
 	}
-	deceleration();
 }
 
 void player::velocityBas()
 {
 	while (deceleration() != 0)
 	{
-		m_playerY += (0.1 * acceleration());
+		grilleJeu.colisionBas();
+		deceleration();
 	}
-	deceleration();
 }
 
 double player::acceleration()
 {
-	m_acceleration += 0.015;
+	m_acceleration += 0.03;
 	if (m_acceleration > 2)
 	{
 		m_acceleration = 2;
@@ -80,26 +81,12 @@ double player::acceleration()
 
 double player::deceleration()
 {
-	m_acceleration -= 0.03;
+	m_acceleration -= 0.06;
 	if (m_acceleration <= 0)
 	{
 		m_acceleration = 0;
 	}
 	return m_acceleration;
-}
-
-void player::translationCam()
-{
-	int i = 1;
-	glLoadIdentity();
-
-	//if (grilleJeu.m_x < (47 + i)) /*&& (grilleJeu.m_y > 15 /*5*/
-	glTranslatef(-m_playerX + 29, -m_playerY + 15.5, 0);
-
-	/*else
-	glTranslatef(-grilleJeu.m_x + i, -grilleJeu.m_y + 15.5, 0);*/
-
-	glutSwapBuffers;
 }
 
 double player::positionX()

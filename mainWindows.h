@@ -44,6 +44,9 @@ public:
 
 	static void clavier(int key, int x, int y);
 	static void clavierUp(int key, int x, int y);	
+
+	void translationCam();
+
 };
 
 extern mainWindows fenetre;
