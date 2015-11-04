@@ -20,13 +20,15 @@ public:
 	void velocityDroit();
 	void velocityHaut();
 	void velocityBas();
-
 	double acceleration();
 	double deceleration();
+
+	void tir(int orientation);
 
 	double positionX();
 	double positionY();
 
+	//double timer(double temps);
 
 private:
 	int m_nbVie;

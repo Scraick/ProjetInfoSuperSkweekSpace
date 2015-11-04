@@ -7,6 +7,7 @@
 #include "grille.h"
 #include "ennemi.h"
 #include "player.h"
+#include "tir.h"
 
 using namespace std;
 
@@ -46,9 +47,7 @@ public:
 	static void clavierUp(int key, int x, int y);	
 
 	void translationCam();
-
 };
-
 extern mainWindows fenetre;
 extern vector <GLuint>	texture;
 #endif

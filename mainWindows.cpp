@@ -6,6 +6,9 @@ GLuint bleu[60][32];
 GLuint jaune[60][32];
 GLuint rose[60][32];
 
+void dessinerTir(int);
+bool tire = false;
+
 mainWindows::mainWindows()
 {
 }
@@ -62,6 +65,8 @@ void mainWindows::loadtexture()
 	LoadGLTextures("textures/PlaneteBleueDetruite.png");	// PlanèteBleueD	21
 	LoadGLTextures("textures/PlaneteJauneDetruite.png");	// PlanèteJauneD	22
 	LoadGLTextures("textures/PlaneteRoseDetruite.png");		// PlanèteRoseD		23
+	LoadGLTextures("textures/tir.png");						// Tir du joueur	24
+
 
 
 	cases caseSoleil; // Creation de la case Soleil, qui contient les frames d'animation
@@ -118,7 +123,7 @@ void mainWindows::init(int x, int y)
 	glutDisplayFunc(affichage);
 	glutReshapeFunc(redim);
 
-	glutTimerFunc(0, callback_affichage, 0);
+	glutTimerFunc(16, callback_affichage, 0);
 
 	glutMainLoop();
 }
@@ -153,13 +158,17 @@ void  mainWindows::affichage()
 	grilleJeu.verifPosition();
 	fenetre.dessinerJoueur();
 
-	glutFullScreen();
+	fenetre.afficherTexture(bullet.bulletX(), bullet.bulletY(), 5, 1, texture[24]);
+
+
+	glutTimerFunc(16, dessinerTir, 0);
 
 	glutSpecialFunc(fenetre.clavier); // Appuie des touches du clavier
 	glutSpecialUpFunc(fenetre.clavierUp); // Touche du clavier relaché
+	//glutFullScreen();
 
 	glFlush();
-	glutTimerFunc(0, callback_affichage, 0);
+	glutTimerFunc(16, callback_affichage, 0);
 }
 
 void  mainWindows::dessinerNiveau()
@@ -239,6 +248,12 @@ void mainWindows::dessinerPlanete()
 
 }
 
+void dessinerTir(int)
+{
+	bullet.shoot(joueur.valDep);
+	glutTimerFunc(5000, dessinerTir, 0);
+}
+
 void mainWindows::planeteBleuDetruite()
 {
 	tmp_x = joueur.positionX();
@@ -302,29 +317,42 @@ void mainWindows::clavier(int key, int x, int y)
 		grilleJeu.colisionDroite();
 		joueur.valDep = 3;
 		break;
+
+	case GLUT_KEY_END:
+		bool tire = true;
+		bullet.setX(joueur.positionX());
+		bullet.setY(joueur.positionY());
+		bullet.shoot(joueur.valDep);
+		cout << bullet.bulletX() << endl;
+		cout << bullet.bulletY() << endl;
+		break;
 	}
 }
 
 void mainWindows::clavierUp(int key, int x, int y)
 {
-	if (key == GLUT_KEY_UP)
-	{
-		joueur.velocityHaut();
-	}
+	//if (key == GLUT_KEY_UP)
+	//{
+	//	joueur.velocityHaut();
+	//}
 
-	if (key == GLUT_KEY_DOWN)
-	{
-		joueur.velocityBas();
-	}
+	//if (key == GLUT_KEY_DOWN)
+	//{
+	//	joueur.velocityBas();
+	//}
 
-	if (key == GLUT_KEY_LEFT)
-	{
-		joueur.velocityGauche();
-	}
+	//if (key == GLUT_KEY_LEFT)
+	//{
+	//	joueur.velocityGauche();
+	//}
 
-	if (key == GLUT_KEY_RIGHT)
+	//if (key == GLUT_KEY_RIGHT)
+	//{
+	//	joueur.velocityDroit();
+	//}
+	if (key == GLUT_KEY_END)
 	{
-		joueur.velocityDroit();
+		//tir = false;
 	}
 }
 

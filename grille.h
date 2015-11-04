@@ -38,6 +38,8 @@ public:
 	void caseFleches();
 	static void callBackFleches(int call);
 
+	void tir(int orientation);
+
 private:
 	int planete;
 };

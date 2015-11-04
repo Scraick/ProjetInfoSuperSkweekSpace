@@ -1,4 +1,5 @@
 #include "mainWindows.h"
+#include "sound.h"
 
 int main()
 {

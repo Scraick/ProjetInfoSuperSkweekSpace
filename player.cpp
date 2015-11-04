@@ -32,6 +32,14 @@ void player::depBas() //Déplacement bas
 	m_playerY += (0.1 * acceleration());
 }
 
+//double player::timer(double temps)
+//{
+//	clock_t arrivee = clock()*(temps*CLOCKS_PER_SEC) / 1000;
+//	int x = arrivee % 10;
+//	cout << (x == 0) << endl;
+//	return x;
+//}
+
 void player::velocityGauche()
 {
 	while (deceleration() != 0)
@@ -43,7 +51,6 @@ void player::velocityGauche()
 
 void player::velocityDroit()
 {
-	//ctime::last_time
 	while (deceleration() != 0)
 	{
 		grilleJeu.colisionDroite();
@@ -87,6 +94,24 @@ double player::deceleration()
 		m_acceleration = 0;
 	}
 	return m_acceleration;
+}
+
+void player::tir(int orientation)
+{
+	switch (orientation)
+	{
+	case 0:
+		break;
+
+	case 1:
+		break;
+
+	case 2:
+		break;
+
+	case 3:
+		break;
+	}
 }
 
 double player::positionX()
