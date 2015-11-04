@@ -1,7 +1,6 @@
 #include "player.h"
 
-player joueur(1,1);
-
+player joueur(1, 1);
 
 player::player(double x, double y)
 {
@@ -9,11 +8,9 @@ player::player(double x, double y)
 	y = m_playerY;
 }
 
-
 player::~player()
 {
 }
-
 
 void player::depGauche() //Déplacement gauche
 {
@@ -35,6 +32,8 @@ void player::depBas() //Déplacement bas
 	m_playerY += (0.1 * acceleration());
 }
 
+
+
 void player::velocityGauche()
 {
 	while (deceleration() != 0)
@@ -51,7 +50,6 @@ void player::velocityDroit()
 		grilleJeu.colisionDroite();
 		deceleration();
 	}
-	
 }
 
 void player::velocityHaut()
@@ -61,7 +59,6 @@ void player::velocityHaut()
 		grilleJeu.colisionHaut();
 		deceleration();
 	}
-	
 }
 
 void player::velocityBas()

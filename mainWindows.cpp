@@ -2,6 +2,12 @@
 
 mainWindows fenetre;
 
+vector <GLuint>	texture;
+GLuint bleu[60][32];
+GLuint jaune[60][32];
+GLuint rose[60][32];
+
+
 mainWindows::mainWindows()
 {
 }
@@ -169,7 +175,6 @@ void mainWindows::afficherTextureSoleil(double x, double y, double largeur, doub
 
 void  mainWindows::affichage()
 {
-
 	glClearColor(0.0, 0.0157, 0.0313, 1);  
 	glClear(GL_COLOR_BUFFER_BIT);
 	glMatrixMode(GL_MODELVIEW);
@@ -179,8 +184,10 @@ void  mainWindows::affichage()
 	fenetre.imageFond();
 	fenetre.dessinerNiveau();
 	fenetre.dessinerPlanete();
+
 	grilleJeu.verifPosition();
 	fenetre.dessinerJoueur();
+
 	glutFullScreen();
 
 	glutSpecialFunc(fenetre.clavier); // Appuie des touches du clavier
@@ -243,6 +250,7 @@ void mainWindows::dessinerJoueur()
 {
 	switch (joueur.valDep)
 	{
+
 	case 0: // Haut
 		afficherTexture(joueur.positionX(), joueur.positionY(), 1, 1, texture[10]);
 		break;
@@ -281,6 +289,7 @@ void mainWindows::dessinerPlanete()
 			if (grilleJeu.Matrice[i][j].m_id == '6')
 			{
 				if ((joueur.positionX() == 1.0) && (joueur.positionY() == 1.0))
+
 				{
 					jaune[i][j] = texture[19];
 				}
@@ -290,7 +299,9 @@ void mainWindows::dessinerPlanete()
 
 			if (grilleJeu.Matrice[i][j].m_id == '7')
 			{
+
 				if ((joueur.positionX() == 1.0) && (joueur.positionY() == 1.0))
+
 				{
 					rose[i][j] = texture[20];
 				}
@@ -311,10 +322,7 @@ void mainWindows::planeteBleuDetruite()
 	{
 		bleu[tmp_y][tmp_x] = texture[21];
 		scoreJoueur += 100;
-	}
-
-	//cout << "planete detruite";
-	
+	}	
 }
 
 void mainWindows::planeteJauneDetruite()
@@ -327,8 +335,6 @@ void mainWindows::planeteJauneDetruite()
 		jaune[tmp_y][tmp_x] = texture[22];
 		scoreJoueur += 100;
 	}
-
-	//cout << "planete detruite";
 }
 
 void mainWindows::planeteRoseDetruite()
@@ -341,8 +347,6 @@ void mainWindows::planeteRoseDetruite()
 		rose[tmp_y][tmp_x] = texture[23];
 		scoreJoueur += 100;
 	}
-
-	//cout << "planete detruite";
 }
 
 void mainWindows::clavier(int key, int x, int y)
@@ -373,7 +377,6 @@ void mainWindows::clavier(int key, int x, int y)
 		joueur.valDep = 3;
 		break;
 	}
-
 }
 
 void mainWindows::clavierUp(int key, int x, int y)
@@ -407,7 +410,6 @@ void mainWindows::redim(int x, int y)
 	glLoadIdentity();
 	glScalef(2, 2, 0);
 	gluOrtho2D(0.0, (double)NB_COLONNES, (double)NB_LIGNES, 0.0);
-
 }
 
 void mainWindows::translationCam()
@@ -442,3 +444,4 @@ void mainWindows::translationCam()
 
 	glutSwapBuffers();
 }
+

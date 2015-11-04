@@ -57,6 +57,7 @@ public:
 	
 	int img_X = 0;
 	int img_Y = 0;
+
 };
 
 extern mainWindows fenetre;

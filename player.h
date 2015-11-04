@@ -7,11 +7,13 @@ class player
 {
 public:
 
+
+
 	player(double x, double y);
 	~player();
 
 	int valDep = 0;
-	
+
 	void depGauche();
 	void depDroit();
 	void depHaut();
@@ -27,6 +29,8 @@ public:
 
 	double positionX();
 	double positionY();
+
+private:
 
 	int m_nbVie;
 	double m_playerX = 1;

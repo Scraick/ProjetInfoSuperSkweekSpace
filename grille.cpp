@@ -78,7 +78,6 @@ void grille::speedEnnemis()
 	int valDefaut = 100;
 }
 
-
 void grille::colisionHaut()
 {
 	int	pt1 = round(joueur.positionX() - 0.4);
@@ -119,7 +118,6 @@ void grille::colisionGauche()
 	if (((grilleJeu.Matrice[(int)pt3][pt1].m_id != '1') && (grilleJeu.Matrice[pt4][(int)pt1].m_id != '1'))
 		&& ((grilleJeu.Matrice[(int)pt3][pt1].m_id != '3') && (grilleJeu.Matrice[pt4][(int)pt1].m_id != '3'))
 		&& ((grilleJeu.Matrice[(int)pt3][pt1].m_id != '8') && (grilleJeu.Matrice[pt4][(int)pt1].m_id != '8')))
-		
 	{
 		joueur.depGauche();
 	}
@@ -132,6 +130,7 @@ void grille::colisionDroite()
 	int pt3 = round(joueur.positionY() - 0.4);
 	int pt4 = round(joueur.positionY() + 0.4);
 
+
 	if (((grilleJeu.Matrice[(int)pt3][pt2].m_id != '1') && (grilleJeu.Matrice[(int)pt4][pt2].m_id != '1'))
 		&& ((grilleJeu.Matrice[(int)pt3][pt2].m_id != '3') && (grilleJeu.Matrice[(int)pt4][pt2].m_id != '3'))
 		&& ((grilleJeu.Matrice[(int)pt3][pt2].m_id != '8') && (grilleJeu.Matrice[(int)pt4][pt2].m_id != '8')))
@@ -140,23 +139,10 @@ void grille::colisionDroite()
 	}
 }
 
+
 double grille::parallaxeFond(double posX, double posY)
 {
-	// Haut
-	if ((joueur.m_acceleration > 0.03) && (joueur.valDep == 0))
-		posY = posY + (0.1 * joueur.acceleration());
 
-	// Gauche
-	if ((joueur.m_acceleration > 0.03) && (joueur.valDep == 1))
-		posX = posX + (0.1 * joueur.acceleration());
-
-	// Bas
-	if ((joueur.m_acceleration > 0.03) && (joueur.valDep == 2))
-		posY = posY - (0.1 * joueur.acceleration());
-
-	// Droite
-	if ((joueur.m_acceleration > 0.03) && (joueur.valDep == 3))
-		posX = posX - (0.1 * joueur.acceleration());
 
 	fenetre.img_X = posX;
 	fenetre.img_Y = posY;
@@ -165,6 +151,7 @@ double grille::parallaxeFond(double posX, double posY)
 
 	return posX, posY;
 }
+
 
 void grille::verifPosition()
 {
@@ -177,7 +164,6 @@ void grille::verifPosition()
 	{
 		glutTimerFunc(250, grilleJeu.callBackFleches, 0);
 	}
-
 
 	if ((grilleJeu.Matrice[pt3][pt1].m_id == '2') && (grilleJeu.Matrice[pt3][pt2].m_id == '2'))
 	{

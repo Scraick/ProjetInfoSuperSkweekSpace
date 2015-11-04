@@ -157,6 +157,7 @@
     <ClCompile Include="mainWindows.cpp" />
     <ClCompile Include="player.cpp" />
     <ClCompile Include="score.cpp" />
+    <ClCompile Include="sound.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cases.h" />
@@ -167,6 +168,7 @@
     <ClInclude Include="mainWindows.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="score.h" />
+    <ClInclude Include="sound.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

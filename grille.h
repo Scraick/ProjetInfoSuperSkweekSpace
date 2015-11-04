@@ -18,9 +18,6 @@ using namespace std;
 
 class grille
 {
-private :
-	int planete;
-
 public:
 	grille();
 	~grille();
@@ -39,6 +36,7 @@ public:
 	void colisionDroite();
 
 	double parallaxeFond(double posX, double posY);
+
 	void verifPosition();
 	void caseFleches();
 	static void callBackFleches(int call);
