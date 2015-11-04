@@ -11,7 +11,8 @@
 using namespace std;
 
 
-class mainWindows
+class mainWindows 
+	
 {
 public:
 	
@@ -24,28 +25,41 @@ public:
 
 	void init(int x, int y);
 	void afficherTexture(double, double, double, double, const GLuint &);
+	void afficherTextureSoleil(double, double, double, double, const GLuint &);
 	int LoadGLTextures(string);
 	int tmp_x = 0, tmp_y = 0;
 	int scoreJoueur = 0;
 
+	vector <GLuint>	texture;
+	GLuint bleu[60][32];
+	GLuint jaune[60][32];
+	GLuint rose[60][32];
+
 	void dessinerNiveau();
 	void dessinerJoueur();
 	void dessinerPlanete();
+
 	void planeteBleuDetruite();
 	void planeteJauneDetruite();
 	void planeteRoseDetruite();
 
 	static void affichage();
 	static void callback_affichage(int);
+	void translationCam();
 
 	static void redim(int x, int y);
 	void loadtexture();
 
-	static void clavier(int key, int x, int y);
+	void imageFond();
 	
+	static void clavier(int key, int x, int y);
+	static void clavierUp(int key, int x, int y);
+	
+	int img_X = 0;
+	int img_Y = 0;
 };
 
 extern mainWindows fenetre;
-extern vector <GLuint>	texture;
+extern mainWindows mainWindow;
 #endif
 

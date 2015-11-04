@@ -1,27 +1,37 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 #include "grille.h"
-#include "grille.h"
-
+#include <ctime>
 
 class player
 {
 public:
-	player();
+
+	player(double x, double y);
 	~player();
 
 	int valDep = 0;
-	int m_x, m_y; //Position de départ du joueur
-
+	
 	void depGauche();
 	void depDroit();
 	void depHaut();
 	void depBas();
 
-	void translationCam();
+	void velocityGauche();
+	void velocityDroit();
+	void velocityHaut();
+	void velocityBas();
 
-protected:
+	double acceleration();
+	double deceleration();
+
+	double positionX();
+	double positionY();
+
 	int m_nbVie;
+	double m_playerX = 1;
+	double m_playerY = 1;
+	double m_acceleration;
 };
 
 extern player joueur;

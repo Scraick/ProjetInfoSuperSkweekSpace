@@ -8,6 +8,7 @@
 #include "cases.h"
 #include "mainWindows.h"
 #include "ennemiPeuple.h"
+#include "player.h"
 
 
 #define NB_LIGNES 32
@@ -28,14 +29,23 @@ public:
 
 	void dessinerNiveauBas(vector <cases> C);
 	double distancePlanetes();
+
 	void respawnEnnemi();
 	void speedEnnemis();
 
+	void colisionHaut();
+	void colisionBas();
+	void colisionGauche();
+	void colisionDroite();
+
+	double parallaxeFond(double posX, double posY);
 	void verifPosition();
 	void caseFleches();
 	static void callBackFleches(int call);
 
-	
+private:
+	//int planete;
+
 };
 
 extern grille grilleJeu;
