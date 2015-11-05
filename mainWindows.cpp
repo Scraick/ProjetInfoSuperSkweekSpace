@@ -65,9 +65,13 @@ void mainWindows::loadtexture()
 	LoadGLTextures("textures/PlaneteJauneDetruite.png");	// PlanèteJauneD	22
 	LoadGLTextures("textures/PlaneteRoseDetruite.png");		// PlanèteRoseD		23
 	LoadGLTextures("textures/NuageGalaxie.jpg");			// galaxie			24
-	LoadGLTextures("textures/Teleport02.png");				// Tp02				25
-	LoadGLTextures("textures/Teleport03.png");				// Tp03				26
-	LoadGLTextures("textures/Teleport04.png");				// Tp04				27
+	LoadGLTextures("textures/CargoHaut.png");				// ennemiPeuple		25
+	LoadGLTextures("textures/CargoDroite.png");				// ennemiPeuple		26
+	LoadGLTextures("textures/CargoBas.png");				// ennemiPeuple		27
+	LoadGLTextures("textures/CargoGauche.png");				// ennemiPeuple		28
+	LoadGLTextures("textures/Teleport02.png");				// teleport			29
+	LoadGLTextures("textures/Teleport03.png");				// teleport			30
+	LoadGLTextures("textures/Teleport04.png");				// teleport			31
 
 
 	cases caseSoleil; // Creation de la case Soleil, qui contient les frames d'animation
@@ -98,9 +102,9 @@ void mainWindows::loadtexture()
 	caseTeleport.m_id = '4';
 	caseTeleport.sub_id = '0';
 	caseTeleport.ajouterFrame(texture[8]);
-	caseTeleport.ajouterFrame(texture[25]);
-	caseTeleport.ajouterFrame(texture[26]);
-	caseTeleport.ajouterFrame(texture[27]);
+	caseTeleport.ajouterFrame(texture[29]);
+	caseTeleport.ajouterFrame(texture[30]);
+	caseTeleport.ajouterFrame(texture[31]);
 
 
 	//Plusieurs numéros pour le moment, car l'attribution automatique ne fonctionne pas
@@ -181,20 +185,33 @@ void  mainWindows::affichage()
 
 	fenetre.translationCam();
 
-	fenetre.imageFond();
+	//fenetre.imageFond();
 	fenetre.dessinerNiveau();
 	fenetre.dessinerPlanete();
 
 	grilleJeu.verifPosition();
 	fenetre.dessinerJoueur();
 
-	glutFullScreen();
+	if (fenetre.nbrPlaneteDetruite > 3)
+	{
+		// Si le nombre de planètes détruites est supérieur à 3, l'ennemi apparait et bouge vers elles
+		if (grilleJeu.declencherBalayage == true)
+		{
+			grilleJeu.balayageDeLaMatrice = true;
+			grilleJeu.declencherBalayage = false;
+		}
+
+		glutTimerFunc(16, cargo01.deplacementEP, 0);
+		fenetre.dessinerEnnemiPeuple();
+	}
+		
+	//glutFullScreen();
 
 	glutSpecialFunc(fenetre.clavier); // Appuie des touches du clavier
-	glutSpecialUpFunc(fenetre.clavierUp); // Touche du clavier relaché
+	//glutSpecialUpFunc(fenetre.clavierUp); // Touche du clavier relaché
 
 	glFlush();
-	glutTimerFunc(0, callback_affichage, 0);
+	glutTimerFunc(10, callback_affichage, 0);
 }
 
 void mainWindows::callback_affichage(int) // utiliser pour atteindre la fonction affichage
@@ -223,7 +240,6 @@ void mainWindows::imageFond()
 	glDisable(GL_TEXTURE_2D);
 	
 }
-
 
 void  mainWindows::dessinerNiveau()
 {
@@ -266,6 +282,29 @@ void mainWindows::dessinerJoueur()
 	case 3: // Droite
 		afficherTexture(joueur.positionX(), joueur.positionY(), 1, 1, texture[13]);
 		break;
+	}
+}
+
+void mainWindows::dessinerEnnemiPeuple()
+{
+	switch (cargo01.valDep)
+	{
+	case 0:
+		afficherTexture(cargo01.positionX(), cargo01.positionY(), 1, 1, texture[25]);
+		break;
+
+	case 1:
+		afficherTexture(cargo01.positionX(), cargo01.positionY(), 1, 1, texture[26]);
+		break;
+
+	case 2:
+		afficherTexture(cargo01.positionX(), cargo01.positionY(), 1, 1, texture[27]);
+		break;
+
+	case 3:
+		afficherTexture(cargo01.positionX(), cargo01.positionY(), 1, 1, texture[28]);
+		break;
+
 	}
 }
 
@@ -322,6 +361,7 @@ void mainWindows::planeteBleuDetruite()
 	{
 		bleu[tmp_y][tmp_x] = texture[21];
 		scoreJoueur += 100;
+		nbrPlaneteDetruite += 1;
 	}	
 }
 
@@ -334,6 +374,7 @@ void mainWindows::planeteJauneDetruite()
 	{
 		jaune[tmp_y][tmp_x] = texture[22];
 		scoreJoueur += 100;
+		nbrPlaneteDetruite += 1;
 	}
 }
 
@@ -346,6 +387,7 @@ void mainWindows::planeteRoseDetruite()
 	{
 		rose[tmp_y][tmp_x] = texture[23];
 		scoreJoueur += 100;
+		nbrPlaneteDetruite += 1;
 	}
 }
 
@@ -408,7 +450,7 @@ void mainWindows::redim(int x, int y)
 	
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	glScalef(2, 2, 0);
+	//glScalef(2, 2, 0);
 	gluOrtho2D(0.0, (double)NB_COLONNES, (double)NB_LIGNES, 0.0);
 }
 

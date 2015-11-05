@@ -36,6 +36,10 @@ public:
 	void colisionDroite();
 
 	double parallaxeFond(double posX, double posY);
+	bool déplacementEnnemiPeuple = false;
+	bool balayageDeLaMatrice = false;
+	bool declencherBalayage = true;
+	int val_X, val_Y;
 
 	void verifPosition();
 	void caseFleches();

@@ -29,6 +29,7 @@ public:
 	int LoadGLTextures(string);
 	int tmp_x = 0, tmp_y = 0;
 	int scoreJoueur = 0;
+	int nbrPlaneteDetruite = 0;
 
 	vector <GLuint>	texture;
 	GLuint bleu[60][32];
@@ -37,6 +38,7 @@ public:
 
 	void dessinerNiveau();
 	void dessinerJoueur();
+	void dessinerEnnemiPeuple();
 	void dessinerPlanete();
 
 	void planeteBleuDetruite();

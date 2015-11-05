@@ -43,30 +43,39 @@ void grille::dessinerNiveauBas(vector <cases> C)
 double grille::distancePlanetes()
 {
 	// Initialisation des valeurs de distance
-	int val = 0;
+	int val ;
 	int valTemp = 100000;
 
-	// Boucle pour la recherche des planétes
-	for (int i = 0; i < NB_LIGNES; i++)
+	if (balayageDeLaMatrice == true)
 	{
-		for (int j = 0; j < NB_COLONNES; j++)
+		// Boucle pour la recherche des planètes
+		for (int i = 0; i < NB_LIGNES; i++)
 		{
-			if ((Matrice[i][j].m_id == '2') && (fenetre.bleu[i][j] == fenetre.texture[21])
-				|| (Matrice[i][j].m_id == '6') && (fenetre.bleu[i][j] == fenetre.texture[22])
-				|| (Matrice[i][j].m_id == '7') && (fenetre.bleu[i][j] == fenetre.texture[23]))
+			for (int j = 0; j < NB_COLONNES; j++)
 			{
-				val = sqrt((ennemiPeuple().positionX() - i) * (ennemiPeuple().positionX() - i) + (ennemiPeuple().positionY() - j) * (ennemiPeuple().positionY() - j)); // Calcul de la distance entre le vaisseau et la planéte
-
-				if (val < valTemp)
+				if ((Matrice[i][j].m_id == '2') && (fenetre.bleu[i][j] == fenetre.texture[21])
+					|| (Matrice[i][j].m_id == '6') && (fenetre.jaune[i][j] == fenetre.texture[22])
+					|| (Matrice[i][j].m_id == '7') && (fenetre.rose[i][j] == fenetre.texture[23]))
 				{
-					valTemp = val; // Mise en place d'une valeur temp
+					val = sqrt((cargo01.positionX() - i) * (cargo01.positionX() - i) + (cargo01.positionY() - j) * (cargo01.positionY() - j)); // Calcul de la distance entre le vaisseau et la planète
+
+					if (val < valTemp)
+					{
+						val_X = j;
+						val_Y = i;
+						balayageDeLaMatrice = false;
+						valTemp = val; // Mise en place d'une valeur temp
+					}
 				}
 			}
 		}
+
+		cout << "Recherche en cours" << endl;
 	}
 
 	return valTemp;
 }
+
 
 void grille::respawnEnnemi()
 {
@@ -139,7 +148,6 @@ void grille::colisionDroite()
 	}
 }
 
-
 double grille::parallaxeFond(double posX, double posY)
 {
 
@@ -151,7 +159,6 @@ double grille::parallaxeFond(double posX, double posY)
 
 	return posX, posY;
 }
-
 
 void grille::verifPosition()
 {
