@@ -3,7 +3,7 @@
 #include <vector>
 #include <chrono>
 #include "GL/glut.h"
-
+#include <iostream>
 
 
 class cases

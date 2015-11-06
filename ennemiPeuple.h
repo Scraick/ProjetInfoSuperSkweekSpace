@@ -7,20 +7,27 @@ class ennemiPeuple : public ennemi
 {
 public:
 
-	ennemiPeuple();
-
-
+	ennemiPeuple(double x, double y);
 	
-	int positionX();
-	int positionY();
-
-	ennemiPeuple(int x, int y);
+	double positionX();
+	double positionY();
 
 	void nombre();
-	void changerCase();
-	//void deplacementEP();
+	void changerCase(ennemiPeuple);
+	static void deplacementEP(int, ennemiPeuple &);
 
+	void depGauche();
+	void depDroit();
+	void depHaut();
+	void depBas();
+
+	double m_acceleration;
+	int valDep = 0;
 
 };
+
+extern ennemiPeuple cargo01;
+extern ennemiPeuple cargo02;
+extern ennemiPeuple cargo03;
 
 #endif

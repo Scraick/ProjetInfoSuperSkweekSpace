@@ -42,34 +42,49 @@ int mainWindows::LoadGLTextures(string name) // Load Bitmaps And Convert To Text
 void mainWindows::loadtexture()
 {
 	LoadGLTextures("textures/Sol.png");						// Sol				0
+
 	LoadGLTextures("textures/murTrouNoir.png");				// Murs				1
 	LoadGLTextures("textures/murTrouNoir02.png");			// Murs	2			2
 	LoadGLTextures("textures/murTrouNoir03.png");			// Murs	3			3
 	LoadGLTextures("textures/murTrouNoir04.png");			// Murs	4			4
+
 	LoadGLTextures("textures/Soleil02.png");				// Soleil			5
 	LoadGLTextures("textures/Soleil.png");					// Soleil	2		6
 	LoadGLTextures("textures/Soleil03.png");				// Soleil	3		7
+
 	LoadGLTextures("textures/Teleport.png");				// Tp				8
+
 	LoadGLTextures("textures/ventSolaire.png");				// Flèches			9
+
 	LoadGLTextures("textures/playerHaut.png");				// playerHaut		10
 	LoadGLTextures("textures/playerGauche.png");			// playerGauche		11
 	LoadGLTextures("textures/playerBas.png");				// playerBas		12
 	LoadGLTextures("textures/playerDroite.png");			// playerDroite		13
+
 	LoadGLTextures("textures/ventSolaire02.png");			// Flèches			14
 	LoadGLTextures("textures/ventSolaire03.png");			// Flèches			15
 	LoadGLTextures("textures/ventSolaire04.png");			// Flèches			16
 	LoadGLTextures("textures/ventSolaire05.png");			// Flèches			17
+
 	LoadGLTextures("textures/PlaneteBleue.png");			// PlanèteBleue		18
 	LoadGLTextures("textures/PlaneteJaune.png");			// PlanèteJaune		19
 	LoadGLTextures("textures/PlaneteRose.png");				// PlanèteRose		20
 	LoadGLTextures("textures/PlaneteBleueDetruite.png");	// PlanèteBleueD	21
 	LoadGLTextures("textures/PlaneteJauneDetruite.png");	// PlanèteJauneD	22
 	LoadGLTextures("textures/PlaneteRoseDetruite.png");		// PlanèteRoseD		23
+
 	LoadGLTextures("textures/NuageGalaxie.jpg");			// galaxie			24
-	LoadGLTextures("textures/Teleport02.png");				// Tp02				25
-	LoadGLTextures("textures/Teleport03.png");				// Tp03				26
-	LoadGLTextures("textures/Teleport04.png");				// Tp04				27
-	LoadGLTextures("textures/tir.png");						// Tir du joueur	28
+
+	LoadGLTextures("textures/CargoHaut.png");				// ennemiPeuple		25
+	LoadGLTextures("textures/CargoDroite.png");				// ennemiPeuple		26
+	LoadGLTextures("textures/CargoBas.png");				// ennemiPeuple		27
+	LoadGLTextures("textures/CargoGauche.png");				// ennemiPeuple		28
+
+	LoadGLTextures("textures/Teleport02.png");				// teleport			29
+	LoadGLTextures("textures/Teleport03.png");				// teleport			30
+	LoadGLTextures("textures/Teleport04.png");				// teleport			31
+
+	LoadGLTextures("textures/tir.png");						// Tir du joueur	32
 
 	cases caseSoleil; // Creation de la case Soleil, qui contient les frames d'animation
 	caseSoleil.m_id = '3';
@@ -99,9 +114,9 @@ void mainWindows::loadtexture()
 	caseTeleport.m_id = '4';
 	caseTeleport.sub_id = '0';
 	caseTeleport.ajouterFrame(texture[8]);
-	caseTeleport.ajouterFrame(texture[25]);
-	caseTeleport.ajouterFrame(texture[26]);
-	caseTeleport.ajouterFrame(texture[27]);
+	caseTeleport.ajouterFrame(texture[29]);
+	caseTeleport.ajouterFrame(texture[30]);
+	caseTeleport.ajouterFrame(texture[31]);
 
 	//Plusieurs numéros pour le moment, car l'attribution automatique ne fonctionne pas
 	planeteBleue.m_id = '2';
@@ -157,9 +172,50 @@ void mainWindows::afficherTexture(double x, double y, double largeur, double hau
 		glTexCoord2d(0, 1); glVertex2d(x, y);
 		glTexCoord2d(1, 1); glVertex2d(x + largeur, y);
 		glTexCoord2d(1, 0); glVertex2d(x + largeur, y + hauteur);
-		glTexCoord2d(0, 0); glVertex2d(x, y + hauteur);
+	glTexCoord2d(0, 0); glVertex2d(x, y + hauteur);
 	glEnd();
 	glDisable(GL_TEXTURE_2D);
+
+}
+
+void  mainWindows::affichage()
+{
+	glClearColor(0.0, 0.0157, 0.0313, 1);  
+	glClear(GL_COLOR_BUFFER_BIT);
+	glMatrixMode(GL_MODELVIEW);
+
+	fenetre.translationCam();
+
+	fenetre.imageFond();
+	fenetre.dessinerNiveau();
+	fenetre.dessinerPlanete();
+
+	grilleJeu.verifPosition();
+	fenetre.dessinerJoueur();
+
+	if (fenetre.nbrPlaneteDetruite > 4)
+	{
+		// Si le nombre de planètes détruites est supérieur à 5, l'ennemi apparait et bouge vers elles
+		if (grilleJeu.declencherBalayage == true)
+		{
+			grilleJeu.balayageDeLaMatrice = true;
+			grilleJeu.declencherBalayage = false;
+		}
+
+		glutTimerFunc(16, fenetre.deplacementEnnemis, 0);
+		cout << cargo01.m_x << " " << cargo01.m_y << endl;
+		fenetre.dessinerEnnemiPeuple();
+	}
+
+	
+		
+	//glutFullScreen();
+
+	glutSpecialFunc(fenetre.clavier); // Appuie des touches du clavier
+	//glutSpecialUpFunc(fenetre.clavierUp); // Touche du clavier relaché
+
+	glFlush();
+	glutTimerFunc(10, callback_affichage, 0);
 }
 
 void mainWindows::imageFond()
@@ -191,6 +247,7 @@ void mainWindows::dessinerNiveau()
 		{
 			// Appel de la fonction textureAnime, qui permet de faire l'animation
 			// Si il n'y a qu'un texture dans une case, il n'ya a pas d'animation
+			// Ajout d'une condition pour que les soleils prennent quatres case
 			if (grilleJeu.Matrice[i][j].m_id == '3')
 			{
 				afficherTexture(j, i, 2, 2, grilleJeu.Matrice[i][j].textureAnime());
@@ -200,8 +257,77 @@ void mainWindows::dessinerNiveau()
 				afficherTexture(j, i, 1, 1, grilleJeu.Matrice[i][j].textureAnime());
 			}
 		}
+}
+
+
+
+void mainWindows::dessinerEnnemiPeuple()
+{
+	//cout << "dessiner ennemi" << endl;
+
+	if (fenetre.nbrPlaneteDetruite > 4)
+	{
+		switch (cargo01.valDep)
+		{
+		case 0:
+			afficherTexture(cargo01.m_x, cargo01.m_y, 1, 1, texture[25]);
+			break;
+
+		case 1:
+			afficherTexture(cargo01.m_x, cargo01.m_y, 1, 1, texture[26]);
+			break;
+
+		case 2:
+			afficherTexture(cargo01.m_x, cargo01.m_y, 1, 1, texture[27]);
+			break;
+
+		case 3:
+			afficherTexture(cargo01.m_x, cargo01.m_y, 1, 1, texture[28]);
+			break;
+		}
 	}
 
+	if (fenetre.nbrPlaneteDetruite > 9)
+	{
+		switch (cargo02.valDep)
+		{
+		case 0:
+			afficherTexture(cargo02.m_x, cargo02.m_y, 1, 1, texture[25]);
+			break;
+
+		case 1:
+			afficherTexture(cargo02.m_x, cargo02.m_y, 1, 1, texture[26]);
+			break;
+
+		case 2:
+			afficherTexture(cargo02.m_x, cargo02.m_y, 1, 1, texture[27]);
+			break;
+
+		case 3:
+			afficherTexture(cargo02.m_x, cargo02.m_y, 1, 1, texture[28]);
+			break;
+		}
+	}
+	if (fenetre.nbrPlaneteDetruite > 14)
+	{
+		switch (cargo03.valDep)
+		{
+		case 0:
+			afficherTexture(cargo03.m_x, cargo03.m_y, 1, 1, texture[25]);
+			break;
+
+		case 1:
+			afficherTexture(cargo03.m_x, cargo03.m_y, 1, 1, texture[26]);
+			break;
+
+		case 2:
+			afficherTexture(cargo03.m_x, cargo03.m_y, 1, 1, texture[27]);
+			break;
+
+		case 3:
+			afficherTexture(cargo03.m_x, cargo03.m_y, 1, 1, texture[28]);
+			break;
+		}
 }
 
 void mainWindows::dessinerPlanete()
@@ -244,6 +370,25 @@ void mainWindows::dessinerPlanete()
 				afficherTexture(j, i, 1, 1, rose[i][j]);
 			}
 		}
+		}
+
+}
+
+void mainWindows::deplacementEnnemis(int obligatoire)
+{
+	
+	cargo01.deplacementEP(0, cargo01);
+
+	 if (fenetre.nbrPlaneteDetruite > 9)
+	 {
+		 grilleJeu.balayageDeLaMatrice = true;
+		 cargo02.deplacementEP(0, cargo02);
+	 }
+
+	 if (fenetre.nbrPlaneteDetruite > 14)
+	 {
+		 grilleJeu.balayageDeLaMatrice = true;
+		 cargo03.deplacementEP(0, cargo03);
 	}
 }
 
@@ -263,7 +408,7 @@ void mainWindows::dessinerJoueur()
 	case 3: // Droite
 		afficherTexture(joueur.positionX(), joueur.positionY(), 1.25, 1.25, texture[13]);
 		break;
-	}
+}
 }
 
 void dessinerTir(int)
@@ -286,6 +431,7 @@ void mainWindows::planeteBleuDetruite()
 	{
 		bleu[tmp_y][tmp_x] = texture[21];
 		scoreJoueur += 100;
+		nbrPlaneteDetruite += 1;
 	}	
 }
 
@@ -298,6 +444,7 @@ void mainWindows::planeteJauneDetruite()
 	{
 		jaune[tmp_y][tmp_x] = texture[22];
 		scoreJoueur += 100;
+		nbrPlaneteDetruite += 1;
 	}
 }
 
@@ -310,6 +457,7 @@ void mainWindows::planeteRoseDetruite()
 	{
 		rose[tmp_y][tmp_x] = texture[23];
 		scoreJoueur += 100;
+		nbrPlaneteDetruite += 1;
 	}
 }
 
@@ -348,10 +496,10 @@ void mainWindows::clavier(int key, int x, int y)
 			bullet.setY(joueur.positionY());
 			bullet.setActif(true);
 			bullet.shoot(joueur.valDep);
-		}
+	}
 		else
 		break;
-	}
+}
 }
 
 void mainWindows::clavierUp(int key, int x, int y)
@@ -386,7 +534,7 @@ void mainWindows::redim(int x, int y)
 	glViewport(0, 0, x, y);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	glScalef(2, 2, 0);
+	//glScalef(2, 2, 0);
 	gluOrtho2D(0.0, (double)NB_COLONNES, (double)NB_LIGNES, 0.0);
 }
 
