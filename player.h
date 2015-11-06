@@ -6,6 +6,9 @@
 class player
 {
 public:
+
+
+
 	player(double x, double y);
 	~player();
 
@@ -23,11 +26,8 @@ public:
 	double acceleration();
 	double deceleration();
 
-	void tir(int orientation);
-
 	double positionX();
 	double positionY();
-
 	//double timer(double temps);
 
 private:

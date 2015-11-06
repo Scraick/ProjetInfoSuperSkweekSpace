@@ -8,20 +8,23 @@
 #include "ennemi.h"
 #include "player.h"
 #include "tir.h"
+#include "sound.h"
 
 using namespace std;
 
-
-class mainWindows
+class mainWindows 
 {
 public:
-	
 	mainWindows();
 	~mainWindows();
 
+	vector <GLuint>	texture;
 	vector <cases> m_cases; //Vecteur de cases, qui est rempli avec toutes les textures
 	cases casePlanetes; //Cases des planetes accesible depuis la grille pour le changement de texture
 	cases planeteBleue, planeteJaune, planeteRose;
+	GLuint bleu[60][32];
+	GLuint jaune[60][32];
+	GLuint rose[60][32];
 
 	void init(int x, int y);
 	void afficherTexture(double, double, double, double, const GLuint &);
@@ -32,23 +35,26 @@ public:
 	void dessinerNiveau();
 	void dessinerJoueur();
 	void dessinerPlanete();
-
+	void dessinerTirs();
 	void planeteBleuDetruite();
 	void planeteJauneDetruite();
 	void planeteRoseDetruite();
 
 	static void affichage();
 	static void callback_affichage(int);
-
 	static void redim(int x, int y);
-	void loadtexture();
 
+	void translationCam();
+	void loadtexture();
+	void imageFond();
+	
 	static void clavier(int key, int x, int y);
 	static void clavierUp(int key, int x, int y);	
 
-	void translationCam();
+	int img_X = 0;
+	int img_Y = 0;
 };
 extern mainWindows fenetre;
-extern vector <GLuint>	texture;
+extern vector <GLuint> texture;
 #endif
 

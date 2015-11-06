@@ -10,6 +10,7 @@
 #include "ennemiPeuple.h"
 #include "player.h"
 
+
 #define NB_LIGNES 32
 #define NB_COLONNES 60
 
@@ -34,14 +35,15 @@ public:
 	void colisionGauche();
 	void colisionDroite();
 
+	double parallaxeFond(double posX, double posY);
+
 	void verifPosition();
 	void caseFleches();
 	static void callBackFleches(int call);
 
-	void tir(int orientation);
-
 private:
-	int planete;
+	//int planete;
+
 };
 
 extern grille grilleJeu;

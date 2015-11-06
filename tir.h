@@ -11,13 +11,9 @@ public:
 
 	void shoot(int orientation);
 
-	void tirHaut();
-	void tirBas();
-	void tirDroite();
-	void tirGauche();
-
 	double bulletX();
 	double bulletY();
+	bool bulletActif();
 	void setX(double x);
 	void setY(double y);
 	void setActif(bool a);
@@ -25,9 +21,10 @@ public:
 private:
 	double m_bulletX;
 	double m_bulletY;
-	double speed = 0;
-	bool actif = false;
-	bool suivant = true;
+	double m_speed = 0;
+	int m_orientation;
+	bool m_actif = false;
+	int pt1, pt2, pt3, pt4;
 };
 extern tir bullet;
 #endif

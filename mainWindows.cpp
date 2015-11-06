@@ -1,13 +1,13 @@
 #include "mainWindows.h"
 
 mainWindows fenetre;
+
 vector <GLuint>	texture;
 GLuint bleu[60][32];
 GLuint jaune[60][32];
 GLuint rose[60][32];
 
 void dessinerTir(int);
-bool tire = false;
 
 mainWindows::mainWindows()
 {
@@ -17,7 +17,7 @@ mainWindows::~mainWindows()
 {
 }
 
-int  mainWindows::LoadGLTextures(string name) // Load Bitmaps And Convert To Textures
+int mainWindows::LoadGLTextures(string name) // Load Bitmaps And Convert To Textures
 {
 	
 	GLuint essai = SOIL_load_OGL_texture
@@ -65,9 +65,11 @@ void mainWindows::loadtexture()
 	LoadGLTextures("textures/PlaneteBleueDetruite.png");	// PlanèteBleueD	21
 	LoadGLTextures("textures/PlaneteJauneDetruite.png");	// PlanèteJauneD	22
 	LoadGLTextures("textures/PlaneteRoseDetruite.png");		// PlanèteRoseD		23
-	LoadGLTextures("textures/tir.png");						// Tir du joueur	24
-
-
+	LoadGLTextures("textures/NuageGalaxie.jpg");			// galaxie			24
+	LoadGLTextures("textures/Teleport02.png");				// Tp02				25
+	LoadGLTextures("textures/Teleport03.png");				// Tp03				26
+	LoadGLTextures("textures/Teleport04.png");				// Tp04				27
+	LoadGLTextures("textures/tir.png");						// Tir du joueur	28
 
 	cases caseSoleil; // Creation de la case Soleil, qui contient les frames d'animation
 	caseSoleil.m_id = '3';
@@ -93,6 +95,14 @@ void mainWindows::loadtexture()
 	caseVent.ajouterFrame(texture[16]);
 	caseVent.ajouterFrame(texture[17]);
 
+	cases caseTeleport;
+	caseTeleport.m_id = '4';
+	caseTeleport.sub_id = '0';
+	caseTeleport.ajouterFrame(texture[8]);
+	caseTeleport.ajouterFrame(texture[25]);
+	caseTeleport.ajouterFrame(texture[26]);
+	caseTeleport.ajouterFrame(texture[27]);
+
 	//Plusieurs numéros pour le moment, car l'attribution automatique ne fonctionne pas
 	planeteBleue.m_id = '2';
 	planeteJaune.m_id = '6';
@@ -103,12 +113,11 @@ void mainWindows::loadtexture()
 	m_cases.push_back(caseTrouNoir);
 	m_cases.push_back(cases(texture[0], '2', '0'));
 	m_cases.push_back(caseSoleil);
-	m_cases.push_back(cases(texture[8], '4', '0'));
+	m_cases.push_back(caseTeleport);
 	m_cases.push_back(caseVent);
 	m_cases.push_back(cases(texture[0], '6', '0'));
 	m_cases.push_back(cases(texture[0], '7', '0'));
-	
-	
+	m_cases.push_back(cases(texture[0], '8', '0'));
 }
 
 void mainWindows::init(int x, int y)
@@ -123,9 +132,19 @@ void mainWindows::init(int x, int y)
 	glutDisplayFunc(affichage);
 	glutReshapeFunc(redim);
 
-	glutTimerFunc(16, callback_affichage, 0);
+	// Initialisation de la musique
+	FMOD_SYSTEM *system;
+	FMOD_SOUND *musique;
+	FMOD_RESULT resultat;
+	FMOD_System_Create(&system);
+	FMOD_System_Init(system, 1, FMOD_INIT_NORMAL, 0);
+	resultat = FMOD_System_CreateSound(system, "sounds/Main_Theme.mp3", FMOD_SOFTWARE | FMOD_2D | FMOD_CREATESTREAM, 0, &musique);
+	sons.music(system, musique, resultat);
 
+	glutTimerFunc(16, callback_affichage, 0);
 	glutMainLoop();
+
+	sons.stop( system, musique, resultat);
 }
 
 void mainWindows::afficherTexture(double x, double y, double largeur, double hauteur, const GLuint &texture)
@@ -135,43 +154,36 @@ void mainWindows::afficherTexture(double x, double y, double largeur, double hau
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glBindTexture(GL_TEXTURE_2D, texture);
 	glBegin(GL_QUADS);
-	glColor3d(1.0, 1.0, 1.0);
-	glTexCoord2d(0, hauteur); glVertex2d(x, y);
-	glTexCoord2d(largeur, hauteur); glVertex2d(x + largeur, y);
-	glTexCoord2d(largeur, 0); glVertex2d(x + largeur, y + hauteur);
-	glTexCoord2d(0, 0); glVertex2d(x, y + hauteur);
+		glTexCoord2d(0, 1); glVertex2d(x, y);
+		glTexCoord2d(1, 1); glVertex2d(x + largeur, y);
+		glTexCoord2d(1, 0); glVertex2d(x + largeur, y + hauteur);
+		glTexCoord2d(0, 0); glVertex2d(x, y + hauteur);
 	glEnd();
 	glDisable(GL_TEXTURE_2D);
 }
 
-void  mainWindows::affichage()
+void mainWindows::imageFond()
 {
-	glClearColor(0.0, 0.0157, 0.0313, 1);  
-	glClear(GL_COLOR_BUFFER_BIT);
-	glMatrixMode(GL_MODELVIEW);
+	int largeur = 60;
+	int hauteur = 32;
 
-	fenetre.translationCam();
+	//grilleJeu.parallaxeFond(img_X, img_Y);
 
-	fenetre.dessinerNiveau();
-	fenetre.dessinerPlanete();
-
-	grilleJeu.verifPosition();
-	fenetre.dessinerJoueur();
-
-	fenetre.afficherTexture(bullet.bulletX(), bullet.bulletY(), 5, 1, texture[24]);
-
-
-	glutTimerFunc(16, dessinerTir, 0);
-
-	glutSpecialFunc(fenetre.clavier); // Appuie des touches du clavier
-	glutSpecialUpFunc(fenetre.clavierUp); // Touche du clavier relaché
-	//glutFullScreen();
-
-	glFlush();
-	glutTimerFunc(16, callback_affichage, 0);
+	//affichage différent, pour avoir une taille supérieure à 1 sur 1
+	glEnable(GL_TEXTURE_2D);
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glBindTexture(GL_TEXTURE_2D, texture[24]);
+	glBegin(GL_QUADS);
+	glTexCoord2d(0, 1); glVertex2d(img_X, img_Y);
+	glTexCoord2d(1, 1); glVertex2d(img_X + largeur, img_Y);
+	glTexCoord2d(1, 0); glVertex2d(img_X + largeur, img_Y + hauteur);
+	glTexCoord2d(0, 0); glVertex2d(img_X, img_Y + hauteur);
+	glEnd();
+	glDisable(GL_TEXTURE_2D);
 }
 
-void  mainWindows::dessinerNiveau()
+void mainWindows::dessinerNiveau()
 {
 	for (int i = 0; i < NB_LIGNES ; i++) //Parcours de la matrice de cases et affichage des textures
 	{
@@ -179,32 +191,17 @@ void  mainWindows::dessinerNiveau()
 		{
 			// Appel de la fonction textureAnime, qui permet de faire l'animation
 			// Si il n'y a qu'un texture dans une case, il n'ya a pas d'animation
-			afficherTexture(j, i, 1, 1, grilleJeu.Matrice[i][j].textureAnime());
+			if (grilleJeu.Matrice[i][j].m_id == '3')
+			{
+				afficherTexture(j, i, 2, 2, grilleJeu.Matrice[i][j].textureAnime());
+			}
+			else
+			{
+				afficherTexture(j, i, 1, 1, grilleJeu.Matrice[i][j].textureAnime());
+			}
 		}
 	}
 
-}
-
-void mainWindows::dessinerJoueur()
-{
-	switch (joueur.valDep)
-	{
-	case 0:
-		afficherTexture(joueur.positionX(), joueur.positionY(), 1, 1, texture[10]);
-		break;
-
-	case 1:
-		afficherTexture(joueur.positionX(), joueur.positionY(), 1, 1, texture[11]);
-		break;
-
-	case 2:
-		afficherTexture(joueur.positionX(), joueur.positionY(), 1, 1, texture[12]);
-		break;
-
-	case 3:
-		afficherTexture(joueur.positionX(), joueur.positionY(), 1, 1, texture[13]);
-		break;
-	}
 }
 
 void mainWindows::dessinerPlanete()
@@ -216,7 +213,7 @@ void mainWindows::dessinerPlanete()
 		{
 			if (grilleJeu.Matrice[i][j].m_id == '2')
 			{
-				if ((joueur.positionX() == 1) && (joueur.positionY() == 1))
+				if ((joueur.positionX() == 1.0) && (joueur.positionY() == 1.0))
 				{
 					bleu[i][j] = texture[18];
 				}
@@ -226,7 +223,8 @@ void mainWindows::dessinerPlanete()
 
 			if (grilleJeu.Matrice[i][j].m_id == '6')
 			{
-				if ((joueur.positionX() == 1) && (joueur.positionY() == 1))
+				if ((joueur.positionX() == 1.0) && (joueur.positionY() == 1.0))
+
 				{
 					jaune[i][j] = texture[19];
 				}
@@ -236,7 +234,9 @@ void mainWindows::dessinerPlanete()
 
 			if (grilleJeu.Matrice[i][j].m_id == '7')
 			{
-				if ((joueur.positionX() == 1) && (joueur.positionY() == 1))
+
+				if ((joueur.positionX() == 1.0) && (joueur.positionY() == 1.0))
+
 				{
 					rose[i][j] = texture[20];
 				}
@@ -245,13 +245,36 @@ void mainWindows::dessinerPlanete()
 			}
 		}
 	}
+}
 
+void mainWindows::dessinerJoueur()
+{
+	switch (joueur.valDep)
+	{
+	case 0: // Haut
+		afficherTexture(joueur.positionX(), joueur.positionY(), 1.25, 1.25, texture[10]);
+		break;
+	case 1: // Gauche
+		afficherTexture(joueur.positionX(), joueur.positionY(), 1.25, 1.25, texture[11]);
+		break;
+	case 2: // Bas
+		afficherTexture(joueur.positionX(), joueur.positionY(), 1.25, 1.25, texture[12]);
+		break;
+	case 3: // Droite
+		afficherTexture(joueur.positionX(), joueur.positionY(), 1.25, 1.25, texture[13]);
+		break;
+	}
 }
 
 void dessinerTir(int)
 {
 	bullet.shoot(joueur.valDep);
-	glutTimerFunc(5000, dessinerTir, 0);
+	glutTimerFunc(6400, dessinerTir, 0);
+}
+
+void mainWindows::dessinerTirs()
+{
+	fenetre.afficherTexture(bullet.bulletX(), bullet.bulletY(), 1, 1, fenetre.texture[28]);
 }
 
 void mainWindows::planeteBleuDetruite()
@@ -319,12 +342,14 @@ void mainWindows::clavier(int key, int x, int y)
 		break;
 
 	case GLUT_KEY_END:
-		bool tire = true;
-		bullet.setX(joueur.positionX());
-		bullet.setY(joueur.positionY());
-		bullet.shoot(joueur.valDep);
-		cout << bullet.bulletX() << endl;
-		cout << bullet.bulletY() << endl;
+		if (!bullet.bulletActif())
+		{
+			bullet.setX(joueur.positionX());
+			bullet.setY(joueur.positionY());
+			bullet.setActif(true);
+			bullet.shoot(joueur.valDep);
+		}
+		else
 		break;
 	}
 }
@@ -396,6 +421,34 @@ void mainWindows::translationCam()
 	glTranslatef(-joueur.positionX() + i, -joueur.positionY() + j, 0);
 
 	glutSwapBuffers();
+}
+
+void mainWindows::affichage()
+{
+	glClearColor(0.0, 0.0157, 0.0313, 1);
+	glClear(GL_COLOR_BUFFER_BIT);
+	glMatrixMode(GL_MODELVIEW);
+
+	fenetre.imageFond();
+	fenetre.dessinerNiveau();
+	fenetre.dessinerPlanete();
+
+	fenetre.translationCam();
+	grilleJeu.verifPosition();
+	fenetre.dessinerJoueur();
+
+	if (bullet.bulletActif() == true)
+	{
+		fenetre.dessinerTirs();
+		glutTimerFunc(64, dessinerTir, 0);
+	}
+
+	glutSpecialFunc(fenetre.clavier); // Appuie des touches du clavier
+	glutSpecialUpFunc(fenetre.clavierUp); // Touche du clavier relaché
+//	glutFullScreen();
+
+	glFlush();
+	glutTimerFunc(16, callback_affichage, 0);
 }
 
 void mainWindows::callback_affichage(int) // utiliser pour atteindre la fonction affichage

@@ -20,7 +20,6 @@ public:
 	char sub_id;
 
 	virtual GLuint textureAnime(); //Fonction qui ajoute une frame a chaque rafraichissement, pour animer la case
-	virtual GLuint textureAnimePassage(); // Fonction qui anime les planetes sur lesquelles le joueur passe
 	void ajouterFrame(GLuint texture);
 
 };

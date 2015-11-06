@@ -96,24 +96,6 @@ double player::deceleration()
 	return m_acceleration;
 }
 
-void player::tir(int orientation)
-{
-	switch (orientation)
-	{
-	case 0:
-		break;
-
-	case 1:
-		break;
-
-	case 2:
-		break;
-
-	case 3:
-		break;
-	}
-}
-
 double player::positionX()
 {
 	return m_playerX;

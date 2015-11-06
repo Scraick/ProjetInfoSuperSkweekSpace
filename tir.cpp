@@ -12,12 +12,13 @@ tir::~tir()
 
 void tir::shoot(int orientation)
 {
-	int pt1, pt2, pt3, pt4;
+	int tmp;
+	tmp = orientation;
 
-	//if ((actif == true) && (speed < 0.2) && (suivant == false))
-	//{
-		//speed += 0.01f;
-		switch (orientation)
+	if (!bulletActif())
+		m_orientation = tmp;
+
+		switch (m_orientation)
 		{
 		case 0:
 			pt1 = round(m_bulletX - 0.4);
@@ -25,9 +26,15 @@ void tir::shoot(int orientation)
 			pt3 = round(m_bulletY - 0.6);
 			pt4 = round(m_bulletY + 0.4);
 
-			if ((grilleJeu.Matrice[pt3][pt1].m_id != '1') && (grilleJeu.Matrice[pt3][pt2].m_id != '1') && (grilleJeu.Matrice[pt3][pt1].m_id != '3') && (grilleJeu.Matrice[pt3][pt2].m_id != '3'))
+			if ((grilleJeu.Matrice[pt3][pt1].m_id != '1') && (grilleJeu.Matrice[pt3][pt2].m_id != '1') && (grilleJeu.Matrice[pt3][pt1].m_id != '3') && (grilleJeu.Matrice[pt3][pt2].m_id != '3') && (m_speed < 2))
 			{
-				tirHaut();
+				m_speed += 0.01;
+				m_bulletY -= (m_speed);
+			}
+			else
+			{
+				bullet.setActif(false);
+				m_speed = 0;
 			}
 			break;
 
@@ -37,9 +44,15 @@ void tir::shoot(int orientation)
 			pt3 = round(m_bulletY - 0.4);
 			pt4 = round(m_bulletY + 0.6);
 
-			if ((grilleJeu.Matrice[pt3][pt1].m_id != '1') && (grilleJeu.Matrice[pt4][pt1].m_id != '1') && (grilleJeu.Matrice[pt3][pt1].m_id != '3') && (grilleJeu.Matrice[pt4][pt1].m_id != '3'))
+			if ((grilleJeu.Matrice[pt3][pt1].m_id != '1') && (grilleJeu.Matrice[pt4][pt1].m_id != '1') && (grilleJeu.Matrice[pt3][pt1].m_id != '3') && (grilleJeu.Matrice[pt4][pt1].m_id != '3') && (m_speed < 2))
 			{
-				tirGauche();
+				m_speed += 0.01;
+				m_bulletX -= (m_speed);
+			}
+			else
+			{
+				bullet.setActif(false);
+				m_speed = 0;
 			}
 			break;
 
@@ -49,9 +62,15 @@ void tir::shoot(int orientation)
 			pt3 = round(m_bulletY - 0.4);
 			pt4 = round(m_bulletY + 0.6);
 
-			if ((grilleJeu.Matrice[pt4][pt1].m_id != '1') && (grilleJeu.Matrice[pt4][pt2].m_id != '1') && (grilleJeu.Matrice[pt4][pt1].m_id != '3') && (grilleJeu.Matrice[pt4][pt2].m_id != '3'))
+			if ((grilleJeu.Matrice[pt4][pt1].m_id != '1') && (grilleJeu.Matrice[pt4][pt2].m_id != '1') && (grilleJeu.Matrice[pt4][pt1].m_id != '3') && (grilleJeu.Matrice[pt4][pt2].m_id != '3') && (m_speed < 2))
 			{
-				tirBas();
+				m_speed += 0.01;
+				m_bulletY += (m_speed);
+			}
+			else
+			{
+				bullet.setActif(false);
+				m_speed = 0;
 			}
 			break;
 
@@ -61,40 +80,19 @@ void tir::shoot(int orientation)
 			pt3 = round(m_bulletY - 0.4);
 			pt4 = round(m_bulletY + 0.4);
 
-			if ((grilleJeu.Matrice[pt3][pt2].m_id != '1') && (grilleJeu.Matrice[pt4][pt2].m_id != '1') && (grilleJeu.Matrice[pt3][pt2].m_id != '3') && (grilleJeu.Matrice[pt4][pt2].m_id != '3'))
+			if ((grilleJeu.Matrice[pt3][pt2].m_id != '1') && (grilleJeu.Matrice[pt4][pt2].m_id != '1') && (grilleJeu.Matrice[pt3][pt2].m_id != '3') && (grilleJeu.Matrice[pt4][pt2].m_id != '3') && (m_speed < 2))
 			{
-				tirDroite();
+				m_speed += 0.01;
+				m_bulletX += (m_speed);
+			}
+			else
+			{
+				bullet.setActif(false);
+				m_speed = 0;
 			}
 			break;
 		}
-	//}
-	//else
-	//{
-	//	suivant = true;
-	//	speed = 0;
-	//	actif = false;
-	//}
-}
-
-void tir::tirGauche() //Déplacement gauche
-{
-	m_bulletX -= (0.1);
-}
-
-void tir::tirDroite() //Déplacement droit
-{
-	m_bulletX += (0.1);
-}
-
-void tir::tirHaut() //Déplacement haut
-{
-	m_bulletY -= (0.1);
-}
-
-void tir::tirBas() //Déplacement bas
-{
-	m_bulletY += (0.1);
-}
+	}
 
 double tir::bulletX()
 {
@@ -118,5 +116,10 @@ void tir::setY(double y)
 
 void tir::setActif(bool a)
 {
-	actif = a;
+	m_actif = a;
+}
+
+bool tir::bulletActif()
+{
+	return m_actif;
 }

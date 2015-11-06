@@ -20,22 +20,9 @@ cases::cases(GLuint texture, char id, char id2)
 	sub_id = id2;
 }
 
-
 GLuint cases::textureAnime()
 {
-
 	frame = (frame + 1) % (m_textures.size() * ralentissementAnim); //Incrémentation de la frame, puis retour au début lorsque le nombre max de frame est atteint
-	return m_textures[(frame / ralentissementAnim)];
-
-}
-
-GLuint cases::textureAnimePassage()
-{
-	if (frame < (3 * ralentissementAnim))
-	{
-		frame++;
-	}
-	
 	return m_textures[(frame / ralentissementAnim)];
 }
 
@@ -43,6 +30,3 @@ void cases::ajouterFrame(GLuint texture) //Fonction pour remplir une case de plu
 {
 	m_textures.push_back(texture);
 }
-
-
-

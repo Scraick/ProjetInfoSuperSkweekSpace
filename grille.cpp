@@ -51,7 +51,9 @@ double grille::distancePlanetes()
 	{
 		for (int j = 0; j < NB_COLONNES; j++)
 		{
-			if ((Matrice[i][j].m_id == '2') && (planete == 4))
+			if ((Matrice[i][j].m_id == '2') && (fenetre.bleu[i][j] == fenetre.texture[21])
+				|| (Matrice[i][j].m_id == '6') && (fenetre.bleu[i][j] == fenetre.texture[22])
+				|| (Matrice[i][j].m_id == '7') && (fenetre.bleu[i][j] == fenetre.texture[23]))
 			{
 				val = sqrt((ennemiPeuple().positionX() - i) * (ennemiPeuple().positionX() - i) + (ennemiPeuple().positionY() - j) * (ennemiPeuple().positionY() - j)); // Calcul de la distance entre le vaisseau et la planéte
 
@@ -83,7 +85,9 @@ void grille::colisionHaut()
 	int	pt3 = round(joueur.positionY() - 0.6);
 	int	pt4 = round(joueur.positionY() + 0.4);
 
-	if ((grilleJeu.Matrice[pt3][pt1].m_id != '1') && (grilleJeu.Matrice[pt3][pt2].m_id != '1') && (grilleJeu.Matrice[pt3][pt1].m_id != '3') && (grilleJeu.Matrice[pt3][pt2].m_id != '3'))
+	if (((grilleJeu.Matrice[pt3][(int)pt1].m_id != '1') && (grilleJeu.Matrice[pt3][(int)pt2].m_id != '1'))
+		&& ((grilleJeu.Matrice[pt3][(int)pt1].m_id != '3') && (grilleJeu.Matrice[pt3][(int)pt2].m_id != '3'))
+		&& ((grilleJeu.Matrice[pt3][(int)pt1].m_id != '8') && (grilleJeu.Matrice[pt3][(int)pt2].m_id != '8')))
 	{
 		joueur.depHaut();
 	}
@@ -96,7 +100,9 @@ void grille::colisionBas()
 	int pt3 = round(joueur.positionY() - 0.4);
 	int pt4 = round(joueur.positionY() + 0.6);
 
-	if ((grilleJeu.Matrice[pt4][pt1].m_id != '1') && (grilleJeu.Matrice[pt4][pt2].m_id != '1') && (grilleJeu.Matrice[pt4][pt1].m_id != '3') && (grilleJeu.Matrice[pt4][pt2].m_id != '3'))
+	if (((grilleJeu.Matrice[pt4][(int)pt1].m_id != '1') && (grilleJeu.Matrice[pt4][(int)pt2].m_id != '1'))
+		&& ((grilleJeu.Matrice[pt4][(int)pt1].m_id != '3') && (grilleJeu.Matrice[pt4][(int)pt2].m_id != '3'))
+		&& ((grilleJeu.Matrice[pt4][(int)pt1].m_id != '8') && (grilleJeu.Matrice[pt4][(int)pt2].m_id != '8')))
 	{
 		joueur.depBas();
 	}
@@ -109,7 +115,9 @@ void grille::colisionGauche()
 	int pt3 = round(joueur.positionY() - 0.4);
 	int pt4 = round(joueur.positionY() + 0.4);
 
-	if ((grilleJeu.Matrice[pt3][pt1].m_id != '1') && (grilleJeu.Matrice[pt4][pt1].m_id != '1') && (grilleJeu.Matrice[pt3][pt1].m_id != '3') && (grilleJeu.Matrice[pt4][pt1].m_id != '3'))
+	if (((grilleJeu.Matrice[(int)pt3][pt1].m_id != '1') && (grilleJeu.Matrice[pt4][(int)pt1].m_id != '1'))
+		&& ((grilleJeu.Matrice[(int)pt3][pt1].m_id != '3') && (grilleJeu.Matrice[pt4][(int)pt1].m_id != '3'))
+		&& ((grilleJeu.Matrice[(int)pt3][pt1].m_id != '8') && (grilleJeu.Matrice[pt4][(int)pt1].m_id != '8')))
 	{
 		joueur.depGauche();
 	}
@@ -122,10 +130,20 @@ void grille::colisionDroite()
 	int pt3 = round(joueur.positionY() - 0.4);
 	int pt4 = round(joueur.positionY() + 0.4);
 
-	if ((grilleJeu.Matrice[pt3][pt2].m_id != '1') && (grilleJeu.Matrice[pt4][pt2].m_id != '1') && (grilleJeu.Matrice[pt3][pt2].m_id != '3') && (grilleJeu.Matrice[pt4][pt2].m_id != '3'))
+
+	if (((grilleJeu.Matrice[(int)pt3][pt2].m_id != '1') && (grilleJeu.Matrice[(int)pt4][pt2].m_id != '1'))
+		&& ((grilleJeu.Matrice[(int)pt3][pt2].m_id != '3') && (grilleJeu.Matrice[(int)pt4][pt2].m_id != '3'))
+		&& ((grilleJeu.Matrice[(int)pt3][pt2].m_id != '8') && (grilleJeu.Matrice[(int)pt4][pt2].m_id != '8')))
 	{
 		joueur.depDroit();
 	}
+}
+
+double grille::parallaxeFond(double posX, double posY)
+{
+	fenetre.img_X = posX;
+	fenetre.img_Y = posY;
+	return posX, posY;
 }
 
 void grille::verifPosition()
@@ -140,17 +158,17 @@ void grille::verifPosition()
 		glutTimerFunc(250, grilleJeu.callBackFleches, 0);
 	}
 
-	if ((grilleJeu.Matrice[pt3][pt1].m_id == '2') && (grilleJeu.Matrice[pt3][pt2].m_id == '2')) 
+	if ((grilleJeu.Matrice[pt3][pt1].m_id == '2') && (grilleJeu.Matrice[pt3][pt2].m_id == '2'))
 	{
 		fenetre.planeteBleuDetruite();
 	}
 
-	if ((grilleJeu.Matrice[pt3][pt1].m_id == '6') && (grilleJeu.Matrice[pt3][pt2].m_id == '6')) 
+	if ((grilleJeu.Matrice[pt3][pt1].m_id == '6') && (grilleJeu.Matrice[pt3][pt2].m_id == '6'))
 	{
 		fenetre.planeteJauneDetruite();
 	}
 
-	if ((grilleJeu.Matrice[pt3][pt1].m_id == '7') && (grilleJeu.Matrice[pt3][pt2].m_id == '7')) 
+	if ((grilleJeu.Matrice[pt3][pt1].m_id == '7') && (grilleJeu.Matrice[pt3][pt2].m_id == '7'))
 	{
 		fenetre.planeteRoseDetruite();
 	}
@@ -159,7 +177,6 @@ void grille::verifPosition()
 void grille::caseFleches()
 {
 	int alea = (rand() % 4);
-
 	switch (alea)
 	{
 	case 0:
@@ -178,7 +195,6 @@ void grille::caseFleches()
 		colisionDroite();
 		break;
 	}
-
 }
 
 void grille::callBackFleches(int call)
