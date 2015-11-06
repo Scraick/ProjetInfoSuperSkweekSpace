@@ -23,7 +23,8 @@ cases::cases(GLuint texture, char id, char id2)
 GLuint cases::textureAnime()
 {
 	frame = (frame + 1) % (m_textures.size() * ralentissementAnim); //Incrémentation de la frame, puis retour au début lorsque le nombre max de frame est atteint
-	return m_textures[(frame / ralentissementAnim)];
+	return m_textures[frame / ralentissementAnim];
+	
 }
 
 void cases::ajouterFrame(GLuint texture) //Fonction pour remplir une case de plusieurs frames, comme dans la case soleil, afin de les animer

@@ -32,6 +32,7 @@ void player::depBas() //Déplacement bas
 	m_playerY += (0.1 * acceleration());
 }
 
+<<<<<<< HEAD
 //double player::timer(double temps)
 //{
 //	clock_t arrivee = clock()*(temps*CLOCKS_PER_SEC) / 1000;
@@ -40,6 +41,8 @@ void player::depBas() //Déplacement bas
 //	return x;
 //}
 
+=======
+>>>>>>> origin/master
 void player::velocityGauche()
 {
 	while (deceleration() != 0)

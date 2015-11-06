@@ -6,6 +6,7 @@
 #include "SOIL/SOIL.h"
 #include "grille.h"
 #include "ennemi.h"
+#include "ennemiPeuple.h"
 #include "player.h"
 #include "tir.h"
 #include "sound.h"
@@ -31,11 +32,19 @@ public:
 	int LoadGLTextures(string);
 	int tmp_x = 0, tmp_y = 0;
 	int scoreJoueur = 0;
+	int nbrPlaneteDetruite = 0;
 
 	void dessinerNiveau();
 	void dessinerJoueur();
+	void dessinerEnnemiPeuple();
 	void dessinerPlanete();
+<<<<<<< HEAD
 	void dessinerTirs();
+=======
+
+	static void deplacementEnnemis(int obligatoire);
+
+>>>>>>> origin/master
 	void planeteBleuDetruite();
 	void planeteJauneDetruite();
 	void planeteRoseDetruite();
