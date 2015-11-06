@@ -13,9 +13,8 @@ public:
 	double positionY();
 
 	void nombre();
-	void changerCase();
-	static void deplacementEP(int);
-	int cptDeplacementRalenti = 0;
+	void changerCase(ennemiPeuple);
+	static void deplacementEP(int, ennemiPeuple &);
 
 	void depGauche();
 	void depDroit();
@@ -28,4 +27,7 @@ public:
 };
 
 extern ennemiPeuple cargo01;
+extern ennemiPeuple cargo02;
+extern ennemiPeuple cargo03;
+
 #endif

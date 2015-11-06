@@ -40,7 +40,7 @@ void grille::dessinerNiveauBas(vector <cases> C)
 		cout << "Impossible d'ouvrir le fichier !" << endl;
 }
 
-double grille::distancePlanetes()
+double grille::distancePlanetes(double x, double y)
 {
 	// Initialisation des valeurs de distance
 	int val ;
@@ -49,6 +49,7 @@ double grille::distancePlanetes()
 	if (balayageDeLaMatrice == true)
 	{
 		// Boucle pour la recherche des planètes
+
 		for (int i = 0; i < NB_LIGNES; i++)
 		{
 			for (int j = 0; j < NB_COLONNES; j++)
@@ -57,7 +58,7 @@ double grille::distancePlanetes()
 					|| (Matrice[i][j].m_id == '6') && (fenetre.jaune[i][j] == fenetre.texture[22])
 					|| (Matrice[i][j].m_id == '7') && (fenetre.rose[i][j] == fenetre.texture[23]))
 				{
-					val = sqrt((cargo01.positionX() - i) * (cargo01.positionX() - i) + (cargo01.positionY() - j) * (cargo01.positionY() - j)); // Calcul de la distance entre le vaisseau et la planète
+					val = sqrt((x - i) * (x - i) + (y - j) * (y - j)); // Calcul de la distance entre le vaisseau et la planète
 
 					if (val < valTemp)
 					{
@@ -69,7 +70,6 @@ double grille::distancePlanetes()
 				}
 			}
 		}
-
 		cout << "Recherche en cours" << endl;
 	}
 
@@ -84,7 +84,7 @@ void grille::respawnEnnemi()
 
 void grille::speedEnnemis()
 {
-	int valDefaut = 100;
+	speedEnnemiP = 4000;
 }
 
 void grille::colisionHaut()

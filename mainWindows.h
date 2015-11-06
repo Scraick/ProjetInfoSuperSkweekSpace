@@ -6,6 +6,7 @@
 #include "SOIL/SOIL.h"
 #include "grille.h"
 #include "ennemi.h"
+#include "ennemiPeuple.h"
 #include "player.h"
 
 using namespace std;
@@ -40,6 +41,8 @@ public:
 	void dessinerJoueur();
 	void dessinerEnnemiPeuple();
 	void dessinerPlanete();
+
+	static void deplacementEnnemis(int obligatoire);
 
 	void planeteBleuDetruite();
 	void planeteJauneDetruite();

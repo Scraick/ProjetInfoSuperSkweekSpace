@@ -41,34 +41,44 @@ int  mainWindows::LoadGLTextures(string name) // Load Bitmaps And Convert To Tex
 void mainWindows::loadtexture()
 {
 	LoadGLTextures("textures/Sol.png");						// Sol				0
+
 	LoadGLTextures("textures/murTrouNoir.png");				// Murs				1
 	LoadGLTextures("textures/murTrouNoir02.png");			// Murs	2			2
 	LoadGLTextures("textures/murTrouNoir03.png");			// Murs	3			3
 	LoadGLTextures("textures/murTrouNoir04.png");			// Murs	4			4
+
 	LoadGLTextures("textures/Soleil02.png");				// Soleil			5
 	LoadGLTextures("textures/Soleil.png");					// Soleil	2		6
 	LoadGLTextures("textures/Soleil03.png");				// Soleil	3		7
+
 	LoadGLTextures("textures/Teleport.png");				// Tp				8
+
 	LoadGLTextures("textures/ventSolaire.png");				// Flèches			9
+
 	LoadGLTextures("textures/playerHaut.png");				// playerHaut		10
 	LoadGLTextures("textures/playerGauche.png");			// playerGauche		11
 	LoadGLTextures("textures/playerBas.png");				// playerBas		12
 	LoadGLTextures("textures/playerDroite.png");			// playerDroite		13
+
 	LoadGLTextures("textures/ventSolaire02.png");			// Flèches			14
 	LoadGLTextures("textures/ventSolaire03.png");			// Flèches			15
 	LoadGLTextures("textures/ventSolaire04.png");			// Flèches			16
 	LoadGLTextures("textures/ventSolaire05.png");			// Flèches			17
+
 	LoadGLTextures("textures/PlaneteBleue.png");			// PlanèteBleue		18
 	LoadGLTextures("textures/PlaneteJaune.png");			// PlanèteJaune		19
 	LoadGLTextures("textures/PlaneteRose.png");				// PlanèteRose		20
 	LoadGLTextures("textures/PlaneteBleueDetruite.png");	// PlanèteBleueD	21
 	LoadGLTextures("textures/PlaneteJauneDetruite.png");	// PlanèteJauneD	22
 	LoadGLTextures("textures/PlaneteRoseDetruite.png");		// PlanèteRoseD		23
+
 	LoadGLTextures("textures/NuageGalaxie.jpg");			// galaxie			24
+
 	LoadGLTextures("textures/CargoHaut.png");				// ennemiPeuple		25
 	LoadGLTextures("textures/CargoDroite.png");				// ennemiPeuple		26
 	LoadGLTextures("textures/CargoBas.png");				// ennemiPeuple		27
 	LoadGLTextures("textures/CargoGauche.png");				// ennemiPeuple		28
+
 	LoadGLTextures("textures/Teleport02.png");				// teleport			29
 	LoadGLTextures("textures/Teleport03.png");				// teleport			30
 	LoadGLTextures("textures/Teleport04.png");				// teleport			31
@@ -185,25 +195,28 @@ void  mainWindows::affichage()
 
 	fenetre.translationCam();
 
-	//fenetre.imageFond();
+	fenetre.imageFond();
 	fenetre.dessinerNiveau();
 	fenetre.dessinerPlanete();
 
 	grilleJeu.verifPosition();
 	fenetre.dessinerJoueur();
 
-	if (fenetre.nbrPlaneteDetruite > 3)
+	if (fenetre.nbrPlaneteDetruite > 4)
 	{
-		// Si le nombre de planètes détruites est supérieur à 3, l'ennemi apparait et bouge vers elles
+		// Si le nombre de planètes détruites est supérieur à 5, l'ennemi apparait et bouge vers elles
 		if (grilleJeu.declencherBalayage == true)
 		{
 			grilleJeu.balayageDeLaMatrice = true;
 			grilleJeu.declencherBalayage = false;
 		}
 
-		glutTimerFunc(16, cargo01.deplacementEP, 0);
+		glutTimerFunc(16, fenetre.deplacementEnnemis, 0);
+		cout << cargo01.m_x << " " << cargo01.m_y << endl;
 		fenetre.dessinerEnnemiPeuple();
 	}
+
+	
 		
 	//glutFullScreen();
 
@@ -287,24 +300,71 @@ void mainWindows::dessinerJoueur()
 
 void mainWindows::dessinerEnnemiPeuple()
 {
-	switch (cargo01.valDep)
+	//cout << "dessiner ennemi" << endl;
+
+	if (fenetre.nbrPlaneteDetruite > 4)
 	{
-	case 0:
-		afficherTexture(cargo01.positionX(), cargo01.positionY(), 1, 1, texture[25]);
-		break;
+		switch (cargo01.valDep)
+		{
+		case 0:
+			afficherTexture(cargo01.m_x, cargo01.m_y, 1, 1, texture[25]);
+			break;
 
-	case 1:
-		afficherTexture(cargo01.positionX(), cargo01.positionY(), 1, 1, texture[26]);
-		break;
+		case 1:
+			afficherTexture(cargo01.m_x, cargo01.m_y, 1, 1, texture[26]);
+			break;
 
-	case 2:
-		afficherTexture(cargo01.positionX(), cargo01.positionY(), 1, 1, texture[27]);
-		break;
+		case 2:
+			afficherTexture(cargo01.m_x, cargo01.m_y, 1, 1, texture[27]);
+			break;
 
-	case 3:
-		afficherTexture(cargo01.positionX(), cargo01.positionY(), 1, 1, texture[28]);
-		break;
+		case 3:
+			afficherTexture(cargo01.m_x, cargo01.m_y, 1, 1, texture[28]);
+			break;
+		}
+	}
 
+	if (fenetre.nbrPlaneteDetruite > 9)
+	{
+		switch (cargo02.valDep)
+		{
+		case 0:
+			afficherTexture(cargo02.m_x, cargo02.m_y, 1, 1, texture[25]);
+			break;
+
+		case 1:
+			afficherTexture(cargo02.m_x, cargo02.m_y, 1, 1, texture[26]);
+			break;
+
+		case 2:
+			afficherTexture(cargo02.m_x, cargo02.m_y, 1, 1, texture[27]);
+			break;
+
+		case 3:
+			afficherTexture(cargo02.m_x, cargo02.m_y, 1, 1, texture[28]);
+			break;
+		}
+	}
+	if (fenetre.nbrPlaneteDetruite > 14)
+	{
+		switch (cargo03.valDep)
+		{
+		case 0:
+			afficherTexture(cargo03.m_x, cargo03.m_y, 1, 1, texture[25]);
+			break;
+
+		case 1:
+			afficherTexture(cargo03.m_x, cargo03.m_y, 1, 1, texture[26]);
+			break;
+
+		case 2:
+			afficherTexture(cargo03.m_x, cargo03.m_y, 1, 1, texture[27]);
+			break;
+
+		case 3:
+			afficherTexture(cargo03.m_x, cargo03.m_y, 1, 1, texture[28]);
+			break;
+		}
 	}
 }
 
@@ -350,6 +410,26 @@ void mainWindows::dessinerPlanete()
 		}
 	}
 
+}
+
+void mainWindows::deplacementEnnemis(int obligatoire)
+{
+	
+	cargo01.deplacementEP(0, cargo01);
+
+	 if (fenetre.nbrPlaneteDetruite > 9)
+	 {
+		 grilleJeu.balayageDeLaMatrice = true;
+		 cargo02.deplacementEP(0, cargo02);
+	 }
+
+	 if (fenetre.nbrPlaneteDetruite > 14)
+	 {
+		 grilleJeu.balayageDeLaMatrice = true;
+		 cargo03.deplacementEP(0, cargo03);
+	 }
+
+	glutTimerFunc(16, fenetre.deplacementEnnemis, 0);
 }
 
 void mainWindows::planeteBleuDetruite()

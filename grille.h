@@ -7,6 +7,7 @@
 #include <cmath>
 #include "cases.h"
 #include "mainWindows.h"
+#include "ennemi.h"
 #include "ennemiPeuple.h"
 #include "player.h"
 
@@ -25,7 +26,7 @@ public:
 	cases Matrice[NB_LIGNES][NB_COLONNES];
 
 	void dessinerNiveauBas(vector <cases> C);
-	double distancePlanetes();
+	double distancePlanetes (double, double);
 
 	void respawnEnnemi();
 	void speedEnnemis();
@@ -40,6 +41,7 @@ public:
 	bool balayageDeLaMatrice = false;
 	bool declencherBalayage = true;
 	int val_X, val_Y;
+	int speedEnnemiP;
 
 	void verifPosition();
 	void caseFleches();
