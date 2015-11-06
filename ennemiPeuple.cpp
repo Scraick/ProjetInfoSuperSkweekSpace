@@ -147,7 +147,7 @@ void ennemiPeuple::changerCase(ennemiPeuple vaisseauCargo)
 	if (fenetre.rose[vaisseauCargo.m_y][vaisseauCargo.m_x] == fenetre.texture[23])
 	{
 		if (fenetre.nbrPlaneteDetruite > 5)
-		{
+{
 			grilleJeu.declencherBalayage = true; //Nouvelle recherche de planète
 		}
 

@@ -8,14 +8,14 @@ class ennemiPeuple : public ennemi
 public:
 
 	ennemiPeuple(double x, double y);
-	
+
 	double positionX();
 	double positionY();
 
 	void nombre();
 	void changerCase(ennemiPeuple);
 	static void deplacementEP(int, ennemiPeuple &);
-
+	
 	void depGauche();
 	void depDroit();
 	void depHaut();

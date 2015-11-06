@@ -39,6 +39,9 @@ public:
 	void dessinerEnnemiPeuple();
 	void dessinerPlanete();
 
+	void dessinerTirs();
+
+
 	static void deplacementEnnemis(int obligatoire);
 
 	void planeteBleuDetruite();
@@ -54,8 +57,8 @@ public:
 	void imageFond();
 	
 	static void clavier(int key, int x, int y);
-	static void clavierUp(int key, int x, int y);
-	
+	static void clavierUp(int key, int x, int y);	
+
 	int img_X = 0;
 	int img_Y = 0;
 };
