@@ -26,6 +26,8 @@ public:
 	cases Matrice[NB_LIGNES][NB_COLONNES];
 
 	void dessinerNiveauBas(vector <cases> C);
+	void dessinerNiveauHaut(vector <cases> C);
+
 	double distancePlanetes (double, double);
 
 	void respawnEnnemi();
@@ -56,7 +58,7 @@ public:
 	void depHaut(ennemi &);
 	void depBas(ennemi &);
 
-	void verifPosition();
+	bool verifPosition();
 	void caseFleches();
 	static void callBackFleches(int call);
 

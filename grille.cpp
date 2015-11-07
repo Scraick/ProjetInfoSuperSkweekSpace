@@ -13,7 +13,7 @@ grille::~grille()
 
 void grille::dessinerNiveauBas(vector <cases> C)
 {
-	ifstream fichier("Matricetest.txt", ios::in);  // on ouvre le fichier en lecture
+	ifstream fichier("Matrice01.txt", ios::in);  // on ouvre le fichier en lecture
 
 	if (fichier)  // si l'ouverture a réussi
 	{
@@ -38,6 +38,36 @@ void grille::dessinerNiveauBas(vector <cases> C)
 	}
 	else  // sinon
 		cout << "Impossible d'ouvrir le fichier !" << endl;
+}
+
+void grille::dessinerNiveauHaut(vector<cases> C)
+{
+	ifstream fichier("Matrice02.txt", ios::in);  // on ouvre le fichier en lecture
+
+	if (fichier)  // si l'ouverture a réussi
+	{
+		char caractere;
+
+		for (int y = 0; y < NB_LIGNES; y++)
+		{
+			for (int x = 0; x < NB_COLONNES; x++)
+			{
+
+				fichier.get(caractere);
+				//Remplissage de la matrice de cases, avec des caracteres
+				//Ces derniers seront remplacés par des textures dans le mainWindows
+				Matrice[y][x] = cases(C[caractere - '0']);
+				cout << caractere;
+			}
+
+		}
+
+		fichier.close();
+
+	}
+	else  // sinon
+		cout << "Impossible d'ouvrir le fichier !" << endl;
+
 }
 
 double grille::distancePlanetes(double x, double y)
@@ -323,32 +353,58 @@ double grille::parallaxeFond(double posX, double posY)
 	return posX, posY;
 }
 
-void grille::verifPosition()
+bool grille::verifPosition()
 {
 	int	pt1 = round(joueur.positionX());
 	int	pt2 = round(joueur.positionX());
 	int	pt3 = round(joueur.positionY());
 	int	pt4 = round(joueur.positionY());
 
-	if ((grilleJeu.Matrice[pt3][pt1].m_id == '5') && (grilleJeu.Matrice[pt3][pt2].m_id == '5'))
-	{
-		glutTimerFunc(250, grilleJeu.callBackFleches, 0);
-	}
+	int posX = joueur.positionX(), posY = joueur.positionY();
 
-	if ((grilleJeu.Matrice[pt3][pt1].m_id == '2') && (grilleJeu.Matrice[pt3][pt2].m_id == '2'))
+	if ((grilleJeu.Matrice[pt3][pt1].m_id == '2') && (grilleJeu.Matrice[pt3][pt2].m_id == '2')) // Case Planetes Bleues
 	{
 		fenetre.planeteBleuDetruite();
+		return 0;
 	}
 
-	if ((grilleJeu.Matrice[pt3][pt1].m_id == '6') && (grilleJeu.Matrice[pt3][pt2].m_id == '6'))
+	if ((grilleJeu.Matrice[pt3][pt1].m_id == '4') && (grilleJeu.Matrice[pt3][pt2].m_id == '4')) // Case Teleport
+	{
+		if (fenetre.niveauBas == true)
+		{
+			fenetre.niveauBas = false;
+			cout << "check" << endl;
+			return fenetre.niveauBas;
+		}
+
+		if (fenetre.niveauBas == false)
+		{
+			fenetre.niveauBas = true;
+			cout << "check" << endl;
+			return fenetre.niveauBas;
+		}
+
+	}
+
+	if ((grilleJeu.Matrice[pt3][pt1].m_id == '5') && (grilleJeu.Matrice[pt3][pt2].m_id == '5')) // Case Fleches
+	{
+		glutTimerFunc(250, grilleJeu.callBackFleches, 0);
+		return 0;
+	}
+
+	if ((grilleJeu.Matrice[pt3][pt1].m_id == '6') && (grilleJeu.Matrice[pt3][pt2].m_id == '6')) // Case Planetes Jaunes
 	{
 		fenetre.planeteJauneDetruite();
+		return 0;
 	}
 
-	if ((grilleJeu.Matrice[pt3][pt1].m_id == '7') && (grilleJeu.Matrice[pt3][pt2].m_id == '7'))
+	if ((grilleJeu.Matrice[pt3][pt1].m_id == '7') && (grilleJeu.Matrice[pt3][pt2].m_id == '7')) // Case Planetes Roses
 	{
 		fenetre.planeteRoseDetruite();
+		return 0;
 	}
+
+	return 0;
 }
 
 void grille::caseFleches()

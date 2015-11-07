@@ -52,6 +52,10 @@ public:
 	static void affichage();
 	static void callback_affichage(int);
 	static void redim(int x, int y);
+	bool niveauBas = true;
+	bool dessinerUneFois = false;
+	bool remplirPlanetes = true;
+	int cptTP = 0;
 
 	void translationCam();
 	void loadtexture();

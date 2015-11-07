@@ -145,11 +145,13 @@ void mainWindows::init(int x, int y)
 	glutCreateWindow("Super Skweek");
 
 	loadtexture(); //Load des textures dans les vecteurs correspondants
+
+
 	grilleJeu.dessinerNiveauBas(m_cases); //remplissage de la matrice avec les valeurs
+	
 	glutDisplayFunc(affichage);
 	glutReshapeFunc(redim);
 
-	cout << "une fois ? " << endl;
 	cargo01.setX(25), cargo01.setY(25), cargo01.setVal(0);
 
 	// Initialisation de la musique
@@ -206,23 +208,84 @@ void mainWindows::imageFond()
 
 void mainWindows::dessinerNiveau()
 {
-	for (int i = 0; i < NB_LIGNES; i++) //Parcours de la matrice de cases et affichage des textures
+
+	if (fenetre.niveauBas == true)
 	{
-		for (int j = 0; j < NB_COLONNES; j++)
+
+	for (int i = 0; i < NB_LIGNES; i++) //Parcours de la matrice de cases et affichage des textures
 		{
-			// Appel de la fonction textureAnime, qui permet de faire l'animation
-			// Si il n'y a qu'un texture dans une case, il n'ya a pas d'animation
-			// Ajout d'une condition pour que les soleils prennent quatres case
-			if (grilleJeu.Matrice[i][j].m_id == '3')
+			for (int j = 0; j < NB_COLONNES; j++)
 			{
-				afficherTexture(j, i, 2, 2, grilleJeu.Matrice[i][j].textureAnime());
-			}
-			else
-			{
-				afficherTexture(j, i, 1, 1, grilleJeu.Matrice[i][j].textureAnime());
+				// Appel de la fonction textureAnime, qui permet de faire l'animation
+				// Si il n'y a qu'un texture dans une case, il n'ya a pas d'animation
+				// Ajout d'une condition pour que les soleils prennent quatres case
+				if (grilleJeu.Matrice[i][j].m_id == '3')
+				{
+					afficherTexture(j, i, 2, 2, grilleJeu.Matrice[i][j].textureAnime());
+				}
+				else
+				{
+					afficherTexture(j, i, 1, 1, grilleJeu.Matrice[i][j].textureAnime());
+				}
 			}
 		}
+
+	if (fenetre.dessinerUneFois == true)
+	{
+		grilleJeu.dessinerNiveauBas(m_cases);
+
+		fenetre.remplirPlanetes = true;
+		fenetre.dessinerUneFois = false;
 	}
+	else
+	{
+		if (cptTP > 0)
+		fenetre.remplirPlanetes = false;
+	}
+
+
+	fenetre.dessinerPlanete();
+
+	}
+	else
+	{
+	
+		for (int i = 0; i < NB_LIGNES; i++) //Parcours de la matrice de cases et affichage des textures
+		{
+			for (int j = 0; j < NB_COLONNES; j++)
+			{
+				// Appel de la fonction textureAnime, qui permet de faire l'animation
+				// Si il n'y a qu'un texture dans une case, il n'ya a pas d'animation
+				// Ajout d'une condition pour que les soleils prennent quatres case
+				if (grilleJeu.Matrice[i][j].m_id == '3')
+				{
+					afficherTexture(j, i, 2, 2, grilleJeu.Matrice[i][j].textureAnime());
+				}
+				else
+				{
+					afficherTexture(j, i, 1, 1, grilleJeu.Matrice[i][j].textureAnime());
+				}
+			}
+		}
+
+		if (fenetre.dessinerUneFois == false)
+		{
+			grilleJeu.dessinerNiveauHaut(m_cases);
+
+			cptTP++;
+			fenetre.remplirPlanetes = true;
+			fenetre.dessinerUneFois = true;
+		}
+		else
+		{
+			fenetre.remplirPlanetes = false;
+		}
+
+		fenetre.dessinerPlanete();
+	}
+	
+
+	
 }
 
 void mainWindows::dessinerEnnemiPeuple(ennemi vaisseauCargo)
@@ -257,7 +320,7 @@ void mainWindows::dessinerPlanete()
 		{
 			if (grilleJeu.Matrice[i][j].m_id == '2')
 			{
-				if ((joueur.positionX() == 1.0) && (joueur.positionY() == 1.0))
+				if (fenetre.remplirPlanetes == true)
 				{
 					bleu[i][j] = texture[18]; 
 					//bleu[i][j] = texture[21]; // test ennemiPeuple
@@ -268,8 +331,7 @@ void mainWindows::dessinerPlanete()
 
 			if (grilleJeu.Matrice[i][j].m_id == '6')
 			{
-				if ((joueur.positionX() == 1.0) && (joueur.positionY() == 1.0))
-
+				if (fenetre.remplirPlanetes == true)
 				{
 					jaune[i][j] = texture[19];
 					//jaune[i][j] = texture[22]; // test ennemiPeuple
@@ -281,8 +343,7 @@ void mainWindows::dessinerPlanete()
 			if (grilleJeu.Matrice[i][j].m_id == '7')
 			{
 
-				if ((joueur.positionX() == 1.0) && (joueur.positionY() == 1.0))
-
+				if (fenetre.remplirPlanetes == true)
 				{
 					rose[i][j] = texture[20];
 					//rose[i][j] = texture[23]; // test ennemiPeuple
@@ -291,7 +352,7 @@ void mainWindows::dessinerPlanete()
 				afficherTexture(j, i, 1, 1, rose[i][j]);
 			}
 		}
-		}
+	}
 
 }
 
@@ -347,6 +408,8 @@ void mainWindows::dessinerJoueur()
 		afficherTexture(joueur.positionX(), joueur.positionY(), 1.25, 1.25, texture[13]);
 		break;
 	}
+
+	fenetre.remplirPlanetes = false;
 }
 
 void dessinerTir(int)
@@ -370,6 +433,7 @@ void mainWindows::planeteBleuDetruite()
 		bleu[tmp_y][tmp_x] = texture[21];
 		scoreJoueur += 100;
 		nbrPlaneteDetruite += 1;
+		cout << "planete detruite" << endl;
 	}	
 }
 
@@ -383,6 +447,7 @@ void mainWindows::planeteJauneDetruite()
 		jaune[tmp_y][tmp_x] = texture[22];
 		scoreJoueur += 100;
 		nbrPlaneteDetruite += 1;
+		cout << "planete detruite" << endl;
 	}
 }
 
@@ -396,6 +461,7 @@ void mainWindows::planeteRoseDetruite()
 		rose[tmp_y][tmp_x] = texture[23];
 		scoreJoueur += 100;
 		nbrPlaneteDetruite += 1;
+		cout << "planete detruite" << endl;
 	}
 }
 
@@ -522,11 +588,11 @@ void mainWindows::affichage()
 
 	fenetre.imageFond();
 	fenetre.dessinerNiveau();
-	fenetre.dessinerPlanete();
 
 	fenetre.translationCam();
 	grilleJeu.verifPosition();
 	fenetre.dessinerJoueur();
+
 
 	if (bullet.bulletActif() == true)
 	{
