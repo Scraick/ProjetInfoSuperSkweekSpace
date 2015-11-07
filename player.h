@@ -23,15 +23,14 @@ public:
 	void velocityDroit();
 	void velocityHaut();
 	void velocityBas();
-
 	double acceleration();
 	double deceleration();
 
 	double positionX();
 	double positionY();
+	//double timer(double temps);
 
 private:
-
 	int m_nbVie;
 	double m_playerX = 1;
 	double m_playerY = 1;

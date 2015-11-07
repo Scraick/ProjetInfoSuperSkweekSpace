@@ -6,15 +6,18 @@ class ennemi
 public:
 	ennemi();
 
-	ennemi(int x, int y);
+	ennemi(int x, int y, int val);
 
 	void mortEnnemi(bool etat); //Vérification de la mort des ennemis
 	void deplacementEnnemis(int dep); //Déplacement ennemis
+	int tmp = 0;
+	double tmpX, tmpY;
 
-
-	int m_x, m_y, m_nombre; //Position X et Y des différents ennemis
 	bool m_etat; // booleen d'état de l'ennemi
 
+	void setX(double x);
+	void setY(double y);
+	void setVal(int val);
 
 	void mort(bool etat);
 	void respawn();
@@ -24,7 +27,18 @@ public:
 	int positionX();
 	int positionY();
 
+	int valDep = 0;
+	double m_x, m_y;
 
+	void deplacementEP(ennemi &);
+
+protected:
+	int  m_nombre; //Position X et Y des différents ennemis
+	
 };
+
+extern ennemi cargo01;
+extern ennemi cargo02;
+extern ennemi cargo03;
 
 #endif

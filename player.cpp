@@ -14,23 +14,31 @@ player::~player()
 
 void player::depGauche() //Déplacement gauche
 {
-	m_playerX -= (0.1 * acceleration());
+	m_playerX -= (0.3 * acceleration());
 }
 
 void player::depDroit() //Déplacement droit
 {
-	m_playerX += (0.1 * acceleration());
+	m_playerX += (0.3 * acceleration());
 }
 
 void player::depHaut() //Déplacement haut
 {
-	m_playerY -= (0.1 * acceleration());
+	m_playerY -= (0.3 * acceleration());
 }
 
 void player::depBas() //Déplacement bas
 {
-	m_playerY += (0.1 * acceleration());
+	m_playerY += (0.3 * acceleration());
 }
+
+//double player::timer(double temps)
+//{
+//	clock_t arrivee = clock()*(temps*CLOCKS_PER_SEC) / 1000;
+//	int x = arrivee % 10;
+//	cout << (x == 0) << endl;
+//	return x;
+//}
 
 void player::velocityGauche()
 {

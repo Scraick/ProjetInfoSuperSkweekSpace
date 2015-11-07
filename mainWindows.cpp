@@ -7,6 +7,9 @@ GLuint bleu[60][32];
 GLuint jaune[60][32];
 GLuint rose[60][32];
 
+//, cargo02, cargo03;
+
+void dessinerTir(int);
 
 mainWindows::mainWindows()
 {
@@ -16,7 +19,7 @@ mainWindows::~mainWindows()
 {
 }
 
-int  mainWindows::LoadGLTextures(string name) // Load Bitmaps And Convert To Textures
+int mainWindows::LoadGLTextures(string name) // Load Bitmaps And Convert To Textures
 {
 	
 	GLuint essai = SOIL_load_OGL_texture
@@ -83,6 +86,7 @@ void mainWindows::loadtexture()
 	LoadGLTextures("textures/Teleport03.png");				// teleport			30
 	LoadGLTextures("textures/Teleport04.png");				// teleport			31
 
+	LoadGLTextures("textures/tir.png");						// Tir du joueur	32
 
 	cases caseSoleil; // Creation de la case Soleil, qui contient les frames d'animation
 	caseSoleil.m_id = '3';
@@ -116,7 +120,6 @@ void mainWindows::loadtexture()
 	caseTeleport.ajouterFrame(texture[30]);
 	caseTeleport.ajouterFrame(texture[31]);
 
-
 	//Plusieurs numéros pour le moment, car l'attribution automatique ne fonctionne pas
 	planeteBleue.m_id = '2';
 	planeteJaune.m_id = '6';
@@ -132,8 +135,6 @@ void mainWindows::loadtexture()
 	m_cases.push_back(cases(texture[0], '6', '0'));
 	m_cases.push_back(cases(texture[0], '7', '0'));
 	m_cases.push_back(cases(texture[0], '8', '0'));
-	
-	
 }
 
 void mainWindows::init(int x, int y)
@@ -148,88 +149,38 @@ void mainWindows::init(int x, int y)
 	glutDisplayFunc(affichage);
 	glutReshapeFunc(redim);
 
-	glutTimerFunc(0, callback_affichage, 0);
+	cout << "une fois ? " << endl;
+	cargo01.setX(25), cargo01.setY(25), cargo01.setVal(0);
 
+	// Initialisation de la musique
+	FMOD_SYSTEM *system;
+	FMOD_SOUND *musique;
+	FMOD_RESULT resultat;
+	FMOD_System_Create(&system);
+	FMOD_System_Init(system, 1, FMOD_INIT_NORMAL, 0);
+	resultat = FMOD_System_CreateSound(system, "sounds/Main_Theme.mp3", FMOD_SOFTWARE | FMOD_2D | FMOD_CREATESTREAM, 0, &musique);
+	sons.music(system, musique, resultat);
+
+	glutTimerFunc(16, callback_affichage, 0);
 	glutMainLoop();
+
+	sons.stop( system, musique, resultat);
 }
 
 void mainWindows::afficherTexture(double x, double y, double largeur, double hauteur, const GLuint &texture)
 {
-	
 	glEnable(GL_TEXTURE_2D);
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glBindTexture(GL_TEXTURE_2D, texture);
 	glBegin(GL_QUADS);
-	glTexCoord2d(0, hauteur); glVertex2d(x, y);
-	glTexCoord2d(largeur, hauteur); glVertex2d(x + largeur, y);
-	glTexCoord2d(largeur, 0); glVertex2d(x + largeur, y + hauteur);
+		glTexCoord2d(0, 1); glVertex2d(x, y);
+		glTexCoord2d(1, 1); glVertex2d(x + largeur, y);
+		glTexCoord2d(1, 0); glVertex2d(x + largeur, y + hauteur);
 	glTexCoord2d(0, 0); glVertex2d(x, y + hauteur);
-
 	glEnd();
 	glDisable(GL_TEXTURE_2D);
 
-}
-
-void mainWindows::afficherTextureSoleil(double x, double y, double largeur, double hauteur, const GLuint &texture)
-{
-	glEnable(GL_TEXTURE_2D);
-	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	glBindTexture(GL_TEXTURE_2D, texture);
-	glBegin(GL_QUADS);
-	glTexCoord2d(0, 1); glVertex2d(y, x);
-	glTexCoord2d(1, 1); glVertex2d(y + hauteur, x);
-	glTexCoord2d(1, 0); glVertex2d(y + hauteur, x + largeur);
-	glTexCoord2d(0, 0); glVertex2d(y, x + largeur);
-	glEnd();
-	glDisable(GL_TEXTURE_2D);
-
-}
-
-void  mainWindows::affichage()
-{
-	glClearColor(0.0, 0.0157, 0.0313, 1);  
-	glClear(GL_COLOR_BUFFER_BIT);
-	glMatrixMode(GL_MODELVIEW);
-
-	fenetre.translationCam();
-
-	fenetre.imageFond();
-	fenetre.dessinerNiveau();
-	fenetre.dessinerPlanete();
-
-	grilleJeu.verifPosition();
-	fenetre.dessinerJoueur();
-
-	if (fenetre.nbrPlaneteDetruite > 4)
-	{
-		// Si le nombre de planètes détruites est supérieur à 5, l'ennemi apparait et bouge vers elles
-		if (grilleJeu.declencherBalayage == true)
-		{
-			grilleJeu.balayageDeLaMatrice = true;
-			grilleJeu.declencherBalayage = false;
-		}
-
-		glutTimerFunc(16, fenetre.deplacementEnnemis, 0);
-		cout << cargo01.m_x << " " << cargo01.m_y << endl;
-		fenetre.dessinerEnnemiPeuple();
-	}
-
-	
-		
-	//glutFullScreen();
-
-	glutSpecialFunc(fenetre.clavier); // Appuie des touches du clavier
-	//glutSpecialUpFunc(fenetre.clavierUp); // Touche du clavier relaché
-
-	glFlush();
-	glutTimerFunc(10, callback_affichage, 0);
-}
-
-void mainWindows::callback_affichage(int) // utiliser pour atteindre la fonction affichage
-{
-	affichage();
 }
 
 void mainWindows::imageFond()
@@ -251,20 +202,20 @@ void mainWindows::imageFond()
 	glTexCoord2d(0, 0); glVertex2d(img_X, img_Y + hauteur);
 	glEnd();
 	glDisable(GL_TEXTURE_2D);
-	
 }
 
-void  mainWindows::dessinerNiveau()
+void mainWindows::dessinerNiveau()
 {
-	for (int i = 0; i < NB_LIGNES ; i++) //Parcours de la matrice de cases et affichage des textures
+	for (int i = 0; i < NB_LIGNES; i++) //Parcours de la matrice de cases et affichage des textures
 	{
-		for (int j = 0; j < NB_COLONNES ; j++)
+		for (int j = 0; j < NB_COLONNES; j++)
 		{
 			// Appel de la fonction textureAnime, qui permet de faire l'animation
 			// Si il n'y a qu'un texture dans une case, il n'ya a pas d'animation
+			// Ajout d'une condition pour que les soleils prennent quatres case
 			if (grilleJeu.Matrice[i][j].m_id == '3')
 			{
-				afficherTextureSoleil(i, j, 2, 2, grilleJeu.Matrice[i][j].textureAnime());
+				afficherTexture(j, i, 2, 2, grilleJeu.Matrice[i][j].textureAnime());
 			}
 			else
 			{
@@ -272,100 +223,29 @@ void  mainWindows::dessinerNiveau()
 			}
 		}
 	}
-
 }
 
-void mainWindows::dessinerJoueur()
+void mainWindows::dessinerEnnemiPeuple(ennemi vaisseauCargo)
 {
-	switch (joueur.valDep)
-	{
-
-	case 0: // Haut
-		afficherTexture(joueur.positionX(), joueur.positionY(), 1, 1, texture[10]);
-		break;
-
-	case 1: // Gauche
-		afficherTexture(joueur.positionX(), joueur.positionY(), 1, 1, texture[11]);
-		break;
-
-	case 2: // Bas
-		afficherTexture(joueur.positionX(), joueur.positionY(), 1, 1, texture[12]);
-		break;
-
-	case 3: // Droite
-		afficherTexture(joueur.positionX(), joueur.positionY(), 1, 1, texture[13]);
-		break;
-	}
-}
-
-void mainWindows::dessinerEnnemiPeuple()
-{
-	//cout << "dessiner ennemi" << endl;
-
-	if (fenetre.nbrPlaneteDetruite > 4)
-	{
-		switch (cargo01.valDep)
+		switch (vaisseauCargo.valDep)
 		{
 		case 0:
-			afficherTexture(cargo01.m_x, cargo01.m_y, 1, 1, texture[25]);
+			afficherTexture(vaisseauCargo.positionX(), vaisseauCargo.positionY(), 1, 1, texture[25]);
 			break;
 
 		case 1:
-			afficherTexture(cargo01.m_x, cargo01.m_y, 1, 1, texture[26]);
+			//cout << "affichage texture gauche" << endl;
+			afficherTexture(vaisseauCargo.positionX(), vaisseauCargo.positionY() ,1, 1, texture[26]);
 			break;
 
 		case 2:
-			afficherTexture(cargo01.m_x, cargo01.m_y, 1, 1, texture[27]);
+			afficherTexture(vaisseauCargo.positionX(), vaisseauCargo.positionY(), 1, 1, texture[27]);
 			break;
 
 		case 3:
-			afficherTexture(cargo01.m_x, cargo01.m_y, 1, 1, texture[28]);
+			afficherTexture(vaisseauCargo.positionX(), vaisseauCargo.positionY(), 1, 1, texture[28]);
 			break;
 		}
-	}
-
-	if (fenetre.nbrPlaneteDetruite > 9)
-	{
-		switch (cargo02.valDep)
-		{
-		case 0:
-			afficherTexture(cargo02.m_x, cargo02.m_y, 1, 1, texture[25]);
-			break;
-
-		case 1:
-			afficherTexture(cargo02.m_x, cargo02.m_y, 1, 1, texture[26]);
-			break;
-
-		case 2:
-			afficherTexture(cargo02.m_x, cargo02.m_y, 1, 1, texture[27]);
-			break;
-
-		case 3:
-			afficherTexture(cargo02.m_x, cargo02.m_y, 1, 1, texture[28]);
-			break;
-		}
-	}
-	if (fenetre.nbrPlaneteDetruite > 14)
-	{
-		switch (cargo03.valDep)
-		{
-		case 0:
-			afficherTexture(cargo03.m_x, cargo03.m_y, 1, 1, texture[25]);
-			break;
-
-		case 1:
-			afficherTexture(cargo03.m_x, cargo03.m_y, 1, 1, texture[26]);
-			break;
-
-		case 2:
-			afficherTexture(cargo03.m_x, cargo03.m_y, 1, 1, texture[27]);
-			break;
-
-		case 3:
-			afficherTexture(cargo03.m_x, cargo03.m_y, 1, 1, texture[28]);
-			break;
-		}
-	}
 }
 
 void mainWindows::dessinerPlanete()
@@ -379,7 +259,8 @@ void mainWindows::dessinerPlanete()
 			{
 				if ((joueur.positionX() == 1.0) && (joueur.positionY() == 1.0))
 				{
-					bleu[i][j] = texture[18];
+					bleu[i][j] = texture[18]; 
+					//bleu[i][j] = texture[21]; // test ennemiPeuple
 				}
 
 				afficherTexture(j, i, 1, 1, bleu[i][j]);
@@ -391,6 +272,7 @@ void mainWindows::dessinerPlanete()
 
 				{
 					jaune[i][j] = texture[19];
+					//jaune[i][j] = texture[22]; // test ennemiPeuple
 				}
 
 				afficherTexture(j, i, 1, 1, jaune[i][j]);
@@ -403,33 +285,79 @@ void mainWindows::dessinerPlanete()
 
 				{
 					rose[i][j] = texture[20];
+					//rose[i][j] = texture[23]; // test ennemiPeuple
 				}
 
 				afficherTexture(j, i, 1, 1, rose[i][j]);
 			}
 		}
-	}
+		}
 
 }
 
 void mainWindows::deplacementEnnemis(int obligatoire)
 {
+
+	cargo01.deplacementEP(cargo01);
+	//cout << "position apres fonction, dans le main: " << cargo01.positionX() << " " << cargo01.positionY() << endl;
+	fenetre.dessinerEnnemiPeuple(cargo01);
 	
-	cargo01.deplacementEP(0, cargo01);
 
 	 if (fenetre.nbrPlaneteDetruite > 9)
 	 {
-		 grilleJeu.balayageDeLaMatrice = true;
-		 cargo02.deplacementEP(0, cargo02);
+		 if (grilleJeu.declencherBalayage == true)
+		 {
+			 grilleJeu.balayageDeLaMatrice02 = true;
+			 grilleJeu.declencherBalayage = false;
+		 }
+
+		 cargo02.deplacementEP(cargo02);
+		 fenetre.dessinerEnnemiPeuple(cargo02);
 	 }
 
 	 if (fenetre.nbrPlaneteDetruite > 14)
 	 {
-		 grilleJeu.balayageDeLaMatrice = true;
-		 cargo03.deplacementEP(0, cargo03);
-	 }
+		 if (grilleJeu.declencherBalayage == true)
+		 {
+			 grilleJeu.balayageDeLaMatrice02 = true;
+			 grilleJeu.declencherBalayage = false;
+		 }
 
-	glutTimerFunc(16, fenetre.deplacementEnnemis, 0);
+		 cargo03.deplacementEP(cargo03);
+		 fenetre.dessinerEnnemiPeuple(cargo03);
+	}
+
+	glutTimerFunc(300, fenetre.deplacementEnnemis, 0);
+}
+
+void mainWindows::dessinerJoueur()
+{
+	switch (joueur.valDep)
+	{
+	case 0: // Haut
+		afficherTexture(joueur.positionX(), joueur.positionY(), 1.25, 1.25, texture[10]);
+		break;
+	case 1: // Gauche
+		afficherTexture(joueur.positionX(), joueur.positionY(), 1.25, 1.25, texture[11]);
+		break;
+	case 2: // Bas
+		afficherTexture(joueur.positionX(), joueur.positionY(), 1.25, 1.25, texture[12]);
+		break;
+	case 3: // Droite
+		afficherTexture(joueur.positionX(), joueur.positionY(), 1.25, 1.25, texture[13]);
+		break;
+	}
+}
+
+void dessinerTir(int)
+{
+	bullet.shoot();
+	glutTimerFunc(6400, dessinerTir, 0);
+}
+
+void mainWindows::dessinerTirs()
+{
+	fenetre.afficherTexture(bullet.bulletX(), bullet.bulletY(), 1, 1, fenetre.texture[32]);
 }
 
 void mainWindows::planeteBleuDetruite()
@@ -473,6 +401,11 @@ void mainWindows::planeteRoseDetruite()
 
 void mainWindows::clavier(int key, int x, int y)
 {
+	if (!bullet.bulletActif())
+	{
+		bullet.setOrientation(joueur.valDep);
+	}
+
 	switch (key)
 	{
 	case GLUT_KEY_F1:
@@ -498,36 +431,50 @@ void mainWindows::clavier(int key, int x, int y)
 		grilleJeu.colisionDroite();
 		joueur.valDep = 3;
 		break;
+
+	case GLUT_KEY_END:
+		if (!bullet.bulletActif())
+		{
+			bullet.setX(joueur.positionX());
+			bullet.setY(joueur.positionY());
+			bullet.setActif(true);
+			bullet.shoot();
+		}
+		else
+		break;
 	}
 }
 
 void mainWindows::clavierUp(int key, int x, int y)
 {
-	if (key == GLUT_KEY_UP)
-	{
-		joueur.velocityHaut();
-	}
+	//if (key == GLUT_KEY_UP)
+	//{
+	//	joueur.velocityHaut();
+	//}
 
-	if (key == GLUT_KEY_DOWN)
-	{
-		joueur.velocityBas();
-	}
+	//if (key == GLUT_KEY_DOWN)
+	//{
+	//	joueur.velocityBas();
+	//}
 
-	if (key == GLUT_KEY_LEFT)
-	{
-		joueur.velocityGauche();
-	}
+	//if (key == GLUT_KEY_LEFT)
+	//{
+	//	joueur.velocityGauche();
+	//}
 
-	if (key == GLUT_KEY_RIGHT)
+	//if (key == GLUT_KEY_RIGHT)
+	//{
+	//	joueur.velocityDroit();
+	//}
+	if (key == GLUT_KEY_END)
 	{
-		joueur.velocityDroit();
+		//tir = false;
 	}
 }
 
 void mainWindows::redim(int x, int y)
 {
 	glViewport(0, 0, x, y);
-	
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	//glScalef(2, 2, 0);
@@ -542,23 +489,23 @@ void mainWindows::translationCam()
 	glLoadIdentity();
 
 	//Coin haut/gauche
-	if (joueur.positionX() < 14)
+	if (joueur.positionX() < 15)
 	{
-		i = 15 + joueur.positionX();
+		i = 14 + joueur.positionX();
 	}
-	if (joueur.positionY() < 7.5)
+	if (joueur.positionY() < 8.5)
 	{
-		j = 8 + joueur.positionY();
+		j = 7 + joueur.positionY();
 	}
 
 	//Coin bas/droite
-	if (joueur.positionX() > 44)
+	if (joueur.positionX() > 43)
 	{
-		i = joueur.positionX() - 15;
+		i = joueur.positionX() - 14;
 	}
-	if (joueur.positionY() > 23.5)
+	if (joueur.positionY() > 22.5)
 	{
-		j = joueur.positionY() - 8;
+		j = joueur.positionY() - 7;
 	}
 
 	//Centre de l'écran
@@ -567,3 +514,48 @@ void mainWindows::translationCam()
 	glutSwapBuffers();
 }
 
+void mainWindows::affichage()
+{
+	glClearColor(0.0, 0.0157, 0.0313, 1);
+	glClear(GL_COLOR_BUFFER_BIT);
+	glMatrixMode(GL_MODELVIEW);
+
+	fenetre.imageFond();
+	fenetre.dessinerNiveau();
+	fenetre.dessinerPlanete();
+
+	fenetre.translationCam();
+	grilleJeu.verifPosition();
+	fenetre.dessinerJoueur();
+
+	if (bullet.bulletActif() == true)
+	{
+		fenetre.dessinerTirs();
+		glutTimerFunc(64, dessinerTir, 0);
+	}
+
+	if (fenetre.nbrPlaneteDetruite > 4)
+	{
+		// Si le nombre de planètes détruites est supérieur à 5, l'ennemi apparait et bouge vers elles
+		if (grilleJeu.declencherBalayage == true)
+		{
+			grilleJeu.balayageDeLaMatrice = true;
+			grilleJeu.declencherBalayage = false;
+		}
+
+		glutTimerFunc(16, fenetre.deplacementEnnemis, 0);
+	}
+
+
+	glutSpecialFunc(fenetre.clavier); // Appuie des touches du clavier
+	glutSpecialUpFunc(fenetre.clavierUp); // Touche du clavier relaché
+	//	glutFullScreen();
+
+	glFlush();
+	glutTimerFunc(16, callback_affichage, 0);
+}
+
+void mainWindows::callback_affichage(int) // utiliser pour atteindre la fonction affichage
+{
+	affichage();
+}

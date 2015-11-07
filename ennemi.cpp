@@ -1,5 +1,7 @@
 #include "ennemi.h"
 
+ennemi cargo01, cargo02, cargo03;
+
 
 ennemi::ennemi() : m_etat(true)
 {
@@ -22,8 +24,9 @@ void ennemi::respawn()
 
 }
 
-ennemi::ennemi(int x, int y) : m_etat(true)
+ennemi::ennemi(int x, int y, int val) : m_etat(true)
 {
+	val = valDep;
 	m_x = x;
 	m_y = y;
 }
@@ -64,4 +67,20 @@ int ennemi::positionX()
 int ennemi::positionY()
 {
 	return m_y;
+}
+
+
+void ennemi::setX(double x)
+{
+	m_x = x;
+}
+
+void ennemi::setY(double y)
+{
+	m_y = y;
+}
+
+void ennemi::setVal(int val)
+{
+	valDep = val;
 }

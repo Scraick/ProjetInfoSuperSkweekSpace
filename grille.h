@@ -39,9 +39,22 @@ public:
 	double parallaxeFond(double posX, double posY);
 	bool déplacementEnnemiPeuple = false;
 	bool balayageDeLaMatrice = false;
+	bool balayageDeLaMatrice02 = false;
+	bool balayageDeLaMatrice03 = false;
 	bool declencherBalayage = true;
 	int val_X, val_Y;
 	int speedEnnemiP;
+
+	void changerCase(ennemi);
+	void colisionHautEP(ennemi &);
+	void colisionBasEP(ennemi &);
+	void colisionGaucheEP(ennemi &);
+	void colisionDroiteEP(ennemi &);
+
+	void depGauche(ennemi &);
+	void depDroite(ennemi &);
+	void depHaut(ennemi &);
+	void depBas(ennemi &);
 
 	void verifPosition();
 	void caseFleches();
