@@ -44,10 +44,15 @@ public:
 	bool balayageDeLaMatrice02 = false;
 	bool balayageDeLaMatrice03 = false;
 	bool declencherBalayage = true;
+	bool declencherBalayage02 = true;
+	bool declencherBalayage03 = true;
+
 	int val_X, val_Y;
+	int val_X2, val_Y2;
+	int val_X3, val_Y3;
 	int speedEnnemiP;
 
-	void changerCase(ennemi);
+	void changerCase();
 	void colisionHautEP(ennemi &);
 	void colisionBasEP(ennemi &);
 	void colisionGaucheEP(ennemi &);
@@ -57,7 +62,7 @@ public:
 	void depDroite(ennemi &);
 	void depHaut(ennemi &);
 	void depBas(ennemi &);
-
+	
 	bool verifPosition();
 	void caseFleches();
 	static void callBackFleches(int call);

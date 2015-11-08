@@ -32,8 +32,7 @@ public:
 	int LoadGLTextures(string);
 	int tmp_x = 0, tmp_y = 0;
 	int scoreJoueur = 0;
-	int nbrPlaneteDetruite = 0; // test ennemis = 9
-
+	int nbrPlaneteDetruite = 0; // test ennemis = 18
 
 	void dessinerNiveau();
 	void dessinerJoueur();
@@ -41,9 +40,6 @@ public:
 	void dessinerPlanete();
 
 	void dessinerTirs();
-
-
-	static void deplacementEnnemis(int obligatoire);
 
 	void planeteBleuDetruite();
 	void planeteJauneDetruite();

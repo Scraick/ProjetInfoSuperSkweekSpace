@@ -14,12 +14,11 @@ void ennemi::deplacementEP(ennemi &vaisseauCargo) 	// Déplacement vers la planèt
 {
 	cptDeplacementRalenti++;
 
-	if (cptDeplacementRalenti == 200)
+	if (cptDeplacementRalenti == 40)
 	{
-		//cout << "verification distance cargo01" << endl;
-		grilleJeu.distancePlanetes(vaisseauCargo.m_x, vaisseauCargo.m_y);
-
-			// Si il a trouvé des planètes et que le booléen random est à faux, alors il se déplace vers les planètes
+		if (vaisseauCargo.numeroEnnemi == 1)
+		{
+			grilleJeu.distancePlanetes(vaisseauCargo.m_x, vaisseauCargo.m_y);
 
 			if (grilleJeu.val_Y < vaisseauCargo.m_y) //Position Y plus basse
 			{
@@ -71,15 +70,126 @@ void ennemi::deplacementEP(ennemi &vaisseauCargo) 	// Déplacement vers la planèt
 			}
 
 			cptDeplacementRalenti = 0;
+		}
 
-			//cout << "Valeur vaisseauCargo : " << vaisseauCargo.valDep << endl;
-			//cout << "Valeur Cargo01 : " << cargo01.valDep << endl;
+		if (vaisseauCargo.numeroEnnemi == 2)
+		{
+			grilleJeu.distancePlanetes(vaisseauCargo.m_x, vaisseauCargo.m_y);
 
-			cout << "position vaisseauCargo : " << vaisseauCargo.positionX() << " " << vaisseauCargo.positionY() << endl;
-			cout << "position Cargo01 : " << cargo01.positionX() << " " << cargo01.positionY() << endl;
+			if (grilleJeu.val_Y2 < vaisseauCargo.m_y) //Position Y plus basse
+			{
+				if (grilleJeu.val_X2 == vaisseauCargo.m_x) // et position X égale
+				{
+					grilleJeu.depHaut(vaisseauCargo); //Va vers le haut
+				}
+				else // si la position X n'est pas égale
+				{
+					if (grilleJeu.val_X2 > vaisseauCargo.m_x) // si elle est plus grande
+					{
+						grilleJeu.depDroite(vaisseauCargo);// va vers la droite
+					}
+					else if (grilleJeu.val_X2 < vaisseauCargo.m_x) // si elle est plus petite 
+					{
+						grilleJeu.depGauche(vaisseauCargo); //Va vers la gauche
+					}
+				}
+			}
+			else if (grilleJeu.val_Y2 > vaisseauCargo.m_y)// Si la position Y est plus haute
+			{
+				if (grilleJeu.val_X2 == vaisseauCargo.m_x) // et position X égale
+				{
+					grilleJeu.depBas(vaisseauCargo); // Va vers le bas
+				}
+				else // si la position X n'est pas égale
+				{
+					if (grilleJeu.val_X2 > vaisseauCargo.m_x) // si elle est plus grande
+					{
+						grilleJeu.depDroite(vaisseauCargo); // va vers la droite
+					}
+					else if (grilleJeu.val_X2 < vaisseauCargo.m_x) // si elle est plus petite 
+					{
+						grilleJeu.depGauche(vaisseauCargo); //Va vers la gauche
+					}
+				}
+			}
+			else // si la position Y est égale
+			{
+				if (grilleJeu.val_X2 < vaisseauCargo.m_x) // Si la position X est plus petite
+				{
+					grilleJeu.depGauche(vaisseauCargo); // va vers la gauche
+				}
+
+				if (grilleJeu.val_X2 > vaisseauCargo.m_x) // Si la position X est plus grande
+				{
+					grilleJeu.depDroite(vaisseauCargo); // va vers la droite
+				}
+			}
+
+			cptDeplacementRalenti = 0;
+		}
+
+		if (vaisseauCargo.numeroEnnemi == 3)
+		{
+			grilleJeu.distancePlanetes(vaisseauCargo.m_x, vaisseauCargo.m_y);
+
+			if (grilleJeu.val_Y3 < vaisseauCargo.m_y) //Position Y plus basse
+			{
+				if (grilleJeu.val_X3 == vaisseauCargo.m_x) // et position X égale
+				{
+					grilleJeu.depHaut(vaisseauCargo); //Va vers le haut
+				}
+				else // si la position X n'est pas égale
+				{
+					if (grilleJeu.val_X3 > vaisseauCargo.m_x) // si elle est plus grande
+					{
+						grilleJeu.depDroite(vaisseauCargo);// va vers la droite
+					}
+					else if (grilleJeu.val_X3 < vaisseauCargo.m_x) // si elle est plus petite 
+					{
+						grilleJeu.depGauche(vaisseauCargo); //Va vers la gauche
+					}
+				}
+			}
+			else if (grilleJeu.val_Y3 > vaisseauCargo.m_y)// Si la position Y est plus haute
+			{
+				if (grilleJeu.val_X3 == vaisseauCargo.m_x) // et position X égale
+				{
+					grilleJeu.depBas(vaisseauCargo); // Va vers le bas
+				}
+				else // si la position X n'est pas égale
+				{
+					if (grilleJeu.val_X3 > vaisseauCargo.m_x) // si elle est plus grande
+					{
+						grilleJeu.depDroite(vaisseauCargo); // va vers la droite
+					}
+					else if (grilleJeu.val_X3 < vaisseauCargo.m_x) // si elle est plus petite 
+					{
+						grilleJeu.depGauche(vaisseauCargo); //Va vers la gauche
+					}
+				}
+			}
+			else // si la position Y est égale
+			{
+				if (grilleJeu.val_X3 < vaisseauCargo.m_x) // Si la position X est plus petite
+				{
+					grilleJeu.depGauche(vaisseauCargo); // va vers la gauche
+				}
+
+				if (grilleJeu.val_X3 > vaisseauCargo.m_x) // Si la position X est plus grande
+				{
+					grilleJeu.depDroite(vaisseauCargo); // va vers la droite
+				}
+			}
+
+			cptDeplacementRalenti = 0;
+		}
+
+		cout << "position Cargo01 : " << cargo01.positionX() << " " << cargo01.positionY() << endl;
+		cout << "position Cargo02 : " << cargo02.positionX() << " " << cargo02.positionY() << endl;
+		cout << "position Cargo03 : " << cargo03.positionX() << " " << cargo03.positionY() << endl;
 	}
 	
-	grilleJeu.changerCase(vaisseauCargo);
+	grilleJeu.changerCase();
 
 }
 

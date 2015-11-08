@@ -73,20 +73,20 @@ void grille::dessinerNiveauHaut(vector<cases> C)
 double grille::distancePlanetes(double x, double y)
 {
 	// Initialisation des valeurs de distance
-	int val ;
-	int valTemp = 100000;
+	
 
-	if ((balayageDeLaMatrice == true) || (balayageDeLaMatrice02 == true) || (balayageDeLaMatrice03 == true))
+	if (balayageDeLaMatrice == true)
 	{
+		int val;
+		int valTemp = 100000;
+
 		// Boucle pour la recherche des planètes
 
 		for (int i = 0; i < NB_LIGNES; i++)
 		{
 			for (int j = 0; j < NB_COLONNES; j++)
 			{
-				if ((Matrice[i][j].m_id == '2') && (fenetre.bleu[i][j] == fenetre.texture[21])
-						|| (Matrice[i][j].m_id == '6') && (fenetre.jaune[i][j] == fenetre.texture[22])
-						|| (Matrice[i][j].m_id == '7') && (fenetre.rose[i][j] == fenetre.texture[23]))
+				if ((Matrice[i][j].m_id == '2') && (fenetre.bleu[i][j] == fenetre.texture[21]))
 				{
 						val = sqrt((x - i) * (x - i) + (y - j) * (y - j)); // Calcul de la distance entre le vaisseau et la planète
 
@@ -95,19 +95,78 @@ double grille::distancePlanetes(double x, double y)
 							val_X = j;
 							val_Y = i;
 							balayageDeLaMatrice = false;
-							balayageDeLaMatrice02 = false;
-							balayageDeLaMatrice03 = false;
 							valTemp = val; // Mise en place d'une valeur temp
 					}
 				}
 			}
 		}
-
-		cout << "Planete à reparer : "<< val_X << " " << val_Y << endl;
-		cout << "Recherche en cours" << endl;
+		
+		std::cout << "Planete à reparer : "<< val_X << " " << val_Y << endl;
+		std::cout << "Recherche en cours" << endl;
 	}
 
-	return valTemp;
+	if (balayageDeLaMatrice02 == true)
+	{
+		int val;
+		int valTemp = 100000;
+		// Boucle pour la recherche des planètes
+
+		for (int i = 0; i < NB_LIGNES; i++)
+		{
+			for (int j = 0; j < NB_COLONNES; j++)
+			{
+				if ((Matrice[i][j].m_id == '6') && (fenetre.jaune[i][j] == fenetre.texture[22]))
+				{
+					val = sqrt((x - i) * (x - i) + (y - j) * (y - j)); // Calcul de la distance entre le vaisseau et la planète
+
+					if (val < valTemp)
+					{
+						val_X2 = j;
+						val_Y2 = i;
+						balayageDeLaMatrice02 = false;
+						valTemp = val; // Mise en place d'une valeur temp
+						cout << "passage et changement des valeurs 02?" << endl;
+					}
+				}
+			}
+		}
+
+		std::cout << "Planete à reparer : " << val_X2 << " " << val_Y2 << endl;
+		std::cout << "Recherche en cours" << endl;
+	}
+
+	if (balayageDeLaMatrice03 == true)
+	{
+		int val;
+		int valTemp = 100000;
+		// Boucle pour la recherche des planètes
+
+		for (int i = 0; i < NB_LIGNES; i++)
+		{
+			for (int j = 0; j < NB_COLONNES; j++)
+			{
+				if ((Matrice[i][j].m_id == '7') && (fenetre.rose[i][j] == fenetre.texture[23]))
+				{
+					val = sqrt((x - i) * (x - i) + (y - j) * (y - j)); // Calcul de la distance entre le vaisseau et la planète
+
+					if (val < valTemp)
+					{
+						val_X3 = j;
+						val_Y3 = i;
+						balayageDeLaMatrice03 = false;
+						valTemp = val; // Mise en place d'une valeur temp
+						cout << "passage et changement des valeurs 03?" << endl;
+					}
+				}
+			}
+		}
+
+		std::cout << "Planete à reparer : " << val_X3 << " " << val_Y3 << endl;
+		std::cout << "Recherche en cours" << endl;
+
+	}
+
+	return 0;
 }
 
 void grille::respawnEnnemi()
@@ -122,10 +181,10 @@ void grille::speedEnnemis()
 
 void grille::colisionHaut()
 {
-	int	pt1 = round(joueur.positionX() - 0.4);
-	int	pt2 = round(joueur.positionX() + 0.4);
-	int	pt3 = round(joueur.positionY() - 0.4);
-	int	pt4 = round(joueur.positionY() + 0.4);
+	int	pt1 = round(joueur.positionX() - 0.2);
+	int	pt2 = round(joueur.positionX() + 0.2);
+	int	pt3 = round(joueur.positionY() - 0.2);
+	int	pt4 = round(joueur.positionY() + 0.2);
 
 	if (((grilleJeu.Matrice[pt3][(int)pt1].m_id != '1') && (grilleJeu.Matrice[pt3][(int)pt2].m_id != '1'))
 		&& ((grilleJeu.Matrice[pt3][(int)pt1].m_id != '3') && (grilleJeu.Matrice[pt3][(int)pt2].m_id != '3'))
@@ -137,10 +196,10 @@ void grille::colisionHaut()
 
 void grille::colisionBas()
 {
-	int pt1 = round(joueur.positionX() - 0.4);
-	int pt2 = round(joueur.positionX() + 0.4);
-	int pt3 = round(joueur.positionY() - 0.4);
-	int pt4 = round(joueur.positionY() + 0.4);
+	int pt1 = round(joueur.positionX() - 0.2);
+	int pt2 = round(joueur.positionX() + 0.2);
+	int pt3 = round(joueur.positionY() - 0.2);
+	int pt4 = round(joueur.positionY() + 0.2);
 
 	if (((grilleJeu.Matrice[pt4][(int)pt1].m_id != '1') && (grilleJeu.Matrice[pt4][(int)pt2].m_id != '1'))
 		&& ((grilleJeu.Matrice[pt4][(int)pt1].m_id != '3') && (grilleJeu.Matrice[pt4][(int)pt2].m_id != '3'))
@@ -152,10 +211,10 @@ void grille::colisionBas()
 
 void grille::colisionGauche()
 {
-	int pt1 = round(joueur.positionX() - 0.4);
-	int pt2 = round(joueur.positionX() + 0.4);
-	int pt3 = round(joueur.positionY() - 0.4);
-	int pt4 = round(joueur.positionY() + 0.4);
+	int pt1 = round(joueur.positionX() - 0.2);
+	int pt2 = round(joueur.positionX() + 0.2);
+	int pt3 = round(joueur.positionY() - 0.2);
+	int pt4 = round(joueur.positionY() + 0.2);
 
 	if (((grilleJeu.Matrice[(int)pt3][pt1].m_id != '1') && (grilleJeu.Matrice[pt4][(int)pt1].m_id != '1'))
 		&& ((grilleJeu.Matrice[(int)pt3][pt1].m_id != '3') && (grilleJeu.Matrice[pt4][(int)pt1].m_id != '3'))
@@ -167,10 +226,10 @@ void grille::colisionGauche()
 
 void grille::colisionDroite()
 {
-	int pt1 = round(joueur.positionX() - 0.4);
-	int pt2 = round(joueur.positionX() + 0.4);
-	int pt3 = round(joueur.positionY() - 0.4);
-	int pt4 = round(joueur.positionY() + 0.4);
+	int pt1 = round(joueur.positionX() - 0.2);
+	int pt2 = round(joueur.positionX() + 0.2);
+	int pt3 = round(joueur.positionY() - 0.2);
+	int pt4 = round(joueur.positionY() + 0.2);
 
 
 	if (((grilleJeu.Matrice[(int)pt3][pt2].m_id != '1') && (grilleJeu.Matrice[(int)pt4][pt2].m_id != '1'))
@@ -268,79 +327,67 @@ void grille::depGauche(ennemi &vaisseauCargo)
 {
 	vaisseauCargo.setVal(1);
 	vaisseauCargo.m_x--;
-	cout << "position dans fonction deplacement : " << vaisseauCargo.positionX() << " " << vaisseauCargo.positionY() << endl;
+	
 }
 
 void grille::depDroite(ennemi &vaisseauCargo)
 {
 	vaisseauCargo.setVal(3);
 	vaisseauCargo.m_x++;
-	cout << "position dans fonction deplacement droite : " << vaisseauCargo.positionX() << " " << vaisseauCargo.positionY() << endl;
+	
 }
 
 void grille::depHaut(ennemi &vaisseauCargo)
 {
 	vaisseauCargo.setVal(0);
 	vaisseauCargo.m_y--;
-	cout << "position dans fonction deplacement : " << vaisseauCargo.positionX() << " " << vaisseauCargo.positionY() << endl;
+
 }
 
 void grille::depBas(ennemi &vaisseauCargo)
 {
 	vaisseauCargo.setVal(2);
 	vaisseauCargo.m_y++;
-	cout << "position dans fonction deplacement : " << vaisseauCargo.positionX() << " " << vaisseauCargo.positionY() << endl;
+	
 }
 
 
-void grille::changerCase(ennemi vaisseauCargo)
+void grille::changerCase()
 {
 	//Si la case détruite est bleue
-	if (fenetre.bleu[vaisseauCargo.positionY()][vaisseauCargo.positionX()] == fenetre.texture[21])
+	if (fenetre.bleu[cargo01.positionY()][cargo01.positionX()] == fenetre.texture[21])
 	{
-		if (fenetre.nbrPlaneteDetruite > 4)
-		{
-			grilleJeu.declencherBalayage = true; //Nouvelle recherche de planète
-			grilleJeu.balayageDeLaMatrice02 = true;
-			grilleJeu.balayageDeLaMatrice03 = true;
-		}
+		grilleJeu.balayageDeLaMatrice = true; //Nouvelle recherche de planète
 
-		fenetre.bleu[vaisseauCargo.positionY()][vaisseauCargo.positionX()] = fenetre.texture[18]; //On change la texture en texture de base
+		fenetre.bleu[cargo01.positionY()][cargo01.positionX()] = fenetre.texture[18]; //On change la texture en texture de base
 		fenetre.scoreJoueur -= 50; //Score du joueur baissé de 50
+		fenetre.nbrPlaneteDetruite --;
 
 		cout << "scoreJoueur : " << fenetre.scoreJoueur << endl;
 	}
 
 
 	//Si la case détruite est jaune
-	if (fenetre.jaune[vaisseauCargo.positionY()][vaisseauCargo.positionX()] == fenetre.texture[22])
+	if (fenetre.jaune[cargo02.positionY()][cargo02.positionX()] == fenetre.texture[22])
 	{
-		if (fenetre.nbrPlaneteDetruite > 4)
-		{
-			grilleJeu.declencherBalayage = true; //Nouvelle recherche de planète
-			grilleJeu.balayageDeLaMatrice02 = true;
-			grilleJeu.balayageDeLaMatrice03 = true;
-		}
+		grilleJeu.balayageDeLaMatrice02 = true;//Nouvelle recherche de planète
 
-		fenetre.jaune[vaisseauCargo.positionY()][vaisseauCargo.positionX()] = fenetre.texture[19]; //On change la texture en texture de base
+		fenetre.jaune[cargo02.positionY()][cargo02.positionX()] = fenetre.texture[19]; //On change la texture en texture de base
 		fenetre.scoreJoueur -= 50; //Score du joueur baissé de 50
+		fenetre.nbrPlaneteDetruite--;
 
 		cout << "scoreJoueur : " << fenetre.scoreJoueur << endl;
 	}
 
 
 	//Si la case détruite est rose
-	if (fenetre.rose[vaisseauCargo.positionY()][vaisseauCargo.positionX()] == fenetre.texture[23])
+	if (fenetre.rose[cargo03.positionY()][cargo03.positionX()] == fenetre.texture[23])
 	{
-		if (fenetre.nbrPlaneteDetruite > 4)
-		{
-			grilleJeu.declencherBalayage = true; //Nouvelle recherche de planète
-			grilleJeu.balayageDeLaMatrice02 = true;
-			grilleJeu.balayageDeLaMatrice03 = true;
-		}
+		grilleJeu.balayageDeLaMatrice03 = true;//Nouvelle recherche de planète
 
-		fenetre.rose[vaisseauCargo.positionY()][vaisseauCargo.positionX()] = fenetre.texture[20]; //On change la texture en texture de base
+		fenetre.rose[cargo03.positionY()][cargo03.positionX()] = fenetre.texture[20]; //On change la texture en texture de base
 		fenetre.scoreJoueur -= 50; //Score du joueur baissé de 50
+		fenetre.nbrPlaneteDetruite--;
 
 		cout << "scoreJoueur : " << fenetre.scoreJoueur << endl;
 	}
@@ -375,6 +422,7 @@ bool grille::verifPosition()
 			fenetre.niveauBas = false;
 			cout << "check" << endl;
 			return fenetre.niveauBas;
+
 		}
 
 		if (fenetre.niveauBas == false)
@@ -382,6 +430,7 @@ bool grille::verifPosition()
 			fenetre.niveauBas = true;
 			cout << "check" << endl;
 			return fenetre.niveauBas;
+
 		}
 
 	}
