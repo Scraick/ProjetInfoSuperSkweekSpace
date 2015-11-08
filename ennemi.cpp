@@ -24,12 +24,13 @@ void ennemi::respawn()
 
 }
 
-ennemi::ennemi(int x, int y, int val, int numero) : m_etat(true)
+ennemi::ennemi(int x, int y, int val, int numero, int PV) : m_etat(true)
 {
 	val = valDep;
 	m_x = x;
 	m_y = y;
 	numero = numeroEnnemi;
+	PV = nbrPVEP;
 }
 
 
@@ -90,3 +91,9 @@ void ennemi::setNumero(int numero)
 {
 	numeroEnnemi = numero;
 }
+
+void ennemi::setNbrPV(int PV)
+{
+	nbrPVEP = PV;
+}
+

@@ -6,7 +6,7 @@ class ennemi
 public:
 	ennemi();
 
-	ennemi(int x, int y, int val, int numero);
+	ennemi(int x, int y, int val, int numero, int PV);
 
 	void mortEnnemi(bool etat); //Vérification de la mort des ennemis
 	void deplacementEnnemis(int dep); //Déplacement ennemis
@@ -19,6 +19,7 @@ public:
 	void setY(double y);
 	void setVal(int val);
 	void setNumero(int numero);
+	void setNbrPV(int PV);
 
 	void mort(bool etat);
 	void respawn();
@@ -29,7 +30,8 @@ public:
 	int positionY();
 
 	int valDep = 0;
-	int numeroEnnemi = -1;
+	int numeroEnnemi = 0;
+	int nbrPVEP;
 	double m_x, m_y;
 
 	void deplacementEP(ennemi &);

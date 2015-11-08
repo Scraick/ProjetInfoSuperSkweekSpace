@@ -10,8 +10,6 @@ GLuint rose[60][32];
 GLuint saveM1[60][32];
 GLuint saveM2[60][32];
 
-//, cargo02, cargo03;
-
 void dessinerTir(int);
 
 mainWindows::mainWindows()
@@ -155,9 +153,9 @@ void mainWindows::init(int x, int y)
 	glutDisplayFunc(affichage);
 	glutReshapeFunc(redim);
 
-	cargo01.setX(55), cargo01.setY(29), cargo01.setVal(0), cargo01.setNumero(1);
-	cargo02.setX(56), cargo02.setY(29), cargo02.setVal(0), cargo02.setNumero(2);
-	cargo03.setX(57), cargo03.setY(29), cargo03.setVal(0), cargo03.setNumero(3);
+	cargo01.setX(55), cargo01.setY(29), cargo01.setVal(0), cargo01.setNumero(1), cargo01.setNbrPV(3);
+	cargo02.setX(56), cargo02.setY(29), cargo02.setVal(0), cargo02.setNumero(2), cargo02.setNbrPV(3);
+	cargo03.setX(57), cargo03.setY(29), cargo03.setVal(0), cargo03.setNumero(3), cargo03.setNbrPV(3);
 
 	saveM1[60][32] = { texture[0] };
 	saveM2[60][32] = { texture[0] };
